@@ -78,33 +78,36 @@ const Value = () => {
       </div>
       
       <div className="bg-white py-16">
-      <div className="max-w-7xl mx-40 px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden">
-          {/* Image Section - Adjusted height and object-fit */}
-          <div className="w-full">
-            <img
-              src="/mission.jpg"
-              alt="Mission"
-              className="w-full h-[750px] object-cover rounded-3xl"
-            />
-          </div>
+  <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <div className="relative flex items-center">
+      {/* Image Section */}
+      <div className="w-[60%]">
+        <img
+          src="/mission.jpg"
+          alt="Mission"
+          className="w-full h-[750px] object-cover rounded-3xl"
+        />
+      </div>
 
-          {/* Text Section - Keeping original mission content */}
-          <div className="absolute top-1/2 -right-0 transform -translate-y-1/2 bg-blue-900 text-white p-10 rounded-3xl w-[50%] lg:w-[40%] shadow-lg">
-            <h3 className="text-2xl font-bold mb-6">
-              Mission: To empower Africa's aspiring professionals with open-source projects and hands-on learning opportunities.
-            </h3>
-            <p className="text-sm leading-relaxed">
-              At Sqwads, we believe in the power of collaboration and community.
-              We bridge the gap between learning and doing by connecting students, interns, and career-transitioning individuals to open-source projects. We empower users to build projects, refine their skills, and enhance their employability, preparing them for success in a fast-paced tech landscape.
-            </p>
-            <p className="mt-4 text-sm font-medium">
-              Join us in shaping the future of technology, one project at a time.
-            </p>
-          </div>
+      {/* Text Section */}
+      <div className="w-[40%] -ml-10 relative z-10">
+        <div className="bg-blue-900 text-white p-10 rounded-3xl shadow-lg">
+          <h3 className="text-2xl font-bold mb-6">
+            Mission: To empower Africa's aspiring professionals with open-source projects and hands-on learning opportunities.
+          </h3>
+          <p className="text-sm leading-relaxed">
+            At Sqwads, we believe in the power of collaboration and community.
+            We bridge the gap between learning and doing by connecting students, interns, and career-transitioning individuals to open-source projects. We empower users to build projects, refine their skills, and enhance their employability, preparing them for success in a fast-paced tech landscape.
+          </p>
+          <p className="mt-4 text-sm font-medium">
+            Join us in shaping the future of technology, one project at a time.
+          </p>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
 
 
 
