@@ -1,9 +1,15 @@
-import React from 'react';
-import howImage from './path-to-your-how-image.png'; // Update the path to your image
+import Image from 'next/image';
 
 const How = () => {
   return (
     <section className="bg-white py-16 px-6 md:px-12 lg:px-20">
+      {/* "To Get Started" Button */}
+      <div className="mb-8">
+        <button className="bg-purple-100 text-purple-700 py-2 px-4 rounded-full font-medium hover:bg-purple-200 transition">
+          ⚡ TO GET STARTED
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
         {/* Left Column: Steps */}
         <div>
@@ -19,20 +25,14 @@ const How = () => {
               <div key={index} className="flex items-center space-x-4">
                 <div
                   className={`flex items-center justify-center h-12 w-12 rounded-full text-white text-xl font-bold ${
-                    index === 0
-                      ? "bg-blue-600"
-                      : index === 1
-                      ? "bg-gray-400"
-                      : "bg-gray-400"
+                    index === 0 ? "bg-blue-600" : "bg-gray-400"
                   }`}
                 >
                   {step.number}
                 </div>
                 <p
                   className={`text-lg font-medium ${
-                    index === 0
-                      ? "text-gray-900"
-                      : "text-gray-500"
+                    index === 0 ? "text-gray-900" : "text-gray-500"
                   }`}
                 >
                   {step.text}
@@ -42,9 +42,23 @@ const How = () => {
           </div>
         </div>
 
-        {/* Center Column: Image */}
-        <div className="flex justify-center">
-          <img src={"/how-form.png"} alt="How Sqwads Works" className="w-full max-w-md lg:max-w-none" />
+        {/* Center Column: Images */}
+        <div className="relative flex justify-center">
+          <Image
+            src="/how.png"
+            alt="How Sqwads Works"
+            width={400} // Define width in pixels
+            height={400} // Define height in pixels
+            className="w-full max-w-md lg:max-w-none"
+          />
+          {/* Small image overlay */}
+          <Image
+            src="/small.png"
+            alt="Additional Info"
+            width={112} // Width for the small image
+            height={112} // Height for the small image
+            className="absolute -bottom-8 right-8 shadow-lg rounded-lg"
+          />
         </div>
 
         {/* Right Column: Description */}
