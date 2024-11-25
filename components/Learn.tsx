@@ -63,6 +63,41 @@ const Learn = () => {
             </p>
           </div>
         </div>
+
+        {/* Third Section: Article + Image (Reversed Layout) */}
+        <div className="flex flex-col lg:flex-row-reverse gap-12 items-center">
+          {/* Right Column: Image */}
+          <div className="relative lg:w-1/2">
+            <Image
+              src="/analyze.png"
+              alt="Person analyzing data on multiple monitors"
+              width={600}
+              height={400}
+              className="rounded-lg shadow-lg"
+            />
+          </div>
+
+          {/* Left Column: Article */}
+          <div className="lg:w-1/2 space-y-4">
+            <h3 className="text-xl font-semibold text-gray-800">
+              Analyze Data for a Non-Profit to Drive Better Decisions
+            </h3>
+            <p className="text-gray-600 text-lg">
+              Leverage data insights to support impactful decision-making,
+              optimize resources, and enhance the effectiveness of programs,
+              helping the non-profit achieve its mission.
+            </p>
+
+            {/* Explore More Projects Link */}
+            <a
+              href="/projects"
+              className="text-blue-600 text-lg font-medium flex items-center hover:underline"
+            >
+              Explore more projects
+              <span className="ml-2 text-2xl font-bold">&gt;</span>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
