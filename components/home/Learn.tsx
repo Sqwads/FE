@@ -5,19 +5,19 @@ const Learn = () => {
   const progressValue = 14; // Example progress level
 
   return (
-    <section className="bg-white py-16 px-8 lg:px-16">
+    <section className="bg-[#F9FDFF] py-16 px-8 lg:px-16">
       {/* Container */}
       <div className="max-w-7xl mx-auto space-y-16">
         {/* First Section: Header + Intro */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between">
           <div className="lg:w-1/2">
-            <h2 className="text-4xl font-bold text-gray-800">
+            <h2 className="text-4xl font-medium text-gray-800">
               Learn by Doing: <br />
               <span className="text-blue-600">Real Projects, Real Impact</span>
             </h2>
           </div>
           <div className="lg:w-1/2 mt-6 lg:mt-0">
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 lg:text-lg">
               At Sqwads, we believe the best way to grow is through hands-on
               experience. Dive into real-world projects across tech and non-tech
               fields—like software development, marketing, and project
@@ -56,7 +56,7 @@ const Learn = () => {
             <h3 className="text-xl font-semibold text-gray-800">
               Build a Web Application for an Educational Platform
             </h3>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 lg:text-lg">
               Design and develop a seamless, user-friendly web application that
               enhances learning experiences, streamlines content delivery, and
               empowers educators and students to connect and grow.

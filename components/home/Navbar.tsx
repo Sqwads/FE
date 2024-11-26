@@ -1,13 +1,13 @@
 import { NAV_LINKS } from "@/constants"
 import Image from "next/image"
 import Link from "next/link"
-import Button from "./Button"
+import Button from "../Button"
 
 const Navbar = () => {
   return (
     <nav
-      className="flexBetween max-container 
-          px-6 py-4 bg-blue-950 rounded-lg relative z-30 m-10 shadow-md"
+      className="flexBetween  
+          px-6 py-4 bg-blue-950 rounded-lg relative z-30 mb-7 shadow-md"
     >
       <Link href='/'>
         <Image src="/images/sqwads-logo.png" alt="logo" width={200} height={50} />
@@ -32,7 +32,7 @@ const Navbar = () => {
         />
       </div>
 
-      
+
     </nav>
   )
 }

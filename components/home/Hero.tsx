@@ -1,28 +1,26 @@
 import Image from "next/image"
-import Button from "./Button"
+import { FaLongArrowAltRight } from "react-icons/fa"
 
 const Hero = () => {
   return (
-    <section className="relative flex flex-col lg:flex-row items-center justify-between align-item-center
-     px-6 py-6 lg:px-12 lg:py-6 max-container w-full bg-blue-950 text-white rounded-xl">
+    <section 
+      className=" flex flex-col lg:flex-row items-center justify-between align-item-center
+          px-6 py-10 lg:px-12 lg:py-6 gap-y-5 w-full bg-blue-950 text-white rounded-xl">
 
       {/* {Left Content} */}
-      <div className="flex flex-col items-start gap-6 max-w-lg">
+      <div className="flex flex-col items-start gap-6 max-w-xl">
 
-        <h1 className="text-[2.8rem] text-[#F5F5F5] font-medium leading-snug">
+        <h1 className="lg:text-[3rem] text-[2.3rem] text-[#F5F5F5] font-medium leading-snug">
           Bridge the Gap Between <span className="text-light_blue">Learning</span> and <span className="text-light_blue">Doing</span>
         </h1>
 
-        <p className="text-lg text-[#D5D7DA]">
+        <p className="lg:text-lg text-base text-[#D5D7DA] mb-5">
           Transform your skills into practical experience by working on open-source projects with guidance from industry experts.
         </p>
 
-        <Button 
-          type="button"
-          title="Learn More"
-          variant="blue"
-          icon="/arrow.svg"
-        />
+        <button className="h-30 flex items-center text-white rounded-md  bg-blue-600 py-3 px-6">
+          Learn More <FaLongArrowAltRight size={23} className="ml-2" />
+        </button>
       </div>
 
       {/* Right Content */}
@@ -30,8 +28,8 @@ const Hero = () => {
         <Image 
           src="/images/hero-image.png"
           alt="hero"
-          width={600}
-          height={400}
+          width={500}
+          height={370}
           className="rounded-lg shadow-lg"
         />
       </div>

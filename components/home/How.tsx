@@ -33,7 +33,7 @@ const How = () => {
   const [activeStep, setActiveStep] = useState(0); // Default to the first step
 
   return (
-    <section className="bg-white py-16 px-6 md:px-12 lg:px-20">
+    <section className="bg-white lg:py-1 py-7 px-6 md:px-12 lg:px-20">
       {/* "To Get Started" Button */}
       <div className="mb-8">
         <button className="bg-purple-100 text-purple-700 py-2 px-4 rounded-full font-medium hover:bg-purple-200 transition duration-300">
@@ -42,35 +42,37 @@ const How = () => {
       </div>
 
       {/* Heading */}
-      <h2 className="text-3xl font-bold text-gray-900 md:text-4xl mb-8">
-        How Sqwads works <br />
+      <h2 className="text-4xl font-medium text-gray-900 md:text-4xl lg:mb-4">
+       <div className='mb-2'> How Sqwads works</div> 
         <span className="text-blue-600">in 3 steps</span>
       </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 ">
         {/* Left Column: Steps */}
         <div>
-          <div className="space-y-6">
+          <div className="space-y-4 my-10 border-l-2 border-[#f0efef] ">
             {steps.map((step, index) => (
               <div
                 key={index}
-                className="flex items-center space-x-4 cursor-pointer"
+                className={` lg:pl-7 pl-3 ${index==activeStep && 'border-l-4 border-[#001D69] rounded'}`}
                 onClick={() => setActiveStep(index)}
               >
-                <div
-                  className={`flex items-center justify-center h-12 w-12 rounded-full text-white text-xl font-bold ${
-                    index === activeStep ? "bg-blue-600" : "bg-gray-400"
-                  }`}
-                >
-                  {step.number}
+                <div className={`flex items-center space-x-4 cursor-pointer rounded-md py-2 px-2 ${index==activeStep && 'bg-[#F6F8FF]'}`}>
+                  <div
+                    className={`flex items-center justify-center h-12 w-12 rounded-full  text-xl font-bold bg-[#F5F5F5] ${
+                      index === activeStep ? "text-gray-900" : "text-white"
+                    }`}
+                  >
+                    {step.number}
+                  </div>
+                  <p
+                    className={`lg:text-lg text-base font-medium ${
+                      index === activeStep ? "text-gray-900" : "text-gray-500"
+                    }`}
+                  >
+                    {step.text}
+                  </p>
                 </div>
-                <p
-                  className={`text-lg font-medium ${
-                    index === activeStep ? "text-gray-900" : "text-gray-500"
-                  }`}
-                >
-                  {step.text}
-                </p>
               </div>
             ))}
           </div>
@@ -96,11 +98,11 @@ const How = () => {
         </div>
 
         {/* Right Column: Description */}
-        <div>
-          <h3 className="text-2xl font-bold text-gray-900">
+        <div className='py-4'>
+          <h3 className="text-2xl font-mediun text-gray-900">
             {steps[activeStep].text}
           </h3>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="mt-4 text-base text-gray-600">
             {steps[activeStep].description}
           </p>
         </div>
