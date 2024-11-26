@@ -28,7 +28,7 @@ const Hero = () => {
       {/* Right Content */}
       <div className="relative flex items-center justify-center w-full max-w-md lg:max-w-xl">
         <Image 
-          src="/hero-image.png"
+          src="/images/hero-image.png"
           alt="hero"
           width={600}
           height={400}

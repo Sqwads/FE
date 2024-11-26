@@ -9,15 +9,15 @@ const How = () => {
       text: "Sign up to build your profile",
       description:
         "Choose your role—Student, Career Switcher, or Mentor—and customize your profile with skills and interests to access tailored projects and connections.",
-      image: "/how.png",
-      smallImage: "/small.png",
+      image: "/images/how.png",
+      smallImage: "/images/small.png",
     },
     {
       number: 2,
       text: "Get Matched to Projects",
       description:
         "Explore a variety of projects that align with your skills and interests, from technical roles to non-technical areas.",
-      image: "/how-1.png", 
+      image: "/images/how-1.png", 
       smallImage: "/pop-up.png",
     },
     {
@@ -25,7 +25,7 @@ const How = () => {
       text: "Gain Mentorship & Build Your Portfolio",
       description:
         "Work on real projects under the guidance of an experienced mentor, receiving valuable feedback to improve your work and build a strong portfolio.",
-      image: "/how-3.png", 
+      image: "/images/how-3.png", 
       smallImage: "/pop-up-1.png", 
     },
   ];
