@@ -31,7 +31,7 @@ const Learn = () => {
           {/* Left Column: Image */}
           <div className="relative lg:w-1/2">
             <Image
-              src="/learn.png"
+              src="/images/learn.png"
               alt="People collaborating on a project for educational development"
               width={600}
               height={400}
@@ -69,7 +69,7 @@ const Learn = () => {
           {/* Right Column: Image */}
           <div className="relative lg:w-1/2">
             <Image
-              src="/analyze.png"
+              src="/images/analyze.png"
               alt="Person analyzing data on multiple monitors"
               width={600}
               height={400}

@@ -83,7 +83,7 @@ const Value = () => {
       {/* Image Section */}
       <div className="w-[60%]">
         <img
-          src="/mission.jpg"
+          src="/images/mission.jpg"
           alt="Mission"
           className="w-full h-[750px] object-cover rounded-3xl"
         />
@@ -93,7 +93,7 @@ const Value = () => {
       <div className="w-[40%] -ml-10 relative z-10">
         <div className="bg-blue-900 text-white p-10 rounded-3xl shadow-lg">
           <h3 className="text-2xl font-bold mb-6">
-            Mission: To empower Africa's aspiring professionals with open-source projects and hands-on learning opportunities.
+            Mission: To empower Africa&apos;s aspiring professionals with open-source projects and hands-on learning opportunities.
           </h3>
           <p className="text-sm leading-relaxed">
             At Sqwads, we believe in the power of collaboration and community.

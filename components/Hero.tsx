@@ -9,11 +9,11 @@ const Hero = () => {
       {/* {Left Content} */}
       <div className="flex flex-col items-start gap-6 max-w-lg">
 
-        <h1 className="text-4xl font-bold leading-snug">
+        <h1 className="text-[2.8rem] text-[#F5F5F5] font-medium leading-snug">
           Bridge the Gap Between <span className="text-light_blue">Learning</span> and <span className="text-light_blue">Doing</span>
         </h1>
 
-        <p className="text-lg text-gray-300">
+        <p className="text-lg text-[#D5D7DA]">
           Transform your skills into practical experience by working on open-source projects with guidance from industry experts.
         </p>
 

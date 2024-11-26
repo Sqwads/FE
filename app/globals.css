@@ -11,8 +11,8 @@
 }
 
 body {
-  font-family: Inter;
-  background-image: url("../public/Sqwads-bg.svg");
+  font-family: "Geist", serif;
+  background-image: url("../public/images/Sqwads-bg.svg");
 }
 
 @layer utilities {
