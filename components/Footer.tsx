@@ -74,11 +74,11 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-[70%] border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               type="submit"
-              className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+              className="mt-4 w-[40%] bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
             >
               Sign Up
             </button>
@@ -94,47 +94,48 @@ const Footer = () => {
         </p>
 
         {/* Right: Social Media */}
-        <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mt-4 md:mt-0">
-          <p className="text-gray-600">Our Socials:</p>
-          <div className="flex space-x-4">
-            <a
-              href="#twitter"
-              className="text-gray-600 hover:text-blue-500"
-              aria-label="Twitter"
-            >
-              <Image
-                src="/images/twitter.png"
-                alt="Twitter Logo"
-                width={24}
-                height={24}
-              />
-            </a>
-            <a
-              href="#instagram"
-              className="text-gray-600 hover:text-pink-500"
-              aria-label="Instagram"
-            >
-              <Image
-                src="/images/instagram.png"
-                alt="Instagram Logo"
-                width={24}
-                height={24}
-              />
-            </a>
-            <a
-              href="#linkedin"
-              className="text-gray-600 hover:text-blue-600"
-              aria-label="LinkedIn"
-            >
-              <Image
-                src="/images/linkedIn.png"
-                alt="LinkedIn Logo"
-                width={24}
-                height={24}
-              />
-            </a>
-          </div>
-        </div>
+<div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mt-4 md:mt-0 md:pl-20">
+  <p className="text-gray-600">Our Socials:</p>
+  <div className="flex space-x-4">
+    <a
+      href="#twitter"
+      className="text-gray-600 hover:text-blue-500"
+      aria-label="Twitter"
+    >
+      <Image
+        src="/images/twitter.png"
+        alt="Twitter Logo"
+        width={24}
+        height={24}
+      />
+    </a>
+    <a
+      href="#instagram"
+      className="text-gray-600 hover:text-pink-500"
+      aria-label="Instagram"
+    >
+      <Image
+        src="/images/instagram.png"
+        alt="Instagram Logo"
+        width={24}
+        height={24}
+      />
+    </a>
+    <a
+      href="#linkedin"
+      className="text-gray-600 hover:text-blue-600"
+      aria-label="LinkedIn"
+    >
+      <Image
+        src="/images/linkedIn.png"
+        alt="LinkedIn Logo"
+        width={24}
+        height={24}
+      />
+    </a>
+  </div>
+</div>
+
       </div>
     </footer>
   );

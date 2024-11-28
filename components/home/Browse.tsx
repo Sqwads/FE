@@ -3,9 +3,9 @@ import Image from "next/image";
 
 const Browse = () => {
   return (
-    <section className="py-20 px-10 md:py-28 md:px-16 lg:py-32 lg:px-24 flex items-center justify-between">
+    <section className="py-20 px-10 md:py-28 md:px-16 lg:py-32 lg:px-24 flex flex-col lg:flex-row items-center justify-between space-y-8 lg:space-y-0 lg:space-x-16">
       {/* Left Image */}
-      <div className="relative w-full max-w-md md:max-w-lg lg:max-w-2xl">
+      <div className="relative w-full max-w-md lg:max-w-2xl">
         <Image
           src="/images/browse.png" // Replace with your image path
           alt="Handshake"
@@ -16,8 +16,8 @@ const Browse = () => {
       </div>
 
       {/* Right Content */}
-      <div className="max-w-lg ml-8 space-y-6">
-        <h2 className="text-4xl font-bold text-gray-900 leading-tight">
+      <div className="max-w-lg space-y-6 text-center lg:text-left">
+        <h2 className="text-4xl font-medium text-gray-900 leading-tight">
           Hire Talents with <br />
           <span className="text-blue-600">Real-World Experience</span>
         </h2>
