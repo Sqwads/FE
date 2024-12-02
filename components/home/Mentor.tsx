@@ -21,7 +21,7 @@ const Mentor = () => {
       {/* Image Section */}
       <div className="flex justify-center mb-12">
         <Image
-          src="/images/mentors.png" // Adjust path if needed
+          src="/images/mentors.png"
           alt="Mentorship"
           width={800}
           height={400}
