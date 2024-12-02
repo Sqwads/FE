@@ -6,7 +6,8 @@ import Button from "../Button"
 const Navbar = () => {
   return (
     <nav
-      className="flexBetween opacity-75  
+      style={{background: 'linear-gradient(270deg, #001D69 0%, rgba(0, 29, 105, 0.4) 100%)'}}
+      className="flexBetween   
           px-6 py-4 bg-blue-950 rounded-lg relative z-30 mb-7 shadow-md"
     >
       <Link href='/'>
