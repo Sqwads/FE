@@ -20,7 +20,10 @@ export default function Home() {
       <Value />
       <How />
       <Learn />
-      <Mentor />
+      <div className="" style={{backgroundImage: 'url("/images/mentor-bg.png")'}}>
+        <Mentor />
+      </div>
+      
       <ShowCase />
       <Stories />
       <Join />
