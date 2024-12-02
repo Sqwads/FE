@@ -4,8 +4,9 @@ import { FaLongArrowAltRight } from "react-icons/fa"
 const Hero = () => {
   return (
     <section 
+    style={{background: 'linear-gradient(270deg, #001D69 0%, rgba(0, 29, 105, 0.4) 100%)'}}
       className=" flex flex-col lg:flex-row items-center justify-between align-item-center
-          px-6 py-10 lg:px-12 lg:py-6 gap-y-5 w-full bg-blue-950 text-white rounded-xl">
+          px-6  py-10 lg:px-16 lg:py-10 gap-y-5 w-full text-white rounded-xl">
 
       {/* {Left Content} */}
       <div className="flex flex-col items-start gap-6 max-w-xl">
@@ -14,7 +15,7 @@ const Hero = () => {
           Bridge the Gap Between <span className="text-light_blue">Learning</span> and <span className="text-light_blue">Doing</span>
         </h1>
 
-        <p className="lg:text-lg text-base text-[#D5D7DA] mb-5">
+        <p className="lg:text-xl text-base text-[#D5D7DA] lg:mb-10 mb-5">
           Transform your skills into practical experience by working on open-source projects with guidance from industry experts.
         </p>
 

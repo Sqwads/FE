@@ -6,7 +6,7 @@ import Button from "../Button"
 const Navbar = () => {
   return (
     <nav
-      className="flexBetween  
+      className="flexBetween opacity-75  
           px-6 py-4 bg-blue-950 rounded-lg relative z-30 mb-7 shadow-md"
     >
       <Link href='/'>

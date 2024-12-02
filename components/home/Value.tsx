@@ -18,7 +18,7 @@ const Value = () => {
           {/* Cards Section */}
           <div className="mt-12 grid gap-8 lg:grid-cols-3">
             {/* Card 1 */}
-            <div className="flex flex-col items-center bg-gray-50 p-8 rounded-lg shadow-md border border-[#D1D1D1]">
+            <div className="flex flex-col items-center bg-gray-50 p-8 rounded-lg  border border-[#dfdede]">
               <div className="flex items-center justify-center w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full mb-6">
                 {/* Icon */}
                 <svg
@@ -39,7 +39,7 @@ const Value = () => {
             </div>
 
             {/* Card 2 */}
-            <div className="flex flex-col items-center bg-gray-50 p-8 rounded-lg shadow-md border border-[#D1D1D1]">
+            <div className="flex flex-col items-center bg-gray-50 p-8 rounded-lg  border border-[#dfdede]">
               <div className="flex items-center justify-center w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full mb-6">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@ const Value = () => {
             </div>
 
             {/* Card 3 */}
-            <div className="flex flex-col items-center bg-gray-50 p-8 rounded-lg shadow-md border border-[#D1D1D1]">
+            <div className="flex flex-col items-center bg-gray-50 p-8 rounded-lg  border border-[#dfdede]">
               <div className="flex items-center justify-center w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6H21V18H3V6ZM2 4C1.44772
                4 1 4.44772 1 5V19C1 19.5523 1.44772 20 2 20H22C22.5523 20 23 19.5523 23 19V5C23 4.44772 22.5523 4 22 4H2ZM13
