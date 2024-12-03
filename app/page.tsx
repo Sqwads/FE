@@ -5,6 +5,10 @@ import Learn from "@/components/home/Learn";
 import Mentor from "@/components/home/Mentor";
 import Navbar from "@/components/home/Navbar";
 import Value from "@/components/home/Value";
+import ShowCase from "@/components/home/ShowCase";
+import Stories from "@/components/home/Stories";
+import Join from "@/components/home/Join";
+import Browse from "@/components/home/Browse";
 
 export default function Home() {
   return (
@@ -16,7 +20,14 @@ export default function Home() {
       <Value />
       <How />
       <Learn />
-      <Mentor />
+      <div className="" style={{backgroundImage: 'url("/images/mentor-bg.png")'}}>
+        <Mentor />
+      </div>
+      
+      <ShowCase />
+      <Stories />
+      <Join />
+      <Browse />
     </>
   );
 }
