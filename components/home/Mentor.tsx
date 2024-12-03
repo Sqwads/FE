@@ -19,7 +19,7 @@ const Mentor = () => {
       </div>
 
       {/* Image Section */}
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-12 px-3">
         <Image
           src="/images/mentors.png"
           alt="Mentorship"
@@ -30,7 +30,7 @@ const Mentor = () => {
       </div>
 
         {/* Carousel Section */}
-    <div className="w-[80%] mx-auto px-4">
+    <div className="lg:w-[80%] mx-auto px-4">
       <div className="overflow-x-auto flex gap-4 pb-4 justify-center">
         {/* Card 1 */}
         <div className="w-[300px] bg-white shadow-md rounded-lg p-4 flex-shrink-0 min-h-[220px] flex flex-col justify-between">

@@ -13,7 +13,7 @@ const Learn = () => {
           <div className="lg:w-1/2">
             <h2 className="text-4xl font-medium text-gray-800">
               Learn by Doing: <br />
-              <span className="text-blue-600">Real Projects, Real Impact</span>
+              <span className="text-blue-600 underline">Real Projects, Real Impact</span>
             </h2>
           </div>
           <div className="lg:w-1/2 mt-6 lg:mt-0">
@@ -53,7 +53,7 @@ const Learn = () => {
 
           {/* Right Column: Article */}
           <div className="lg:w-1/2 space-y-4">
-            <h3 className="text-xl font-semibold text-gray-800">
+            <h3 className="text-3xl font-semibold text-gray-800">
               Build a Web Application for an Educational Platform
             </h3>
             <p className="text-gray-600 lg:text-lg">
@@ -79,7 +79,7 @@ const Learn = () => {
 
           {/* Left Column: Article */}
           <div className="lg:w-1/2 space-y-4">
-            <h3 className="text-xl font-semibold text-gray-800">
+            <h3 className="text-3xl font-semibold text-gray-800">
               Analyze Data for a Non-Profit to Drive Better Decisions
             </h3>
             <p className="text-gray-600 text-lg">
@@ -91,10 +91,10 @@ const Learn = () => {
             {/* Explore More Projects Link */}
             <a
               href="/projects"
-              className="text-blue-600 text-lg font-medium flex items-center hover:underline"
+              className="text-blue-600 underline font-medium flex items-center hover:underline"
             >
               Explore more projects
-              <span className="ml-2 text-2xl font-bold">&gt;</span>
+             
             </a>
           </div>
         </div>
