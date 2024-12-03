@@ -7,7 +7,7 @@ const ShowCase = () => {
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 max-w-6xl mx-auto">
         <div>
-        <h2 className="text-4xl font-bold text-blue-600 leading-tight">
+        <h2 className="lg:text-4xl text-3xl font-medium text-blue-600 leading-tight">
                 Showcase Your Work <br />
             <span className="text-gray-800">Impress Employers</span>
           </h2>

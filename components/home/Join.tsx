@@ -3,12 +3,15 @@ import Image from "next/image";
 
 const Join = () => {
   return (
-    <section className="bg-blue-50 py-16 px-8 md:py-24 md:px-16 lg:py-32 lg:px-24 flex flex-col md:flex-row items-center justify-between gap-10">
+    <section className="bg-blue-50 py-16 px-8 lg:py-24 md:px-16  lg:px-32 flex flex-col md:flex-row items-center justify-between gap-10">
+      
       {/* Text Section */}
-      <div className="max-w-2xl text-center md:text-left">
-        <h2 className="text-gray-900 text-3xl md:text-4xl font-medium leading-snug">
-          Ready to Gain Real-World Experience? <br />
-          <span className="text-[rgba(22,24,27,1)]">
+      <div className="max-w-2xl  md:text-left">
+        <img src="/images/Sparkle.png" className="mb-10" alt="" />
+
+        <h2 className="text-gray-900 text-3xl md:text-4xl font-semibold leading-snug">
+          <div className="mb-2">Ready to Gain Real-World Experience?</div> 
+          <span className="text-[#001D69]">
             Start Building Your Portfolio Today!
           </span>
         </h2>
