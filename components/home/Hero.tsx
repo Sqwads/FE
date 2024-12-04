@@ -1,7 +1,9 @@
 import Image from "next/image"
 import { FaLongArrowAltRight } from "react-icons/fa"
+import "../../app/globals.css"
 
 const Hero = () => {
+  
   return (
     <section 
     style={{background: 'linear-gradient(270deg, #001D69 0%, rgba(0, 29, 105, 0.4) 100%)'}}
@@ -20,7 +22,7 @@ const Hero = () => {
         </p>
 
         <button className="h-30 flex items-center text-white rounded-md  bg-blue-600 py-3 px-6">
-          Learn More <FaLongArrowAltRight size={23} className="ml-2" />
+          Learn More <FaLongArrowAltRight size={23} className="ml-2 animate-bounce w-6 h-6" />
         </button>
       </div>
 
