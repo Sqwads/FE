@@ -31,7 +31,7 @@ const Navbar = () => {
           <Link
             href={link.href}
             key={link.key}
-            className="regular-16 text-blue-50 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
+            className="regular-16 text-[#D5D7DA] flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
           >
             {link.label}
           </Link>
@@ -40,8 +40,10 @@ const Navbar = () => {
 
       {/* Get Started Button (Desktop) */}
       <div className="hidden lg:flex items-center">
-        <Button type="button" title="Get Started" icon="/arrow.svg" variant="blue" />
+        <Button type="button" title="Get Started For Free" icon="/arrow.svg" variant="blue" />
       </div>
+
+      
 
       {/* Hamburger Menu (Mobile) */}
       <div className="lg:hidden flex items-center">
