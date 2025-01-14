@@ -68,6 +68,8 @@ const Value = () => {
               <Image
                 src="/images/mission.jpg"
                 alt="Mission"
+                width={50}
+                height={50}
                 className="w-full h-[500px] xl:h-[750px] object-cover rounded-3xl"
               />
             </div>
