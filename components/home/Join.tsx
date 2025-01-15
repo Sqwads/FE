@@ -7,7 +7,13 @@ const Join = () => {
       
       {/* Text Section */}
       <div className="max-w-2xl  md:text-left">
-        <img src="/images/Sparkle.png" className="mb-10" alt="" />
+        <Image 
+          src="/images/Sparkle.png" 
+          className="mb-10" 
+          alt="" 
+          width={100}
+          height={50}
+          />
 
         <h2 className="text-gray-900 text-3xl md:text-4xl font-semibold leading-snug">
           <div className="mb-2">Ready to Gain Real-World Experience?</div> 

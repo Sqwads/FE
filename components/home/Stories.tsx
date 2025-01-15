@@ -4,6 +4,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Image from "next/image";
 
 interface Testimonial {
   name: string;
@@ -106,7 +107,13 @@ const Stories = () => {
              <div className="flex items-center   h-full">
            
               <div className="w-2/5 flex-1 h-full">
-                <img className="w-full h-full object-cover rounded-lg" src={testimonial.image} alt="" />
+                <Image 
+                  className="w-full h-full object-cover rounded-lg" 
+                  src={testimonial.image}
+                   alt=""
+                   width={100}
+                   height={50}
+                   />
               </div>
  
               <div className="  w-3/5 px-4 py-3">

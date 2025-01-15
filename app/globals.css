@@ -21,6 +21,21 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+@keyframes moveLeftRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.arrow-animation {
+  animation: moveLeftRight 1s ease-in-out infinite;
+}
 
 @layer utilities {
   .btn_white { 

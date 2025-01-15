@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BsPersonVcard } from "react-icons/bs";
 import { LuUsers } from "react-icons/lu";
 import { RiLightbulbLine } from "react-icons/ri";
@@ -64,9 +65,11 @@ const Value = () => {
           <div className="relative xl:flex items-center">
             {/* Image Section */}
             <div className="xl:w-[60%] xl:mb-0 mb-7">
-              <img
+              <Image
                 src="/images/mission.jpg"
                 alt="Mission"
+                width={50}
+                height={50}
                 className="w-full h-[500px] xl:h-[750px] object-cover rounded-3xl"
               />
             </div>
