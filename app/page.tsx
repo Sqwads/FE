@@ -1,14 +1,14 @@
-import Hero from "@/components/home/Hero";
-import How from "@/components/home/How";
-import Learn from "@/components/home/Learn";
-import Mentor from "@/components/home/Mentor";
-import Navbar from "@/components/home/Navbar";
-import Value from "@/components/home/Value";
-import ShowCase from "@/components/home/ShowCase";
-import Stories from "@/components/home/Stories";
-import Join from "@/components/home/Join";
-import Browse from "@/components/home/Browse";
-import Footer from "@/components/Footer"; // Import Footer component
+import Hero from "@/app/components/home/Hero";
+import How from "@/app/components/home/How";
+import Learn from "@/app/components/home/Learn";
+import Mentor from "@/app/components/home/Mentor";
+import Navbar from "@/app/components/home/Navbar";
+import Value from "@/app/components/home/Value";
+import ShowCase from "@/app/components/home/ShowCase";
+import Stories from "@/app/components/home/Stories";
+import Join from "@/app/components/home/Join";
+import Browse from "@/app/components/home/Browse";
+import Footer from "@/app/components/Footer"; // Import Footer component
 
 export default function Home() {
   return (
@@ -21,7 +21,7 @@ export default function Home() {
         <Navbar />
         <Hero />
       </div>
-      
+
       {/* Content Sections */}
       <Value />
       <How />
@@ -33,7 +33,7 @@ export default function Home() {
       <Stories />
       <Join />
       <Browse />
-      
+
       {/* Footer */}
       <Footer />
     </>

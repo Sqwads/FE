@@ -40,7 +40,7 @@ const Navbar = () => {
 
       {/* Get Started Button (Desktop) */}
       <div className="hidden lg:flex items-center">
-        <Button type="button" title="Get Started For Free" icon="/arrow.svg" variant="blue" />
+        <Link href={"/signup"}><Button type="button" title="Get Started For Free" icon="/arrow.svg" variant="blue" /></Link>
       </div>
 
       
@@ -95,7 +95,7 @@ const Navbar = () => {
 
           {/* Get Started Button (Mobile) */}
           <div className="flex items-center justify-center mt-4">
-            <Button type="button" title="Get Started" icon="/arrow.svg" variant="blue" />
+            <Link href={"/signup"}><Button type="button" title="Get Started" icon="/arrow.svg" variant="blue" /></Link>
           </div>
         </div>
       )}

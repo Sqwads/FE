@@ -1,4 +1,10 @@
 import type { Metadata } from "next";
+import { MantineProvider } from "@mantine/core";
+import CustomQueryClientProvider from "./providers/react-query-provider";
+import { Toaster } from "react-hot-toast";
+
+import "@mantine/core/styles.layer.css";
+// import "@mantine/dates/styles.layer.css";
 import "./globals.css";
 
 
@@ -21,9 +27,23 @@ export default function RootLayout({
       </head>
       <body >
        
-        <main className=" overflow-hidden">
-          {children}
-        </main>
+        <CustomQueryClientProvider>
+          
+          <MantineProvider>
+          <main className=" overflow-hidden">
+            {children}
+            <Toaster
+              position="top-center"
+              reverseOrder={false}
+              gutter={8}
+              containerClassName="text-sm"
+              toastOptions={{
+                duration: 2500,
+              }}
+            />
+          </main>
+          </MantineProvider>
+        </CustomQueryClientProvider>
       </body>
     </html>
   );

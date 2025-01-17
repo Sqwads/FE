@@ -1,207 +1,174 @@
-// app/signup/page.js
-
-import AuthLayout from "@/components/AuthLayout";
+"use client"
+import { PasswordInput, TextInput } from "@mantine/core";
+import { useForm, yupResolver } from '@mantine/form';
+import { FiUserPlus } from "react-icons/fi";
+import { MdOutlineEmail } from "react-icons/md";
+import { CiLock } from "react-icons/ci";
 import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
+import { instance } from "@/src/api/instance";
+import { Registervalidator } from "@/src/validators/auth_validators";
+import toast from "react-hot-toast";
 
 const Signup = () => {
+
+  const signUpForm = useForm({
+    initialValues:{
+      firstName:'',
+      lastName:'',
+      email:'',
+      password:'',
+      confirm_password:'',
+      username:''
+    },
+    validate: yupResolver(Registervalidator)
+  })
+  
+  const {mutate: signup, isPending} = useMutation({
+    mutationFn: (data:any)=>instance.post('/auth/register',data),
+    mutationKey: ['auth', 'register'],
+    onSuccess() {
+       toast.success("Registration Succesful")
+    },
+    onError(error:any) {
+      console.log(error?.response.data)
+      toast.error(error?.response?.data?.message || 'Action Failed')
+      // toast.error('Failed to create category')
+    },
+  })
+
+  const handleSubmit = (values:any)=>{
+    signup(values)
+    console.log(values)
+  }
+
   return (
-    <AuthLayout>
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <>
+      <div className="bg-white p-8 rounded-xl shadow-lg w-full h-fit max-w-md">
         {/* Title */}
-        <h1 className="text-2xl text-center text-[#001D69] mb-2">
+        <h1 className="text-3xl text-center text-[#001D69] mb-3 font-medium">
           Your Sqwad, Your Story
         </h1>
-        <p className="text-sm text-center text-gray-600 mb-6">
-              Sign up for free and start writing your Sqwads adventure!  
-         </p>
+        <p className="text-sm text-center text-gray-700 mb-6">
+          Sign up for free and start writing your Sqwads adventure!
+        </p>
 
         {/* Form */}
-        <form className="space-y-6">
-  <div className="flex space-x-4">
-    {/* First Name */}
-    <div className="flex-1">
-      <label htmlFor="firstName" className="block text-sm text-gray-700 mb-1">
-        First Name
-      </label>
-      <div className="relative">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
-          />
-        </svg>
-        <input
-          type="text"
-          id="firstName"
-          placeholder="e.g. Yusuf"
-          className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-        />
-      </div>
-    </div>
+        <form className="space-y-6" onSubmit={signUpForm.onSubmit(handleSubmit)}>
+          <div className="flex space-x-4">
+            {/* First Name */}
+            <div className="flex-1">
+              <label htmlFor="firstName" className="block text-sm text-gray-700 mb-1">
+                First Name
+              </label>
+              <div className="relative"> 
+                <TextInput
+                  // size="lg"
+                  leftSection={<FiUserPlus />}
+                  key={signUpForm.key('firstName')}
+                  {...signUpForm.getInputProps('firstName')}
+                />
+              </div>
+            </div>
 
-    {/* Last Name */}
-    <div className="flex-1">
-      <label htmlFor="lastName" className="block text-sm text-gray-700 mb-1">
-        Last Name
-      </label>
-      <div className="relative">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
-          />
-        </svg>
-        <input
-          type="text"
-          id="lastName"
-          placeholder="e.g. Bashar"
-          className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-        />
-      </div>
-    </div>
-  </div>
+            {/* Last Name */}
+            <div className="flex-1">
+              <label htmlFor="lastName" className="block text-sm text-gray-700 mb-1">
+                Last Name
+              </label>
+              <div className="relative">
+                <TextInput
+                  // size="lg"
+                  leftSection={<FiUserPlus />}
+                  className=""
+                  key={signUpForm.key('lastName')}
+                  {...signUpForm.getInputProps('lastName')}
+                />
+              </div>
+            </div>
+          </div>
 
-  <div className="flex space-x-4">
-    {/* Username */}
-    <div className="flex-1">
-      <label htmlFor="username" className="block text-sm text-gray-700 mb-1">
-        Username
-      </label>
-      <div className="relative">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-          />
-        </svg>
-        <input
-          type="text"
-          id="username"
-          placeholder="e.g. yusfbash"
-          className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-        />
-      </div>
-    </div>
+          <div className="flex space-x-4">
+            {/* Username */}
+            <div className="flex-1">
+              <label htmlFor="username" className="block text-sm text-gray-700 mb-1">
+                Username
+              </label>
+              <div className="relative">
+              
+                <TextInput
+                  // size="lg"
+                  leftSection={<FiUserPlus />}
+                   placeholder="e.g Hamid"
+                  className=""
+                  key={signUpForm.key('username')}
+                  {...signUpForm.getInputProps('username')}
+                />
+              </div>
+            </div>
 
-    {/* Email Address */}
-    <div className="flex-1">
-      <label htmlFor="email" className="block text-sm text-gray-700 mb-1">
-        Email Address
-      </label>
-      <div className="relative">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
-          />
-        </svg>
-        <input
-          type="email"
-          id="email"
-          placeholder="e.g. yusufbashar@gmail.com"
-          className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-        />
-      </div>
-    </div>
-  </div>
-   <div className="relative">
+            {/* Email Address */}
+            <div className="flex-1">
+              <label htmlFor="email" className="block text-sm text-gray-700 mb-1">
+                Email Address
+              </label>
+              <div className="relative">
+             
+                <TextInput
+                  // size="lg"
+                  leftSection={<MdOutlineEmail />}
+                  // placeholder="Email"
+                  className=""
+                  key={signUpForm.key('email')}
+                  {...signUpForm.getInputProps('email')}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="">
             <label htmlFor="name" className="block text-sm text-gray-700 mb-1">
               Password
             </label>
-            <div className="relative">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              strokeWidth="1.5" 
-              stroke="currentColor" 
-              className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              >
-              <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-            </svg>
-
-              <input
-                type="text"
-                id="name"
-                placeholder="*******"
-                className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-              />
-            </div>
+            <PasswordInput
+              leftSection={<CiLock />}
+              type="password"
+              // size="lg"
+              placeholder="*****************"
+              key={signUpForm.key('password')}
+              {...signUpForm.getInputProps('password')}
+                // className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+            />
+ 
           </div>
 
-         <div className="relative">
+          <div className="relative">
             <label htmlFor="name" className="block text-sm text-gray-700 mb-1">
               Confirm Password
             </label>
-            <div className="relative">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              strokeWidth="1.5" 
-              stroke="currentColor" 
-              className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              >
-              <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-            </svg>
-
-              <input
-                type="text"
-                id="name"
-                placeholder="*******"
-                className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-              />
-            </div>
+            <PasswordInput
+              leftSection={<CiLock />}
+              type="password"
+              // size="lg"
+              placeholder="*****************"
+              key={signUpForm.key('confirm_password')}
+              {...signUpForm.getInputProps('confirm_password')}
+                // className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+            />
+ 
           </div>
- {/* Signup Button */}
+
+          {/* Signup Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            className={`w-full py-3 bg-[#001D69] text-white rounded  transition ${isPending && 'opacity-50'}`}
           >
-            Signup
+            {isPending? 'Submitting...':'Sign up'}
           </button>
-</form>
+        </form>
 
 
-       
+
         {/* Terms and Links */}
         <p className="text-xs text-center text-gray-500 mt-4">
           By creating an account, you agree to the{" "}
@@ -217,7 +184,7 @@ const Signup = () => {
           </Link>
         </div>
       </div>
-    </AuthLayout>
+    </>
   );
 };
 

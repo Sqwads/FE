@@ -1,9 +1,8 @@
-import AuthLayout from "@/components/AuthLayout";
 import Image from "next/image";
 
 const EmailAuth = () => {
   return (
-    <AuthLayout>
+    <>
       <div className="flex items-center justify-center min-h-screen">
         <div className="bg-white rounded-lg shadow-md p-8 max-w-md w-full text-center">
           {/* Icon */}
@@ -54,7 +53,7 @@ const EmailAuth = () => {
           </div>
         </div>
       </div>
-    </AuthLayout>
+    </>
   );
 };
 

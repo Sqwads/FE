@@ -1,5 +1,4 @@
 "use client";
-import AuthLayout from '@/components/AuthLayout';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
@@ -16,9 +15,8 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) => {
   return (
     <div
-      className={`border rounded-lg p-4 cursor-pointer ${
-        isSelected ? 'bg-blue-100 border-blue-500' : 'bg-white border-gray-300'
-      }`}
+      className={`border rounded-lg p-4 cursor-pointer ${isSelected ? 'bg-blue-100 border-blue-500' : 'bg-white border-gray-300'
+        }`}
       onClick={onSelect}
     >
       <Image
@@ -29,9 +27,8 @@ const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) =>
         className="rounded-md mb-3"
       />
       <h3
-        className={`text-center font-medium ${
-          isSelected ? 'text-blue-800' : 'text-gray-800'
-        }`}
+        className={`text-center font-medium ${isSelected ? 'text-blue-800' : 'text-gray-800'
+          }`}
       >
         {label}
       </h3>
@@ -60,7 +57,7 @@ const OnboardingStage_2 = () => {
   };
 
   return (
-    <AuthLayout>
+    <>
       <section className="flex flex-col lg:flex-row justify-between items-center w-[80%]">
         {/* Left Section */}
         <div className="flex flex-col items-start text-left lg:w-1/2 mb-10 lg:mb-0">
@@ -124,7 +121,7 @@ const OnboardingStage_2 = () => {
           </button>
         </div>
       </section>
-    </AuthLayout>
+    </>
   );
 };
 

@@ -1,7 +1,8 @@
 import Image from 'next/image';
+import React from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 
-const Confirmation = () => {
+const WelcomePage = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -20,13 +21,12 @@ const Confirmation = () => {
 
           {/* Title */}
           <h1 className="text-2xl font-bold text-gray-800 mb-2">
-            Sign Up Complete!
+            Welcome Aboard
           </h1>
 
           {/* Subtitle */}
           <p className="text-sm text-gray-600 mb-6">
-            Your account has been created successfully
-          </p>
+            You’re all set! Your onboarding is now complete, and you’re ready to explore all the amazing opportunities ahead.               </p>
 
           {/* Button */}
           <button className="flex items-center w-full justify-center bg-blue-800 text-white px-6 py-3 rounded-md hover:bg-blue-900">
@@ -36,6 +36,6 @@ const Confirmation = () => {
       </div>
     </>
   );
-};
+}
 
-export default Confirmation;
+export default WelcomePage;

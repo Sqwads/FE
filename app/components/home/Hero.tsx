@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { FaLongArrowAltRight } from "react-icons/fa"
-import "../../app/globals.css"
+import "../../../app/globals.css"
 
 const Hero = () => {
   
