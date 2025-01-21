@@ -1,6 +1,8 @@
 "use client"
 import { PasswordInput, TextInput } from "@mantine/core";
 import { useForm, yupResolver } from '@mantine/form';
+import {useRouter} from 'next/navigation'
+import {base64encode} from 'nodejs-base64'
 import { FiUserPlus } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
@@ -10,8 +12,10 @@ import { instance } from "@/src/api/instance";
 import { Registervalidator } from "@/src/validators/auth_validators";
 import toast from "react-hot-toast";
 
+
 const Signup = () => {
 
+  const router = useRouter()
   const signUpForm = useForm({
     initialValues:{
       firstName:'',
@@ -27,8 +31,10 @@ const Signup = () => {
   const {mutate: signup, isPending} = useMutation({
     mutationFn: (data:any)=>instance.post('/auth/register',data),
     mutationKey: ['auth', 'register'],
-    onSuccess() {
+    onSuccess( response , vars ) {
+      console.log(response)
        toast.success("Registration Succesful")
+       router.push(`/emailauth?email=${base64encode(vars.email)}`)
     },
     onError(error:any) {
       console.log(error?.response.data)

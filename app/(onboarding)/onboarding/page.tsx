@@ -5,7 +5,7 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 const OnboardingStage_1 = () => {
   return (
     <>
-      <div className="bg-white shadow-md rounded-lg p-20 w-full h-full flex flex-col justify-between">
+      <div className="bg-white shadow-md rounded-lg lg:px-20 lg:py-20 px-5 py-10 w-full h-full flex flex-col justify-between">
         {/* Progress Tracker */}
         <div className="mb-10">
           <div className="flex items-center justify-between text-sm text-gray-500">
