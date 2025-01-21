@@ -4,7 +4,7 @@ import { FaLongArrowAltRight } from 'react-icons/fa';
 const Confirmation = () => {
   return (
     <>
-      <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center w-full justify-center min-h-screen">
         {/* Card Container */}
         <div className="bg-white shadow-lg rounded-lg p-8 text-center max-w-md w-full">
           {/* Icon */}

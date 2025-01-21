@@ -44,7 +44,7 @@ const Signup = () => {
 
   return (
     <>
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full h-fit max-w-md">
+      <div className="bg-white mt-20 p-8 rounded-xl shadow-lg w-full h-fit max-w-md">
         {/* Title */}
         <h1 className="text-3xl text-center text-[#001D69] mb-3 font-medium">
           Your Sqwad, Your Story
