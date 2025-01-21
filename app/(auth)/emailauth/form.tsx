@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { instance } from "@/src/api/instance";
 import { base64decode } from "nodejs-base64";
 
-const EmailAuth = () => {
+const EmailAuthForm = () => {
 
   const [otp, setOtp] = useState('')
   const searchParams = useSearchParams();
@@ -102,4 +102,4 @@ const EmailAuth = () => {
   );
 };
 
-export default EmailAuth;
+export default EmailAuthForm;

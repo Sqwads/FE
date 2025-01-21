@@ -1,12 +1,14 @@
-"use client"
 import { Suspense } from "react";
+import EmailAuthForm from "./form";
 
 
 const EmailAuth = () => {
   return (
-    <Suspense>
-      <EmailAuth/>
-    </Suspense>
+    <div>
+      <Suspense>
+        <EmailAuthForm/>
+      </Suspense>
+    </div>
   );
 };
 
