@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
       className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-5 md:px-10 px-3"
       style={{ backgroundImage: 'url("/images/signup_bg.png")' }}
     >
-      <div className="flex w-full md:mb-0 mb-7">
+      <div className="flex w-full md:mb-0 mb-7  ">
         <div className="flex-1">
           <Image src="/images/signup_1.png" alt="Sqwads Logo" width={50} height={50} />
         </div>
@@ -24,7 +24,7 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
       </div>
 
       {/* Content */}
-      <div className="flex justify-center h-fit">
+      <div className="flex justify-center h-fit ">
         {children}
         </div>
 
