@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { instance } from "@/src/api/instance";
+import { cookieStorage } from "@ibnlanre/portal";
 
 const EmailAuthForm = () => {
   const [otp, setOtp] = useState("");
@@ -23,7 +24,7 @@ const EmailAuthForm = () => {
     onSuccess(response) {
       console.log(response);
       toast.success("Verification Successful");
-      localStorage.setItem("access_token", response.data?.data?.token);
+      cookieStorage.setItem("access_token", response.data?.data?.token);
       router.push(`/onboarding`);
     },
     onError(error: any) {

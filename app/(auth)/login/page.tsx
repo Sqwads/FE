@@ -2,29 +2,65 @@
 import { PasswordInput, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import Link from 'next/link';
+import { cookieStorage } from "@ibnlanre/portal";
 import { MdOutlineEmail } from 'react-icons/md';
 import { CiLock } from 'react-icons/ci';
-import { Registervalidator } from '@/src/validators/auth_validators';
+import { LoginVlidator } from '@/src/validators/auth_validators';
+import { useMutation } from '@tanstack/react-query';
+import { instance } from '@/src/api/instance';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import { base64encode } from 'nodejs-base64';
 
 const LoginPage = () => {
+
+  const router = useRouter()
   // Mantine useForm hook
   const form = useForm({
     initialValues: {
       email: '',
-      confirm_password: '',
+      password: '',
     },
-    validate: yupResolver(Registervalidator)
+    validate: yupResolver(LoginVlidator)
   });
 
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data:any)=>instance.post('/auth/login',data),
+    mutationKey: ['auth', 'login'],
+    onSuccess( response) {
+      console.log(response.data)
+  
+      cookieStorage.setItem('access_token', response.data?.data?.access_token)
+      if(response.data?.data?.isProfileComplete){
+        toast.success('Authentication succesfull')
+        router.push('/dashboard')
+      }else{
+        
+        router.push('/onboarding')
+      }
+    },
+    onError(error:any, vars) {
+      console.log(error?.response.data)
+      if(error?.response?.data?.statusCode == 403){
+        toast.error('Account not verified!')
+        router.push(`/emailauth?email=${base64encode(vars?.email)}`)
+        
+        return
+      }
+      toast.error(error?.response?.data?.message || 'Action Failed')
+     
+    },
+  })
+
   const handleSubmit = (values:any) => {
-    console.log('Form submitted:', values);
+    mutate(values)
   };
 
   return (
     <>
-      <div className="bg-white mt-28 p-8 rounded-xl shadow-lg">
+      <div className="bg-white md:mt-16 mt-5 max-w-[450px] py-8 px-7 rounded-xl shadow-lg">
         {/* Title */}
-        <h1 className="text-3xl text-center text-[#001D69] mb-3 font-medium">
+        <h1 className="text-3xl text-center text-[#001D69] mb-3 font-semibold">
           Welcome Back, Sqwad Hero!
         </h1>
         <p className="text-sm text-center text-gray-700 mb-6">
@@ -43,6 +79,7 @@ const LoginPage = () => {
             </label>
             <TextInput
                 leftSection={<MdOutlineEmail />}
+                size='md'
                 placeholder="e.g. user@example.com"
               {...form.getInputProps('email')}
             />
@@ -51,24 +88,25 @@ const LoginPage = () => {
           {/* Confirm Password */}
           <div>
             <label
-              htmlFor="confirm_password"
+              htmlFor="password"
               className="block text-sm text-gray-700 mb-1"
             >
-              Confirm Password
+              Password
             </label>
             <PasswordInput
               leftSection={<CiLock />}
+              size='md'
               placeholder="************"
-              {...form.getInputProps('confirm_password')}
+              {...form.getInputProps('password')}
             />
           </div>
 
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full py-3 bg-[#001D69] text-white rounded transition hover:bg-[#003399]"
+            className={`w-full py-3 bg-[#001D69] text-white rounded transition hover:bg-[#003399] ${isPending && 'opacity-50'}`}
           >
-            Login
+            {isPending?'Authenticating...':'Login'}
           </button>
         </form>
 

@@ -1,6 +1,10 @@
 "use client";
+import { instance } from "@/src/api/instance";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaLongArrowAltRight } from "react-icons/fa";
 
 // Define a type for the Card props
@@ -39,15 +43,16 @@ const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) =>
 };
 
 const OnboardingStage_2 = () => {
+  const router = useRouter()
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
 
   const domains = [
-    { label: "Front-End Development", imageSrc: "/images/frontend.png" },
-    { label: "UI/UX Design", imageSrc: "/images/uiux.png" },
-    { label: "Data Analysis", imageSrc: "/images/data.png" },
-    { label: "Back-End Development", imageSrc: "/images/backend.png" },
-    { label: "Product Management", imageSrc: "/images/product.png" },
-    { label: "Application Development", imageSrc: "/images/app_dev.png" },
+    { label: "Front-End Development", imageSrc: "/images/frontend.png", value:'frontend' },
+    { label: "UI/UX Design", imageSrc: "/images/uiux.png", value:'ui-ux' },
+    { label: "Data Analysis", imageSrc: "/images/data.png", value:'data_analysis' },
+    { label: "Back-End Development", imageSrc: "/images/backend.png", value:'backend' },
+    { label: "Product Management", imageSrc: "/images/product.png", value:'product_management' },
+    { label: "Application Development", imageSrc: "/images/app_dev.png", value:'app_dev' },
   ];
 
   const handleSelect = (label: string) => {
@@ -57,6 +62,27 @@ const OnboardingStage_2 = () => {
         : [...prev, label]
     );
   };
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data:any)=>instance.patch('/user',data),
+    mutationKey: ['user', 'update'],
+    onSuccess( ) {
+       toast.success("Preference Saved !!!")
+       router.push(`/onboarding_3`)
+    },
+    onError(error:any) {
+      console.log(error?.response.data)
+      toast.error(error?.response?.data?.message || 'Action Failed')
+      // toast.error('Failed to create category')
+    },
+  })
+
+  const handleSubmit = ()=>{
+    console.log(selectedDomains)
+    mutate({
+      skills_of_interest: selectedDomains
+    })
+  }
 
   return (
 
@@ -89,18 +115,19 @@ const OnboardingStage_2 = () => {
             key={domain.label}
             imageSrc={domain.imageSrc}
             label={domain.label}
-            isSelected={selectedDomains.includes(domain.label)}
-            onSelect={() => handleSelect(domain.label)}
+            isSelected={selectedDomains.includes(domain.value)}
+            onSelect={() => handleSelect(domain.value)}
           />
         ))}
       </div>
 
       {/* Continue Button */}
       <button
-        className="flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full"
+        onClick={handleSubmit}
+        className={`flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full ${isPending && 'opacity-50'}`}
         disabled={selectedDomains.length === 0}
       >
-        Continue <FaLongArrowAltRight className="ml-2" />
+        {isPending? 'Submitting...':<>Continue <FaLongArrowAltRight className="ml-2" /></>}
       </button>
     </div>
   );

@@ -11,3 +11,8 @@ export const Registervalidator =  Yup.object({
     .required('Please retype your password.')
     .oneOf([Yup.ref('password')], 'Your passwords do not match.')
 })
+
+export const LoginVlidator = Yup.object({
+    email: Yup.string().email().required("Email is required"),
+    password: Yup.string().required("Password is required"),
+})

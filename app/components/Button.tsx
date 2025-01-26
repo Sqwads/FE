@@ -9,7 +9,7 @@ type ButtonProps = {
 const Button = ({ type, title,  variant}: ButtonProps) => {
   return (
     <button
-        className={`flexCenter gap-3 h-30 text-white rounded-md  bg-blue-600 py-2 px-6 ${variant}`}
+        className={`flexCenter gap-3 h-30 cursor-pointer text-white rounded-md  bg-blue-600 py-2 px-6 ${variant}`}
         type={type}
     >
       <label className="font-medium whitespace-normal">{title}</label>

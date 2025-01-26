@@ -1,6 +1,10 @@
 "use client";
+import { instance } from "@/src/api/instance";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 // Define a type for the Card props
 interface CardProps {
@@ -40,15 +44,16 @@ const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) =>
 };
 
 const FinalOnboarding = () => {
+  const router = useRouter()
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
 
   const domains = [
-    { label: "Finance", imageSrc: "/images/finance.png" },
-    { label: "Medical", imageSrc: "/images/medical.png" },
-    { label: "Agriculture", imageSrc: "/images/agric.png" },
-    { label: "Ecommerce", imageSrc: "/images/ecommerce.png" },
-    { label: "Insurance", imageSrc: "/images/insurance.png" },
-    { label: "Hospitality", imageSrc: "/images/hospitality.png" },
+    { label: "Finance", imageSrc: "/images/finance.png", value:"finance" },
+    { label: "Medical", imageSrc: "/images/medical.png", value:"medical"  },
+    { label: "Agriculture", imageSrc: "/images/agric.png", value:"agriculture"  },
+    { label: "Ecommerce", imageSrc: "/images/ecommerce.png", value:"ecommerce"  },
+    { label: "Insurance", imageSrc: "/images/insurance.png", value:"insurance"  },
+    { label: "Hospitality", imageSrc: "/images/hospitality.png", value:"hospitatlity"  },
   ];
 
   const handleSelect = (label: string) => {
@@ -58,6 +63,27 @@ const FinalOnboarding = () => {
         : [...prev, label]
     );
   };
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data:any)=>instance.patch('/user',data),
+    mutationKey: ['user', 'update3'],
+    onSuccess( ) {
+       toast.success("Preference Saved !!!")
+       router.push(`/dashboard`)
+    },
+    onError(error:any) {
+      console.log(error?.response.data)
+      toast.error(error?.response?.data?.message || 'Action Failed')
+      // toast.error('Failed to create category')
+    },
+  })
+
+  const handleSubmit = ()=>{
+    console.log(selectedDomains)
+    mutate({
+      topics_of_interest: selectedDomains
+    })
+  }
 
   return (
     <div className="flex justify-center items-center h-full w-[100%]">
@@ -90,18 +116,20 @@ const FinalOnboarding = () => {
               key={domain.label}
               imageSrc={domain.imageSrc}
               label={domain.label}
-              isSelected={selectedDomains.includes(domain.label)}
-              onSelect={() => handleSelect(domain.label)}
+              isSelected={selectedDomains.includes(domain.value)}
+              onSelect={() => handleSelect(domain.value)}
             />
           ))}
         </div>
 
         {/* Continue Button */}
         <button
-          className="flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full"
+          onClick={handleSubmit}
+          className={`flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full ${isPending && 'opacity-50'}`}
           disabled={selectedDomains.length === 0}
         >
-          Setup my Custom feed
+          {isPending? 'Submitting...':'Setup my Custom feed'}
+         
         </button>
       </div>
     </div>
