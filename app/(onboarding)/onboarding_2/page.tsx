@@ -19,18 +19,19 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) => {
   return (
     <div
-      className={`border rounded-lg p-4 cursor-pointer ${
+      className={`border rounded-lg p-4 cursor-pointer flex flex-col items-center ${
         isSelected ? "bg-blue-100 border-blue-500" : "bg-white border-gray-300"
       }`}
       onClick={onSelect}
     >
-      <Image
-        src={imageSrc}
-        alt={label}
-        width={150}
-        height={100}
-        className="rounded-md mb-3"
-      />
+      <div className="w-full h-20 relative mb-3">
+        <Image
+          src={imageSrc}
+          alt={label}
+          fill
+          className="rounded-md object-cover"
+        />
+      </div>
       <h3
         className={`text-center font-medium ${
           isSelected ? "text-blue-800" : "text-gray-800"
@@ -43,7 +44,7 @@ const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) =>
 };
 
 const OnboardingStage_2 = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
 
   const domains = [
@@ -55,37 +56,32 @@ const OnboardingStage_2 = () => {
     { label: "Application Development", imageSrc: "/images/app_dev.png", value:'app_dev' },
   ];
 
-  const handleSelect = (label: string) => {
+  const handleSelect = (value: string) => {
     setSelectedDomains((prev) =>
-      prev.includes(label)
-        ? prev.filter((domain) => domain !== label)
-        : [...prev, label]
+      prev.includes(value)
+        ? prev.filter((domain) => domain !== value)
+        : [...prev, value]
     );
   };
 
-  const {mutate, isPending} = useMutation({
-    mutationFn: (data:any)=>instance.patch('/user',data),
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: any) => instance.patch('/user', data),
     mutationKey: ['user', 'update'],
-    onSuccess( ) {
-       toast.success("Preference Saved !!!")
-       router.push(`/onboarding_3`)
+    onSuccess() {
+      toast.success("Preference Saved!");
+      router.push(`/onboarding_3`);
     },
-    onError(error:any) {
-      console.log(error?.response.data)
-      toast.error(error?.response?.data?.message || 'Action Failed')
-      // toast.error('Failed to create category')
+    onError(error: any) {
+      console.log(error?.response?.data);
+      toast.error(error?.response?.data?.message || 'Action Failed');
     },
-  })
+  });
 
-  const handleSubmit = ()=>{
-    console.log(selectedDomains)
-    mutate({
-      skills_of_interest: selectedDomains
-    })
-  }
+  const handleSubmit = () => {
+    mutate({ skills_of_interest: selectedDomains });
+  };
 
   return (
-
     <div className="bg-white shadow-md rounded-lg p-10 w-full flex flex-col justify-between">
       {/* Progress Tracker */}
       <div className="mb-10">
@@ -112,7 +108,7 @@ const OnboardingStage_2 = () => {
       <div className="grid grid-cols-2 gap-6 mb-10">
         {domains.map((domain) => (
           <Card
-            key={domain.label}
+            key={domain.value}
             imageSrc={domain.imageSrc}
             label={domain.label}
             isSelected={selectedDomains.includes(domain.value)}
@@ -124,10 +120,12 @@ const OnboardingStage_2 = () => {
       {/* Continue Button */}
       <button
         onClick={handleSubmit}
-        className={`flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full ${isPending && 'opacity-50'}`}
-        disabled={selectedDomains.length === 0}
+        className={`flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full ${
+          isPending ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
+        disabled={isPending || selectedDomains.length === 0}
       >
-        {isPending? 'Submitting...':<>Continue <FaLongArrowAltRight className="ml-2" /></>}
+        {isPending ? 'Submitting...' : <>Continue <FaLongArrowAltRight className="ml-2" /></>}
       </button>
     </div>
   );

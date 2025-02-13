@@ -25,18 +25,10 @@ const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) =>
       }`}
       onClick={onSelect}
     >
-      <Image
-        src={imageSrc}
-        alt={label}
-        width={150}
-        height={100}
-        className="rounded-md mb-3"
-      />
-      <h3
-        className={`text-center font-medium ${
-          isSelected ? "text-blue-800" : "text-gray-800"
-        }`}
-      >
+      <div className="w-full h-20 relative mb-3">
+        <Image src={imageSrc} alt={label} fill className="rounded-md object-cover" />
+      </div>
+      <h3 className={`text-center font-medium ${isSelected ? "text-blue-800" : "text-gray-800"}`}>
         {label}
       </h3>
     </div>
@@ -44,61 +36,53 @@ const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) =>
 };
 
 const FinalOnboarding = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
 
   const domains = [
-    { label: "Finance", imageSrc: "/images/finance.png", value:"finance" },
-    { label: "Medical", imageSrc: "/images/medical.png", value:"medical"  },
-    { label: "Agriculture", imageSrc: "/images/agric.png", value:"agriculture"  },
-    { label: "Ecommerce", imageSrc: "/images/ecommerce.png", value:"ecommerce"  },
-    { label: "Insurance", imageSrc: "/images/insurance.png", value:"insurance"  },
-    { label: "Hospitality", imageSrc: "/images/hospitality.png", value:"hospitatlity"  },
+    { label: "Finance", imageSrc: "/images/finance.png", value: "finance" },
+    { label: "Medical", imageSrc: "/images/medical.png", value: "medical" },
+    { label: "Agriculture", imageSrc: "/images/agric.png", value: "agriculture" },
+    { label: "Ecommerce", imageSrc: "/images/ecommerce.png", value: "ecommerce" },
+    { label: "Insurance", imageSrc: "/images/insurance.png", value: "insurance" },
+    { label: "Hospitality", imageSrc: "/images/hospitality.png", value: "hospitality" },
   ];
 
-  const handleSelect = (label: string) => {
+  const handleSelect = (value: string) => {
     setSelectedDomains((prev) =>
-      prev.includes(label)
-        ? prev.filter((domain) => domain !== label)
-        : [...prev, label]
+      prev.includes(value) ? prev.filter((domain) => domain !== value) : [...prev, value]
     );
   };
 
-  const {mutate, isPending} = useMutation({
-    mutationFn: (data:any)=>instance.patch('/user',data),
-    mutationKey: ['user', 'update3'],
-    onSuccess( ) {
-       toast.success("Preference Saved !!!")
-       router.push(`/dashboard`)
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: any) => instance.patch("/user", data),
+    mutationKey: ["user", "update3"],
+    onSuccess() {
+      toast.success("Preference Saved !!!");
+      router.push("/dashboard");
     },
-    onError(error:any) {
-      console.log(error?.response.data)
-      toast.error(error?.response?.data?.message || 'Action Failed')
-      // toast.error('Failed to create category')
+    onError(error: any) {
+      console.log(error?.response?.data);
+      toast.error(error?.response?.data?.message || "Action Failed");
     },
-  })
+  });
 
-  const handleSubmit = ()=>{
-    console.log(selectedDomains)
-    mutate({
-      topics_of_interest: selectedDomains
-    })
-  }
+  const handleSubmit = () => {
+    if (selectedDomains.length === 0) return;
+    mutate({ topics_of_interest: selectedDomains });
+  };
 
   return (
     <div className="flex justify-center items-center h-full w-[100%]">
-    <div className="bg-white shadow-md rounded-lg p-10 w-full flex flex-col justify-between">
-    {/* Progress Tracker */}
+      <div className="bg-white shadow-md rounded-lg p-10 w-full flex flex-col justify-between">
+        {/* Progress Tracker */}
         <div className="mb-10">
           <div className="flex items-center justify-between text-sm text-gray-500">
             <span>Step 3 of 3</span>
             <span>Onboarding</span>
           </div>
           <div className="relative w-full bg-gray-200 h-2 rounded-full mt-3">
-            <div
-              className="absolute top-0 left-0 h-2 bg-blue-800 rounded-full"
-              style={{ width: "100%" }}
-            ></div>
+            <div className="absolute top-0 left-0 h-2 bg-blue-800 rounded-full" style={{ width: "100%" }}></div>
           </div>
         </div>
 
@@ -125,11 +109,12 @@ const FinalOnboarding = () => {
         {/* Continue Button */}
         <button
           onClick={handleSubmit}
-          className={`flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full ${isPending && 'opacity-50'}`}
-          disabled={selectedDomains.length === 0}
+          className={`flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full ${
+            isPending && "opacity-50"
+          }`}
+          disabled={selectedDomains.length === 0 || isPending}
         >
-          {isPending? 'Submitting...':'Setup my Custom feed'}
-         
+          {isPending ? "Submitting..." : "Setup my Custom feed"}
         </button>
       </div>
     </div>
