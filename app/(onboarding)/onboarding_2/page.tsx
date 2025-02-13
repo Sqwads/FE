@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 // Define a type for the Card props
 interface CardProps {
@@ -15,18 +16,19 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) => {
   return (
     <div
-      className={`border rounded-lg p-4 cursor-pointer ${
+      className={`border rounded-lg p-4 cursor-pointer flex flex-col items-center ${
         isSelected ? "bg-blue-100 border-blue-500" : "bg-white border-gray-300"
       }`}
       onClick={onSelect}
     >
-      <Image
-        src={imageSrc}
-        alt={label}
-        width={150}
-        height={100}
-        className="rounded-md mb-3"
-      />
+      <div className="w-full h-20 relative mb-3">
+        <Image
+          src={imageSrc}
+          alt={label}
+          fill
+          className="rounded-md object-cover"
+        />
+      </div>
       <h3
         className={`text-center font-medium ${
           isSelected ? "text-blue-800" : "text-gray-800"
@@ -58,8 +60,9 @@ const OnboardingStage_2 = () => {
     );
   };
 
-  return (
+  const router = useRouter();
 
+  return (
     <div className="bg-white shadow-md rounded-lg p-10 w-full flex flex-col justify-between">
       {/* Progress Tracker */}
       <div className="mb-10">
@@ -97,6 +100,7 @@ const OnboardingStage_2 = () => {
 
       {/* Continue Button */}
       <button
+        onClick={() => router.push('/onboarding_3')}
         className="flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full"
         disabled={selectedDomains.length === 0}
       >

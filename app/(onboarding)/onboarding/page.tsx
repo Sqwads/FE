@@ -1,8 +1,11 @@
 "use client";
 import React from 'react';
 import { FaLongArrowAltRight } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 const OnboardingStage_1 = () => {
+  const router = useRouter();
+  
   return (
     <>
       <div className="bg-white shadow-md rounded-lg lg:px-20 lg:py-20 px-5 py-10 w-full h-full flex flex-col justify-between">
@@ -51,7 +54,9 @@ const OnboardingStage_1 = () => {
         </div>
 
         {/* Continue Button */}
-        <button className="flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full">
+        <button
+          onClick={() => router.push('/onboarding_2')}
+          className="flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full">
           Continue <FaLongArrowAltRight className="ml-2" />
         </button>
       </div>
