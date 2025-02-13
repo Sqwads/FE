@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import AdminSidebar from './admin_sidebar/page';
 import TopNav from './admin_topnav/page';
 

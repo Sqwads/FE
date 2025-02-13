@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
-    "@ibnlanre/portal": "^4.0.0",
+    "@ibnlanre/portal": "^2.3.1",
     "@mantine/core": "^7.16.0",
     "@mantine/form": "^7.16.0",
     "@mantine/hooks": "^7.16.0",

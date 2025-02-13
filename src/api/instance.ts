@@ -1,4 +1,5 @@
 // import { cookieStorage } from "@ibnlanre/portal";
+import { cookieStorage } from "@ibnlanre/portal";
 import axios from "axios";
 
 export const instance = axios.create({
@@ -8,7 +9,8 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   (config: any) => {
-    const token: string = localStorage.getItem("access_token") as "";
+    const token: string = cookieStorage.getItem("access_token") as "";
+    // console.log(token)
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
