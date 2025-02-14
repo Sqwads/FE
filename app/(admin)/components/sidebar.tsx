@@ -23,7 +23,7 @@ const AdminSidebar = () => {
       {/* AdminSidebar */}
       <div
       style={{ backgroundImage: 'url("/images/signup_bg.png")' }}
-        className={`fixed top-0 left-0 h-full w-64 p-5 flex flex-col transition-transform duration-300 ease-in-out 
+        className={`fixed top-0 left-0 h-full lg:w-64 w-56 p-5 flex flex-col transition-transform duration-300 ease-in-out 
         ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
       >
         {/* Logo */}

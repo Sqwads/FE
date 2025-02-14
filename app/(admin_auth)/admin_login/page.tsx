@@ -10,7 +10,7 @@ import { useMutation } from '@tanstack/react-query';
 import { instance } from '@/src/api/instance';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { base64encode } from 'nodejs-base64';
+
 
 const LoginPage = () => {
 
@@ -29,26 +29,16 @@ const LoginPage = () => {
     mutationKey: ['auth', 'login'],
     onSuccess( response) {
       console.log(response.data)
-      if(response.data?.data?.role  !== 'USER'){
-        return toast.error('Access Denied !!!')
-      }
-      cookieStorage.setItem('access_token', response.data?.data?.access_token)
-      if(response.data?.data?.isProfileComplete){
-        toast.success('Authentication succesfull')
-        router.push('/dashboard')
+      if(response.data?.data?.role == 'ADMIN'){
+        cookieStorage.setItem('access_token', response.data?.data?.access_token)
+        router.push('/admin_dashboard')
       }else{
-        
-        router.push('/onboarding')
+        toast.error('You do not have an admin access')
       }
+      
     },
-    onError(error:any, vars) {
+    onError(error:any) {
       console.log(error?.response.data)
-      if(error?.response?.data?.statusCode == 403){
-        toast.error('Account not verified!')
-        router.push(`/emailauth?email=${base64encode(vars?.email)}`)
-        
-        return
-      }
       toast.error(error?.response?.data?.message || 'Action Failed')
      
     },
@@ -63,7 +53,7 @@ const LoginPage = () => {
       <div className="bg-white md:mt-16 mt-5 max-w-[450px] py-8 px-7 rounded-xl shadow-lg">
         {/* Title */}
         <h1 className="text-3xl text-center text-[#001D69] mb-3 font-semibold">
-          Welcome Back, Sqwad Hero!
+          Welcome Back, Sqwad Admin!
         </h1>
         <p className="text-sm text-center text-gray-700 mb-6">
           Sign up for free and start writing your Sqwads adventure!

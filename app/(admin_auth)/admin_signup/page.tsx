@@ -34,7 +34,7 @@ const Signup = () => {
     onSuccess( response , vars ) {
       console.log(response)
        toast.success("Registration Succesful")
-       router.push(`/emailauth?email=${base64encode(vars.email)}`)
+       router.push(`/admin_emailauth?email=${base64encode(vars.email)}`)
     },
     onError(error:any) {
       console.log(error?.response.data)
@@ -46,7 +46,7 @@ const Signup = () => {
   const handleSubmit = (values:any)=>{
     signup({
       ...values,
-      role:'USER'
+      role:'ADMIN'
     })
     console.log(values)
   }
@@ -56,7 +56,7 @@ const Signup = () => {
       <div className="bg-white lg:mt-10 p-8 rounded-xl shadow-lg w-full h-fit max-w-md">
         {/* Title */}
         <h1 className="text-3xl text-center text-[#001D69] mb-3 font-medium">
-          Your Sqwad, Your Story
+          Register as an Admin
         </h1>
         <p className="text-sm text-center text-gray-700 mb-6">
           Sign up for free and start writing your Sqwads adventure!
@@ -188,7 +188,7 @@ const Signup = () => {
         </p>
         <div className="text-center text-sm text-gray-600 mt-4">
           Already have an account?{" "}
-          <Link href="/login" className="text-blue-900 font-bold underline">
+          <Link href="/admin_login" className="text-blue-900 font-bold underline">
             Login
           </Link>
         </div>
