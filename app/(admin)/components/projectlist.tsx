@@ -11,7 +11,7 @@ const projects = [
     return (
       <div className="bg-white p-6 rounded-2xl shadow-md w-full">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Squads Projects</h2>
+          <h2 className="text-lg text-[#16181B]">Squads Projects</h2>
           <button className="text-blue-600 text-sm">See all</button>
         </div>
         <ul className="space-y-4">
@@ -24,7 +24,10 @@ const projects = [
                 <Image 
                 src={project.image} 
                 alt={project.name} 
-                className="w-10 h-10 rounded-md" />
+                width={50}
+                height={20}
+                className="w-10 h-10 rounded-md"
+                 />
                 <p className="font-medium">{project.name}</p>
               </div>
               <div className="text-right">
