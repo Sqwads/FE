@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { PieChart, Pie, Cell, Legend } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 
 const data = [
   { name: "Product Design", value: 1200, color: "#6366F1" },
