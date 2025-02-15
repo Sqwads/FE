@@ -1,6 +1,10 @@
 import React from 'react';
-import { FaChartBar, FaCheckCircle, FaUserFriends, FaExclamationTriangle } from 'react-icons/fa';import UserActivityChart from '../components/useractivitychart';
+import { FaChartBar, FaCheckCircle, FaUserFriends, FaExclamationTriangle } from 'react-icons/fa';
+import UserActivityChart from '../components/useractivitychart';
 import ProjectsList from '../components/projectlist';
+import UsersAnalysis from '../components/usersanalysis';
+import MentorsList from '../components/mentorslist';
+import Assessments from '../components/assessments';
 
 // Define the type for the stats data
 interface Stat {
@@ -28,7 +32,7 @@ const StatsCard = ({ title, value, icon, trend, trendColor }: StatsCardProps) =>
         <p className="text-sm font-medium text-gray-500">{title}</p>
         {icon}
       </div>
-      <h2 className="text-2xl font-bold mt-2">{value}</h2>
+      <h2 className="text-2xl font-semibold mt-2">{value}</h2>
       <p className={`text-sm mt-1 ${trendColor}`}>{trend}</p>
     </div>
   );
@@ -72,8 +76,8 @@ function AdminDashboard() {
     <section className="p-6 mt-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold">Welcome Back, Admin Yusuf! 👋</h1>
-        <p className="text-gray-500">&quot;Great leadership starts with passion for what you do.</p>
+        <h1 className="text-2xl text-[#16181B]">Welcome Back, Admin Yusuf! 👋</h1>
+        <p className="text-[#16181B80]">&quot;Great leadership starts with passion for what you do.</p>
       </div>
 
       {/* Stats Cards Section */}
@@ -87,6 +91,13 @@ function AdminDashboard() {
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         <UserActivityChart />
         <ProjectsList />
+      </section>
+
+      {/* UsersAnalysis, MentorsList, and Assessments Section */}
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <UsersAnalysis />
+        <MentorsList />
+        <Assessments />
       </section>
     </section>
   );
