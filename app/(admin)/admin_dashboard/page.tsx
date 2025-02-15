@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaChartBar, FaCheckCircle, FaUserFriends, FaExclamationTriangle } from 'react-icons/fa';
+import { FaChartBar, FaCheckCircle, FaUserFriends, FaExclamationTriangle } from 'react-icons/fa';import UserActivityChart from '../components/useractivitychart';
+import ProjectsList from '../components/projectlist';
 
 // Define the type for the stats data
 interface Stat {
@@ -68,7 +69,7 @@ const statsData: Stat[] = [
 // AdminDashboard component
 function AdminDashboard() {
   return (
-    <section className="p-6">
+    <section className="p-6 mt-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold">Welcome Back, Admin Yusuf! 👋</h1>
@@ -80,6 +81,12 @@ function AdminDashboard() {
         {statsData.map((stat, index) => (
           <StatsCard key={index} {...stat} />
         ))}
+      </section>
+
+      {/* User Activity and Projects Section */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <UserActivityChart />
+        <ProjectsList />
       </section>
     </section>
   );

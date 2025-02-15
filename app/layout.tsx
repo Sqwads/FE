@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { MantineProvider } from "@mantine/core";
 import CustomQueryClientProvider from "./providers/react-query-provider";
