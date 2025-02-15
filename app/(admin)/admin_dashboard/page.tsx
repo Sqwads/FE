@@ -1,10 +1,10 @@
 import React from 'react';
 import { FaChartBar, FaCheckCircle, FaUserFriends, FaExclamationTriangle } from 'react-icons/fa';
-import UserActivityChart from '../components/useractivitychart';
-import ProjectsList from '../components/projectlist';
-import UsersAnalysis from '../components/usersanalysis';
-import MentorsList from '../components/mentorslist';
-import Assessments from '../components/assessments';
+import UserActivityChart from './components/useractivitychart';
+import ProjectsList from './components/projectlist';
+import UsersAnalysis from './components/usersanalysis';
+import MentorsList from './components/mentorslist';
+import Assessments from './components/assessments';
 
 // Define the type for the stats data
 interface Stat {
@@ -73,7 +73,7 @@ const statsData: Stat[] = [
 // AdminDashboard component
 function AdminDashboard() {
   return (
-    <section className="p-6 mt-8">
+    <section className="md:px-6 px-3 py-6 mt-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-2xl text-[#16181B]">Welcome Back, Admin Yusuf! 👋</h1>

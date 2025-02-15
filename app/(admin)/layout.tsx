@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { instance } from '@/src/api/instance';
 import { cookieStorage } from '@ibnlanre/portal';
 import { useQuery } from '@tanstack/react-query';
+import '@mantine/core/styles.css';
 
 export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const router = useRouter();
@@ -21,20 +22,22 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* TopNav */}
-      <TopNav />
-
+    <div className="flex h-screen">
+  
       {/* Main Content Area */}
-      <div className="flex flex-1">
-        {/* Sidebar */}
-        <AdminSidebar />
+      <div className="w-64 hidden md:block">
+           <AdminSidebar />
+      </div>
 
-        {/* Main Content */}
-        <div className="flex-1 p-8 bg-gray-200 ml-64">
-          {children}
+       
+      {/* Main Content */}
+      <div className="flex-1 h-screen overflow-y-scroll  bg-[#F6F6F6] ">
+        <TopNav />
+        <div>
+            {children}
         </div>
       </div>
+     
     </div>
   );
 }

@@ -1,31 +1,53 @@
 "use client"
-import { useState } from "react";
+
 import { FiBell, FiBookmark } from "react-icons/fi";
-import { FaSearch } from "react-icons/fa";
+import {AiOutlineMenu} from 'react-icons/ai'
+import { Drawer, TextInput } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import AdminSidebar from "./sidebar";
+
 
 export default function TopNav() {
-  const [isFocused, setIsFocused] = useState(false);
+ 
+  const [opened, { open, close }] = useDisclosure(false);
 
   return (
-    <nav className="w-full bg-white shadow-md fixed top-0 left-24 z-30"> {/* Added left-64 */}
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+    <nav className="w-full bg-white shadow-md "> {/* Added left-64 */}
+       <Drawer 
+            opened={opened} 
+            onClose={close} 
+            withCloseButton={false}
+            size={"xs"}
+            styles={{
+              body:{
+                padding:'0px',
+              }
+            }}
+        >
+          <div className="h-screen">
+            <AdminSidebar/>
+          </div>
+      </Drawer>
+      <div className=" mx-auto px-6 py-5 flex items-center justify-between">
+       
         {/* Search Bar */}
-        <div className="flex-1 hidden md:block relative">
-          {/* Input Field */}
-          <input
-            type="text"
-            className="w-[80%] px-4 py-2 pl-10 rounded-md shadow-sm bg-[#D5D7DA] text-gray-700 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
+        <div className="md:hidden">
+          <AiOutlineMenu  onClick={open} size={27} />
+        </div>
+        <div className="flex-1 max-w-[40rem] hidden md:block">
+          <TextInput          
+            className=" border border-[white] text-gray-700   focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Search anything here..."
+            leftSection={ <FiBookmark/>}
+            size="md"
+            styles={{
+              input:{
+                background:'#F6F6F6',
+                border:'1px solid #D5D7DA'
+              }
+            }}
           />
 
-          {/* Search Icon and Placeholder Text (Conditional Rendering) */}
-          {!isFocused && (
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3  pointer-events-none">
-              <FaSearch className="text-gray-400" />
-              <span className="ml-2 text-gray-400">Search anything here...</span>
-            </div>
-          )}
         </div>
 
         {/* Right Side - Icons and Profile */}
