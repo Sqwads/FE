@@ -13,9 +13,9 @@ const UserActivityChart = () => {
   return (
     <div className="bg-white p-6 rounded-2xl shadow-md w-full">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold">User Activity</h2>
+        <h2 className="text-lg text-[#16181B]">User Activity</h2>
         <select
-          className="border p-2 rounded-md"
+          className="border p-2 bg-[#9BB7FF33] rounded-md"
           value={range}
           onChange={(e) => setRange(e.target.value as "7" | "14" | "30")}
         >
