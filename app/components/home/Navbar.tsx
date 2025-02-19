@@ -30,8 +30,7 @@ const Navbar = () => {
       <ul className="hidden h-full gap-12 lg:flex">
         {NAV_LINKS.map((link) => (
           <Link
-            // href={link.href}
-            href={"/"}
+            href={link.href}
             key={link.key}
             className="regular-16 text-[#D5D7DA] flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
           >
@@ -42,7 +41,7 @@ const Navbar = () => {
 
       {/* Get Started Button (Desktop) */}
       <div className="hidden lg:flex items-center">
-        <Link href={"/#"}>
+        <Link href={"/signup"}>
           <Button type="button" title="Get Started For Free" icon="/arrow.svg" variant="blue" />
         </Link>
       </div>
@@ -67,8 +66,7 @@ const Navbar = () => {
           <ul className="flex flex-col items-center gap-4 py-4">
             {NAV_LINKS.map((link) => (
               <Link
-                // href={link.href}
-                href={"/"}
+                href={link.href}
                 key={link.key}
                 className="regular-16 text-blue-50 cursor-pointer pb-1.5 transition-all hover:font-bold"
                 onClick={() => setIsMenuOpen(false)} // Close menu on click
@@ -80,7 +78,7 @@ const Navbar = () => {
 
           {/* Get Started Button (Mobile) */}
           <div className="flex items-center justify-center mt-4">
-            <Link href={"/#"}>
+            <Link href={"/signup"}>
               <Button type="button" title="Get Started" icon="/arrow.svg" variant="blue" />
             </Link>
           </div>
