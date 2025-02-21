@@ -44,7 +44,7 @@ const AdminSidebar = () => {
             <FaProjectDiagram size={20} /> Projects
           </Link>
           <Link 
-            href="/users" 
+            href="/sqwads_users" 
             className={`flex items-center gap-3 p-2 rounded-md ${
               isActive('/users') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
             }`}
