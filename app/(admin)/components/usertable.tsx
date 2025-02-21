@@ -25,7 +25,7 @@ const UserTable = () => {
 
         {/* Table Body */}
         <tbody>
-          {users.map((user, index) => (
+          {users.map((user: User, index: number) => (
             <tr
               key={index}
               className="border-b hover:bg-gray-50 transition-all shadow-sm"
