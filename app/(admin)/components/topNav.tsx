@@ -5,12 +5,15 @@ import {AiOutlineMenu} from 'react-icons/ai'
 import { Drawer, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import AdminSidebar from "./sidebar";
+import { userWrapper } from "@/src/store";
 
 
 export default function TopNav() {
  
   const [opened, { open, close }] = useDisclosure(false);
-
+  const { user } = userWrapper((state) => ({
+      user: state.user,
+    }));
   return (
     <nav className="w-full bg-white shadow-md "> {/* Added left-64 */}
        <Drawer 
@@ -58,7 +61,7 @@ export default function TopNav() {
           {/* User Profile */}
           <div className="relative">
             <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
-              Y {/* First letter of user’s name */}
+              {user?.firstName && user?.firstName[0]} {/* First letter of user’s name */}
             </div>
           </div>
         </div>

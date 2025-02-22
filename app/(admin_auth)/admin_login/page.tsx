@@ -31,7 +31,9 @@ const LoginPage = () => {
       console.log(response.data)
       if(response.data?.data?.role == 'ADMIN'){
         cookieStorage.setItem('access_token', response.data?.data?.access_token)
+        toast.success('Authentication Successful !!!')
         router.push('/admin_dashboard')
+
       }else{
         toast.error('You do not have an admin access')
       }

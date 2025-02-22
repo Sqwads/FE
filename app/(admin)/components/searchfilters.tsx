@@ -2,12 +2,33 @@
 
 import { TextInput, Button } from "@mantine/core";
 import { FiSearch } from "react-icons/fi";
-import { BsFilter, BsListUl } from "react-icons/bs";
+import {  BsListUl } from "react-icons/bs";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
-const SearchFilters = () => {
+const SearchFilters = ({
+  onChange,
+  handleNextPage,
+  handlePrevPage,
+  currentPage,
+  totalRecords,
+  pageSize
+}:{
+  onChange: (e:any)=>void,
+  handleNextPage:()=>void,
+  handlePrevPage:()=>void,
+  currentPage: number,
+  totalRecords:number,
+  pageSize:number
+}) => {
+ 
+  const pageStart = ((currentPage -1) * pageSize )+ 1
+  const end = pageStart + pageSize -1 
+  const pageEnd = end > totalRecords ? totalRecords: end
+  const totalPage = Math.ceil(totalRecords/pageSize)
+
+  
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center w-full p-4 gap-4">
+    <div className="flex flex-col md:flex-row justify-between items-center w-full py-7 gap-4">
       {/* Search & Filters */}
       <div className="flex flex-col md:flex-row gap-3 items-center w-full md:w-auto">
         {/* Search Input */}
@@ -17,6 +38,7 @@ const SearchFilters = () => {
             leftSection={<FiSearch size={16} className="text-gray-500" />}
             size="md"
             className="w-full"
+            onChange={(e)=>onChange(e)}
             styles={{
               input: {
                 background: "#F6F6F6",
@@ -41,24 +63,26 @@ const SearchFilters = () => {
           >
             Filters
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
             leftSection={<BsFilter size={16} />}
             className="flex-1 md:flex-none"
             aria-label="Sort"
           >
             Sort
-          </Button>
+          </Button> */}
         </div>
       </div>
 
       {/* Pagination */}
       <div className="flex items-center gap-4">
-        <span className="text-gray-500">1-15 of 2500</span>
+        <span className="text-gray-500"> {`${pageStart} to ${pageEnd } of ${totalRecords}`}</span>
         <Button
           variant="subtle"
           size="compact-icon"
           aria-label="Previous Page"
+          onClick={handlePrevPage}
+          disabled={currentPage-1 <= 0}
         >
           <IoChevronBack size={16} />
         </Button>
@@ -66,6 +90,8 @@ const SearchFilters = () => {
           variant="subtle"
           size="compact-icon"
           aria-label="Next Page"
+          disabled={currentPage+1 > totalPage }
+          onClick={handleNextPage}
         >
           <IoChevronForward size={16} />
         </Button>

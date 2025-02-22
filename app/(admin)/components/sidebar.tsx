@@ -5,11 +5,17 @@ import { FaProjectDiagram, FaUsers, FaUserTie, FaBriefcase } from 'react-icons/f
 import { HiOutlineHome } from 'react-icons/hi';
 import Link from 'next/link';
 import Image from 'next/image';
+import { userWrapper } from '@/src/store';
+// import { userWrapper } from '@/src/store';
 
 const AdminSidebar = () => {
  
   const pathname = usePathname(); // Get current route
+  const { user } = userWrapper((state) => ({
+    user: state.user,
+  }));
 
+  console.log(user)
   // Function to check if the link is active
   const isActive = (path: string): boolean => pathname === path;
 
@@ -44,7 +50,7 @@ const AdminSidebar = () => {
             <FaProjectDiagram size={20} /> Projects
           </Link>
           <Link 
-            href="/sqwads_users" 
+            href="/users" 
             className={`flex items-center gap-3 p-2 rounded-md ${
               isActive('/users') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
             }`}
@@ -72,11 +78,11 @@ const AdminSidebar = () => {
         {/* Footer - User Profile */}
         <div className="mt-auto flex items-center gap-3 p-4 text-white rounded-lg">
           <div className="w-10 h-10 flex items-center justify-center bg-blue-900 text-white font-bold rounded-full">
-            Y
+            {user?.firstName && user?.firstName[0]}
           </div>
           <div>
-            <h2 className="font-bold text-sm text-[#001D69]">Yusuf Olowode</h2>
-            <p className="text-xs text-[#16181BB2]">yusufolo@gmail.com</p>
+            <h2 className="font-bold text-sm text-[#001D69]">{user?.firstName} {user?.astName}</h2>
+            <p className="text-xs text-[#16181BB2]">{user?.email}</p>
           </div>
         </div>
       </div>
