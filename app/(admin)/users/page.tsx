@@ -129,7 +129,7 @@ const UserListPage = () => {
     {
       header:'Action',
       id:'action',
-      cell:({cell, row})=>  
+      cell:({ row})=>  
       <Menu position="bottom-end" shadow="md" width={200}>
         <Menu.Target>
           <Button variant="subtle" size="compact-icon">
