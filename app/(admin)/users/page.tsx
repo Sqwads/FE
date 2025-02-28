@@ -54,7 +54,7 @@ const UserListPage = () => {
         handleClearSuspensionAction()
     },
     onError() {
-        toast.error('Failed to suspend user')
+        toast.error('Failed to Modify user status!')
     },
   })
 
