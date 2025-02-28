@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { cookieStorage } from "@ibnlanre/portal";
 import { MdOutlineEmail } from 'react-icons/md';
 import { CiLock } from 'react-icons/ci';
-import { LoginVlidator } from '@/src/validators/auth_validators';
+import { LoginVlidator } from '@/src/validators/validators';
 import { useMutation } from '@tanstack/react-query';
 import { instance } from '@/src/api/instance';
 import { useRouter } from 'next/navigation';
@@ -24,29 +24,29 @@ const LoginPage = () => {
     validate: yupResolver(LoginVlidator)
   });
 
-  const {mutate, isPending} = useMutation({
-    mutationFn: (data:any)=>instance.post('/auth/login',data),
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: any) => instance.post('/auth/login', data),
     mutationKey: ['auth', 'login'],
-    onSuccess( response) {
+    onSuccess(response) {
       console.log(response.data)
-      if(response.data?.data?.role == 'ADMIN'){
+      if (response.data?.data?.role == 'ADMIN') {
         cookieStorage.setItem('access_token', response.data?.data?.access_token)
         toast.success('Authentication Successful !!!')
         router.push('/admin_dashboard')
 
-      }else{
+      } else {
         toast.error('You do not have an admin access')
       }
-      
+
     },
-    onError(error:any) {
+    onError(error: any) {
       console.log(error?.response.data)
       toast.error(error?.response?.data?.message || 'Action Failed')
-     
+
     },
   })
 
-  const handleSubmit = (values:any) => {
+  const handleSubmit = (values: any) => {
     mutate(values)
   };
 
@@ -72,9 +72,9 @@ const LoginPage = () => {
               Email Address
             </label>
             <TextInput
-                leftSection={<MdOutlineEmail />}
-                size='md'
-                placeholder="e.g. user@example.com"
+              leftSection={<MdOutlineEmail />}
+              size='md'
+              placeholder="e.g. user@example.com"
               {...form.getInputProps('email')}
             />
           </div>
@@ -100,7 +100,7 @@ const LoginPage = () => {
             type="submit"
             className={`w-full py-3 bg-[#001D69] text-white rounded transition hover:bg-[#003399] ${isPending && 'opacity-50'}`}
           >
-            {isPending?'Authenticating...':'Login'}
+            {isPending ? 'Authenticating...' : 'Login'}
           </button>
         </form>
 

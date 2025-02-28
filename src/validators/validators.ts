@@ -16,3 +16,9 @@ export const LoginVlidator = Yup.object({
     email: Yup.string().email().required("Email is required"),
     password: Yup.string().required("Password is required"),
 })
+
+export const UserSuspensionValidator = Yup.object({
+    reason: Yup.string().required('Reason is required'),
+    duration: Yup.string(),
+    details: Yup.string()
+})

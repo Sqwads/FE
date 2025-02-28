@@ -4,18 +4,75 @@ import SearchFilters from "../components/searchfilters";
 import AppTable from "../components/appTable";
 import { ColumnDef } from "@tanstack/react-table";
 import { useCustomTable } from "@/src/hooks/useCustomTable";
-import { Avatar, Badge, Button, Menu } from "@mantine/core";
+import { Avatar, Badge, Button, Checkbox, Menu, Modal, NumberInput, Select, Textarea } from "@mantine/core";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { instance } from "@/src/api/instance";
 import moment from 'moment'
 import { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
+import { useDisclosure } from "@mantine/hooks";
+import { useForm, yupResolver } from "@mantine/form";
+import { UserSuspensionValidator } from "@/src/validators/validators";
+import toast from "react-hot-toast";
 
 const UserListPage = () => {
+  const queryClient = useQueryClient()
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [isCustomPeriod, setIsCustomPeriod] = useState(false)
   const [pageSize] = useState(5)
+  const [selectedUser, setSelectedUser] = useState<any>(null)
+  const [opened, { open, close }] = useDisclosure(false);
+  const [verificationMoalOpened, { open:openVerificationModal, close:closeVerificationModal }] = useDisclosure(false);
+  const [periodUnit, setPeriodUnit] = useState<any>('1')
+  const [periodOptions, setPeriodOptions] = useState([
+    {label:'A day', value:'1', isActive:false},
+    {label:'3 days', value:'3'},
+    {label:'5 days', value:'5'},
+    {label:'1 Week', value:'7'}
+  ])
+
+  const form = useForm({
+    initialValues: {
+      reason:'',
+      noOfDays:'',
+      details:''
+    },
+    validate: yupResolver(UserSuspensionValidator)
+  })
+
+ 
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data:any)=>instance.patch(`/user/suspend`, data),
+    mutationKey: ['user', 'suspend'],
+    onSuccess() {
+        toast.success('User Status Modified Successfuly')
+        queryClient.invalidateQueries({
+          queryKey:  ['users']
+        })
+        handleClearSuspensionAction()
+    },
+    onError() {
+        toast.error('Failed to suspend user')
+    },
+  })
+
+  const {data: usersData, isLoading: userInfoIsLoading} = useQuery({
+    queryFn: ()=>instance.get(
+      '/user/all',
+      {
+        params:{
+          pageSize,
+          pageNumber: currentPage,
+          ...(searchQuery.length > 1 && {searchQuery})
+        }
+      }
+    ),
+    queryKey: ['users', searchQuery, currentPage, pageSize],
+    placeholderData: (prev) => prev
+  })
+  const totalPages = Math.ceil(usersData?.data?.totalNoOfRecords/pageSize)
 
   const userDataHeader : ColumnDef<any>[] =[
     {
@@ -72,7 +129,7 @@ const UserListPage = () => {
     {
       header:'Action',
       id:'action',
-      cell:()=>  
+      cell:({cell, row})=>  
       <Menu position="bottom-end" shadow="md" width={200}>
         <Menu.Target>
           <Button variant="subtle" size="compact-icon">
@@ -82,27 +139,12 @@ const UserListPage = () => {
         <Menu.Dropdown>
           <Menu.Item>View Profile</Menu.Item>
           <Menu.Item>Edit User</Menu.Item>
-          <Menu.Item color="red">Suspend User</Menu.Item>
+          {row.original?.status == 'ACTIVE' && <Menu.Item onClick={()=>handleSuspendUser(row.original)} color="red">Suspend User</Menu.Item>}
+          {row.original?.status == 'SUSPENDED' && <Menu.Item onClick={()=>handleActivateUser(row.original?.userId)}  color="#028d4c">Activate User</Menu.Item>}
         </Menu.Dropdown>
       </Menu>
      }
   ]
-
-  const {data: usersData, isLoading: userInfoIsLoading} = useQuery({
-    queryFn: ()=>instance.get(
-      '/user/all',
-      {
-        params:{
-          pageSize,
-          pageNumber: currentPage,
-          ...(searchQuery.length > 1 && {searchQuery})
-        }
-      }
-    ),
-    queryKey: ['users', searchQuery, currentPage, pageSize],
-    placeholderData: (prev) => prev
-  })
-  const totalPages = Math.ceil(usersData?.data?.totalNoOfRecords/pageSize)
 
   const {table} = useCustomTable({
     columns: userDataHeader,
@@ -122,11 +164,84 @@ const UserListPage = () => {
       setCurrentPage(currentPage+1)
     }
   }
+
   const handlePrevPage = ()=>{
     if(currentPage-1 > 0){
       setCurrentPage(currentPage-1)
     }
   }
+
+  const handleSelectPeriodOption = (idx:number)=>{
+    console.log(idx)
+    const period_opt = [...periodOptions]
+    period_opt.forEach((item:any)=>{
+      item.isActive = false
+    })
+    period_opt[idx].isActive = true
+    setPeriodOptions(period_opt)
+  }
+
+  const handleSuspendUser = (user:any)=>{
+      setSelectedUser(user)
+      open()
+
+  }
+
+  const handleSubmitSuspension = (values:any)=>{
+    const activePeriodOption = periodOptions.find(item=>item.isActive)
+    if(!values.noOfDays && !activePeriodOption){
+       toast.error('Select Duration for the Suspension')
+       return
+    }
+    close()
+    openVerificationModal()
+  }
+
+  const handleClearSuspensionAction = ()=>{
+    close()
+    closeVerificationModal()
+    setSelectedUser(null)
+    setIsCustomPeriod(false)
+    const period_opt = [...periodOptions]
+    period_opt.forEach((item:any)=>{
+      item.isActive = false
+    })
+    setPeriodOptions(period_opt)
+    form.reset()
+  }
+
+  const handleFinalizeSuspension = ()=>{
+    const activePeriodOption = periodOptions.find(item=>item.isActive)
+    const payload = {
+      status:'SUSPENDED',
+      details: form.values.details,
+      reason: form.values.reason,
+      userId: selectedUser?.userId,
+      noOfDays: isCustomPeriod 
+                  ? (Number(form.values.noOfDays) * periodUnit).toString():
+                  (Number(activePeriodOption?.value)).toString()
+    }
+    mutate(payload)
+    // console.log(payload)
+    
+  }
+
+  const handleActivateUser = (userId:string)=>{
+    const payload = {
+      userId,
+      status:'ACTIVE'
+    }
+    mutate(payload)
+  }
+
+  const customePeriodUnits = [
+    {label:'Days', value:'1'},
+    {label:'Weeks', value:'7'},
+    {label:'Months', value:'30'},
+    {label:'Years', value:'365'},
+  ]
+
+ 
 
   return (
     <section className="py-14 lg:px-10 px-3">
@@ -173,6 +288,159 @@ const UserListPage = () => {
               <div className="font-semibold text-xl text-[lightgray]">Noting to See here</div>
           </div>
         }
+
+            <Modal 
+                centered
+                opened={opened} 
+                onClose={handleClearSuspensionAction} 
+                size={'md'}
+                // title="Suspend User" 
+                styles={{
+                    title:{
+                        marginTop:'1rem',
+                    },
+                    content:{
+                      borderRadius:"1rem",  
+                    }
+                }}
+            >
+               <form onSubmit={form.onSubmit(handleSubmitSuspension)}>
+               <div className="px-3 pb-7">
+                <div className="text-center  text-2xl font-medium ">Suspend User</div>
+                <div className="text-sm text-[gray] text-center mb-7">Temporariy restrict user access</div>
+
+                <div className="flex flex-col items-center mb-7 ">
+                  <div className="h-14 w-14 flex items-center justify-center rounded-full mb-3 bg-[#5483FF] text-2xl text-white font-medium">
+                      {selectedUser?.firstName[0]}{selectedUser?.lastName[0]}
+                  </div>
+                  <div className="font-medium">{selectedUser?.firstName} {selectedUser?.lastName}</div>
+                  <div className="text-xs text-[gray]">{selectedUser?.email}</div>
+                </div>
+
+                <div className="mb-3">
+                  <div className="text-sm  mb-1 ">Suspension Reason</div>
+                  <Select
+                    placeholder="Select Reason"
+                    data={[
+                      'Inappropriate Content',
+                      'Spamming',
+                      'Abusing Platform Features',
+                      'Harrasing or Bullying others'
+                    ]}
+                    {...form.getInputProps('reason')}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <div className="text-sm mb-1">Period</div>
+                  {!isCustomPeriod && 
+                    <div className="flex">
+                      {periodOptions.map((item, idx)=>
+                        <div 
+                            key={idx} 
+                            onClick={()=>handleSelectPeriodOption(idx)}
+                            className={`border ${item.isActive?'border-[#0234B8] text-[#0234B8]':'border-[#D5D7DA] text-[#16181B]'} bg-[#fdfdfd] cursor-pointer lg:px-2 px-1 py-1 lg:mr-3 mr-1  lg:text-sm text-xs rounded-md`}
+                        >
+                          {item.label}
+                        </div>
+                      )}
+                      <div 
+                        className="border border-[#D5D7DA] bg-[#fdfdfd] px-3 cursor-pointer py-1 mr-3  text-sm rounded-md" 
+                        onClick={()=>setIsCustomPeriod(true)}
+                      >
+                        Custom
+                      </div>
+                    </div>
+                  }
+
+                  {
+                    isCustomPeriod &&
+                    <div className="flex">
+                      <div className="w-20">
+                        <Select
+                          data={customePeriodUnits}
+                          defaultValue={"1"}
+                          onChange={(e)=>setPeriodUnit(e)}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <NumberInput
+                           {...form.getInputProps('noOfDays')}
+                        />
+                      </div>
+                    </div>
+                  }
+
+                </div>
+
+                <div className="mb-3">
+                  <div className="text-sm mb-1">Additional details (optional)</div>
+                  <Textarea
+                       {...form.getInputProps('details')}
+                  />
+                </div>
+                <div className="flex text-sm text-[#16181B80] font-medium mb-5">
+                  <Checkbox checked />
+                  <span className="ml-2">Send a notification to the user about their suspension</span>
+                </div>
+                
+                <button
+                  type="submit"
+                  className={`w-full py-3 bg-[#001D69] text-white rounded transition hover:bg-[#003399] ${false && 'opacity-50'}`}
+                >
+                  {false?'Authenticating...':'Suspend User'}
+                </button>
+
+               </div>
+               </form>
+            </Modal>
+
+            <Modal 
+                centered
+                opened={verificationMoalOpened} 
+                onClose={handleClearSuspensionAction} 
+                size={'md'}
+                styles={{
+                  content:{
+                    borderRadius:"1rem",  
+                  }
+                }}
+            >
+
+                <div className="py-4 flex flex-col items-center justify-center">
+                    <img src="/images/bin.png" className="mb-7" alt="bin" />
+                    <div className="text-2xl font-medium mb-2">Confirm Suspension</div>
+                    <div className="text-[#16181BB2] px-7 text-sm mb-7 text-center">
+                      Confirm suspension of <span className="font-bold">{selectedUser?.firstName} {selectedUser?.lastName} ({selectedUser?.email})</span> 
+                      for {form.values.reason}, lasting   
+                      <span className="font-bold"> {" "}
+                         {
+                          isCustomPeriod ? 
+                          `${form.values.noOfDays} ${customePeriodUnits.find(item=>item.value==periodUnit)?.label}`:
+                           periodOptions.find(item=>item.isActive)?.label
+                         } 
+                      </span>.
+                       Are you sure?
+                    </div>
+
+                    <div>
+                    <button
+                      onClick={handleClearSuspensionAction}
+                       className="py-2 text-sm rounded-md bg-[#EFF3FF] border border-[#001D69] px-4 text-[#001D69]"
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      disabled={isPending}
+                      onClick={handleFinalizeSuspension}
+                      className={`py-2 ml-3 text-sm rounded-md bg-[#F532251A] border border-[#F53225] px-4 text-[#F53225] ${isPending && 'opacity-50'}`}
+                    >
+                        {isPending ?'Suspending...':'Confirm'}
+                    </button>
+                    </div>
+                  
+                </div>
+            </Modal>
        
     </section>
   );

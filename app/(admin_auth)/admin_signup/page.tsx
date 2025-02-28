@@ -1,15 +1,15 @@
 "use client"
 import { PasswordInput, TextInput } from "@mantine/core";
 import { useForm, yupResolver } from '@mantine/form';
-import {useRouter} from 'next/navigation'
-import {base64encode} from 'nodejs-base64'
+import { useRouter } from 'next/navigation'
+import { base64encode } from 'nodejs-base64'
 import { FiUserPlus } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
 import { instance } from "@/src/api/instance";
-import { Registervalidator } from "@/src/validators/auth_validators";
+import { Registervalidator } from "@/src/validators/validators";
 import toast from "react-hot-toast";
 
 
@@ -17,36 +17,36 @@ const Signup = () => {
 
   const router = useRouter()
   const signUpForm = useForm({
-    initialValues:{
-      firstName:'',
-      lastName:'',
-      email:'',
-      password:'',
-      confirm_password:'',
-      username:''
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirm_password: '',
+      username: ''
     },
     validate: yupResolver(Registervalidator)
   })
-  
-  const {mutate: signup, isPending} = useMutation({
-    mutationFn: (data:any)=>instance.post('/auth/register',data),
+
+  const { mutate: signup, isPending } = useMutation({
+    mutationFn: (data: any) => instance.post('/auth/register', data),
     mutationKey: ['auth', 'register'],
-    onSuccess( response , vars ) {
+    onSuccess(response, vars) {
       console.log(response)
-       toast.success("Registration Succesful")
-       router.push(`/admin_emailauth?email=${base64encode(vars.email)}`)
+      toast.success("Registration Succesful")
+      router.push(`/admin_emailauth?email=${base64encode(vars.email)}`)
     },
-    onError(error:any) {
+    onError(error: any) {
       console.log(error?.response.data)
       toast.error(error?.response?.data?.message || 'Action Failed')
       // toast.error('Failed to create category')
     },
   })
 
-  const handleSubmit = (values:any)=>{
+  const handleSubmit = (values: any) => {
     signup({
       ...values,
-      role:'ADMIN'
+      role: 'ADMIN'
     })
     console.log(values)
   }
@@ -70,7 +70,7 @@ const Signup = () => {
               <label htmlFor="firstName" className="block text-sm text-gray-700 mb-1">
                 First Name
               </label>
-              <div className="relative"> 
+              <div className="relative">
                 <TextInput
                   // size="lg"
                   leftSection={<FiUserPlus />}
@@ -104,11 +104,11 @@ const Signup = () => {
                 Username
               </label>
               <div className="relative">
-              
+
                 <TextInput
                   // size="lg"
                   leftSection={<FiUserPlus />}
-                   placeholder="e.g Hamid"
+                  placeholder="e.g Hamid"
                   className=""
                   key={signUpForm.key('username')}
                   {...signUpForm.getInputProps('username')}
@@ -122,7 +122,7 @@ const Signup = () => {
                 Email Address
               </label>
               <div className="relative">
-             
+
                 <TextInput
                   // size="lg"
                   leftSection={<MdOutlineEmail />}
@@ -146,9 +146,9 @@ const Signup = () => {
               placeholder="*****************"
               key={signUpForm.key('password')}
               {...signUpForm.getInputProps('password')}
-                // className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+            // className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
             />
- 
+
           </div>
 
           <div className="relative">
@@ -162,9 +162,9 @@ const Signup = () => {
               placeholder="*****************"
               key={signUpForm.key('confirm_password')}
               {...signUpForm.getInputProps('confirm_password')}
-                // className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+            // className="w-full pl-10 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
             />
- 
+
           </div>
 
           {/* Signup Button */}
@@ -172,7 +172,7 @@ const Signup = () => {
             type="submit"
             className={`w-full py-3 bg-[#001D69] text-white rounded  transition ${isPending && 'opacity-50'}`}
           >
-            {isPending? 'Submitting...':'Sign up'}
+            {isPending ? 'Submitting...' : 'Sign up'}
           </button>
         </form>
 

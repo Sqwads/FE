@@ -3,7 +3,7 @@ import { TextInput } from '@mantine/core';
 import { MdOutlineEmail } from 'react-icons/md';
 import { useForm, yupResolver } from '@mantine/form';
 import Image from 'next/image';
-import { Registervalidator } from '@/src/validators/auth_validators';
+import { Registervalidator } from '@/src/validators/validators';
 
 const ForgetPasswordPage = () => {
   // Mantine useForm hook
@@ -14,7 +14,7 @@ const ForgetPasswordPage = () => {
     validate: yupResolver(Registervalidator)
   });
 
-  const handleSubmit = (values:any) => {
+  const handleSubmit = (values: any) => {
     console.log('Password reset link requested for:', values.email);
   };
 
@@ -24,11 +24,11 @@ const ForgetPasswordPage = () => {
         {/* Icon */}
         <div className="flex justify-center mb-4">
           <div className=" rounded-full">
-            <Image 
-                src="/images/lock.png"
-                alt='lockimage'
-                width={100}
-                height={50}
+            <Image
+              src="/images/lock.png"
+              alt='lockimage'
+              width={100}
+              height={50}
             />
           </div>
         </div>

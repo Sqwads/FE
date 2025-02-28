@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { cookieStorage } from "@ibnlanre/portal";
 import { MdOutlineEmail } from 'react-icons/md';
 import { CiLock } from 'react-icons/ci';
-import { LoginVlidator } from '@/src/validators/auth_validators';
+import { LoginVlidator } from '@/src/validators/validators';
 import { useMutation } from '@tanstack/react-query';
 import { instance } from '@/src/api/instance';
 import { useRouter } from 'next/navigation';
@@ -24,37 +24,37 @@ const LoginPage = () => {
     validate: yupResolver(LoginVlidator)
   });
 
-  const {mutate, isPending} = useMutation({
-    mutationFn: (data:any)=>instance.post('/auth/login',data),
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: any) => instance.post('/auth/login', data),
     mutationKey: ['auth', 'login'],
-    onSuccess( response) {
+    onSuccess(response) {
       console.log(response.data)
-      if(response.data?.data?.role  !== 'USER'){
+      if (response.data?.data?.role !== 'USER') {
         return toast.error('Access Denied !!!')
       }
       cookieStorage.setItem('access_token', response.data?.data?.access_token)
-      if(response.data?.data?.isProfileComplete){
+      if (response.data?.data?.isProfileComplete) {
         toast.success('Authentication succesfull')
         router.push('/dashboard')
-      }else{
-        
+      } else {
+
         router.push('/onboarding')
       }
     },
-    onError(error:any, vars) {
+    onError(error: any, vars) {
       console.log(error?.response.data)
-      if(error?.response?.data?.statusCode == 403){
+      if (error?.response?.data?.statusCode == 403) {
         toast.error('Account not verified!')
         router.push(`/emailauth?email=${base64encode(vars?.email)}`)
-        
+
         return
       }
       toast.error(error?.response?.data?.message || 'Action Failed')
-     
+
     },
   })
 
-  const handleSubmit = (values:any) => {
+  const handleSubmit = (values: any) => {
     mutate(values)
   };
 
@@ -80,9 +80,9 @@ const LoginPage = () => {
               Email Address
             </label>
             <TextInput
-                leftSection={<MdOutlineEmail />}
-                size='md'
-                placeholder="e.g. user@example.com"
+              leftSection={<MdOutlineEmail />}
+              size='md'
+              placeholder="e.g. user@example.com"
               {...form.getInputProps('email')}
             />
           </div>
@@ -108,7 +108,7 @@ const LoginPage = () => {
             type="submit"
             className={`w-full py-3 bg-[#001D69] text-white rounded transition hover:bg-[#003399] ${isPending && 'opacity-50'}`}
           >
-            {isPending?'Authenticating...':'Login'}
+            {isPending ? 'Authenticating...' : 'Login'}
           </button>
         </form>
 
