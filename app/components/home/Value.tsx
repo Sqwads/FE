@@ -2,6 +2,7 @@ import Image from "next/image";
 import { BsPersonVcard } from "react-icons/bs";
 import { LuUsers } from "react-icons/lu";
 import { RiLightbulbLine } from "react-icons/ri";
+import mission from '../../../public/images/mission.jpg'
 
 const Value = () => {
   return (
@@ -12,7 +13,7 @@ const Value = () => {
           {/* Section Title */}
           <div className="text-center">
             <button
-              className="bg-purple-100 border border-[#001D69] text-purple-700 py-2 px-4 rounded-md font-medium hover:bg-purple-200 transition duration-300">
+              className="bg-purple-100 border border-[##FF00FB] text-[#FF00DD] py-2 px-4 rounded-md font-medium hover:bg-purple-200 transition duration-300">
               Benefits 🥰
             </button>
             <h2 className="mt-4 text-3xl font-medium text-[#1b3c91] sm:text-4xl">
@@ -66,10 +67,8 @@ const Value = () => {
             {/* Image Section */}
             <div className="xl:w-[60%] xl:mb-0 mb-7">
               <Image
-                src="/images/mission.jpg"
+                src={mission}
                 alt="Mission"
-                width={50}
-                height={50}
                 className="w-full h-[500px] xl:h-[750px] object-cover rounded-3xl"
               />
             </div>

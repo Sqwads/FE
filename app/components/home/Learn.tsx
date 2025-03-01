@@ -2,21 +2,21 @@ import Image from "next/image";
 import React from "react";
 
 const Learn = () => {
-  const progressValue = 14; // Example progress level
-
   return (
     <section className="bg-[#F9FDFF] py-16 px-8 lg:px-16">
       {/* Container */}
-      <div className="max-w-7xl mx-auto space-y-16">
+      <div className="max-w-6xl mx-auto space-y-16">
         {/* First Section: Header + Intro */}
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
+          {/* Left Column: Header */}
           <div className="lg:w-1/2">
             <h2 className="text-4xl font-medium text-gray-800">
               Learn by Doing: <br />
               <span className="text-blue-600 underline">Real Projects, Real Impact</span>
             </h2>
           </div>
-          <div className="lg:w-1/2 mt-6 lg:mt-0">
+          {/* Right Column: Intro Text */}
+          <div className="lg:w-1/2">
             <p className="text-gray-600 lg:text-lg">
               At Sqwads, we believe the best way to grow is through hands-on
               experience. Dive into real-world projects across tech and non-tech
@@ -35,20 +35,8 @@ const Learn = () => {
               alt="People collaborating on a project for educational development"
               width={600}
               height={400}
-              className="rounded-lg shadow-lg"
+              className="rounded-lg"
             />
-            {/* Progress Bar Overlay */}
-            <div className="absolute bottom-4 left-4 bg-white p-3 rounded-md shadow-md flex items-center space-x-4">
-              <p className="text-sm font-medium text-gray-700">
-                Completion Level
-              </p>
-              <div className="w-32 h-2 bg-gray-300 rounded-full">
-                <div
-                  className="h-2 bg-red-500 rounded-full"
-                  style={{ width: `${progressValue}%` }}
-                ></div>
-              </div>
-            </div>
           </div>
 
           {/* Right Column: Article */}
@@ -73,7 +61,7 @@ const Learn = () => {
               alt="Person analyzing data on multiple monitors"
               width={600}
               height={400}
-              className="rounded-lg shadow-lg"
+              className="rounded-lg"
             />
           </div>
 
@@ -94,7 +82,6 @@ const Learn = () => {
               className="text-blue-600 underline font-medium flex items-center hover:underline"
             >
               Explore more projects
-             
             </a>
           </div>
         </div>
