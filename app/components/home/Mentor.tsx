@@ -39,7 +39,7 @@ const Mentor = () => {
           </p>
           <div>
             <h3 className="text-md font-semibold">Saad Bashar</h3>
-            <p className="text-blue-600 font-medium text-sm">Backend Developer</p>
+            <p className="text-blue-600 font-medium text-xs">Backend Developer</p>
           </div>
         </div>
 
@@ -50,7 +50,7 @@ const Mentor = () => {
           </p>
           <div>
             <h3 className="text-md font-semibold">Yusuf Olowode</h3>
-            <p className="text-blue-600 font-medium text-sm">Product Designer</p>
+            <p className="text-blue-600 font-medium text-xs">Product Designer</p>
           </div>
         </div>
 
@@ -61,7 +61,7 @@ const Mentor = () => {
           </p>
           <div>
             <h3 className="text-md font-semibold">Chukwuma Chidinma</h3>
-            <p className="text-blue-600 font-medium text-sm">Frontend Developer</p>
+            <p className="text-blue-600 font-medium text-xs">Frontend Developer</p>
           </div>
         </div>
 
@@ -72,7 +72,7 @@ const Mentor = () => {
           </p>
           <div>
             <h3 className="text-md font-semibold">Josephine Uzor</h3>
-            <p className="text-blue-600 font-medium text-sm">Product Manager</p>
+            <p className="text-blue-600 font-medium text-xs">Product Manager</p>
           </div>
         </div>
       </div>
