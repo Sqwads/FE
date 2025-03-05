@@ -19,7 +19,7 @@ export default function middleware(req: NextRequest) {
   ]
 
   const user = req.cookies.get("access_token")?.value
-  console.log(unauthenticatedRoutes.includes(req.nextUrl.pathname))
+  // console.log(unauthenticatedRoutes.includes(req.nextUrl.pathname))
   if (!unauthenticatedRoutes.includes(req.nextUrl.pathname)) {
 
     const url = req.nextUrl.clone();

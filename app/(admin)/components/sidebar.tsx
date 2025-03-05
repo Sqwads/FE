@@ -8,7 +8,11 @@ import Image from 'next/image';
 import { userWrapper } from '@/src/store';
 // import { userWrapper } from '@/src/store';
 
-const AdminSidebar = () => {
+const AdminSidebar = ({
+  onSelectTab
+}:{
+  onSelectTab?: ()=>void;
+}) => {
  
   const pathname = usePathname(); // Get current route
   const { user } = userWrapper((state) => ({
@@ -33,7 +37,8 @@ const AdminSidebar = () => {
 
         {/* Navigation Links */}
         <nav className="flex flex-col gap-4">
-          <Link 
+          <Link
+            onClick={onSelectTab} 
             href="/admin_dashboard" 
             className={`flex items-center gap-3 px-2 py-3 rounded-md ${
               isActive('/admin_dashboard') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
@@ -41,7 +46,8 @@ const AdminSidebar = () => {
           >
             <HiOutlineHome size={20} /> Dashboard
           </Link>
-          <Link 
+          <Link
+            onClick={onSelectTab}   
             href="/projects" 
             className={`flex items-center gap-3 p-2 rounded-md ${
               isActive('/projects') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
@@ -49,7 +55,8 @@ const AdminSidebar = () => {
           >
             <FaProjectDiagram size={20} /> Projects
           </Link>
-          <Link 
+          <Link
+            onClick={onSelectTab}   
             href="/users" 
             className={`flex items-center gap-3 p-2 rounded-md ${
               isActive('/users') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
@@ -57,7 +64,8 @@ const AdminSidebar = () => {
           >
             <FaUsers size={20} /> Users
           </Link>
-          <Link 
+          <Link
+            onClick={onSelectTab}   
             href="/mentors" 
             className={`flex items-center gap-3 p-2 rounded-md ${
               isActive('/mentors') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
@@ -65,7 +73,8 @@ const AdminSidebar = () => {
           >
             <FaUserTie size={20} /> Sqwad Mentors
           </Link>
-          <Link 
+          <Link
+            onClick={onSelectTab}   
             href="/admin" 
             className={`flex items-center gap-3 p-2 rounded-md ${
               isActive('/admin') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'

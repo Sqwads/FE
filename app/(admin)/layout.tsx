@@ -44,7 +44,7 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
 
        
       {/* Main Content */}
-      <div className="flex-1 h-screen overflow-y-scroll  bg-[#fdfdfd] ">
+      <div className="flex-1 h-screen overflow-y-scroll  bg-[#fcfafb] ">
         <TopNav />
         <div>
             {children}

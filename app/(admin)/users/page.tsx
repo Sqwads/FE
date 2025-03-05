@@ -15,8 +15,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { useForm, yupResolver } from "@mantine/form";
 import { UserSuspensionValidator } from "@/src/validators/validators";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { formatTextToSentenceCase } from "@/src/common";
 
 const UserListPage = () => {
+  const router = useRouter()
   const queryClient = useQueryClient()
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
@@ -93,7 +96,7 @@ const UserListPage = () => {
     {
       header:'Domain',
       accessorKey:'domain' ,
-      cell:({ row})=> row.original?.skills_of_interest[0],
+      cell:({ row})=> formatTextToSentenceCase(row.original?.skills_of_interest[0]),
     },
     {
       header:'Email',
@@ -137,8 +140,8 @@ const UserListPage = () => {
           </Button>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item>View Profile</Menu.Item>
-          <Menu.Item>Edit User</Menu.Item>
+          <Menu.Item onClick={()=>router.push(`/users/${row.original.userId}`)}>View Profile</Menu.Item>
+          <Menu.Item className="!cursor-not-allowed">Edit User</Menu.Item>
           {row.original?.status == 'ACTIVE' && <Menu.Item onClick={()=>handleSuspendUser(row.original)} color="red">Suspend User</Menu.Item>}
           {row.original?.status == 'SUSPENDED' && <Menu.Item onClick={()=>handleActivateUser(row.original?.userId)}  color="#028d4c">Activate User</Menu.Item>}
         </Menu.Dropdown>
@@ -248,13 +251,13 @@ const UserListPage = () => {
         <div className="flex justify-between items-center  rounded-lg">
           {/* Title and Subtitle */}
           <div>
-            <h1 className="text-3xl font-medium text-blue-600">Sqwads Users</h1>
+            <h1 className="lg:text-3xl text-2xl font-medium text-[#0234B8]">Sqwads Users</h1>
             <p className="text-gray-500 mt-1">An Overview of all sqwads users over the years</p>
           </div>
     
           {/* Export as CSV Button */}
           <button
-            className="flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200"
+            className="lg:flex hidden lg:text-base text-sm  items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200"
             aria-label="Export as CSV"
           >
             Export as CSV

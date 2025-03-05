@@ -19,7 +19,7 @@ const AppTable = (
 ) => {
   return (
     <div className="overflow-x-auto overflow-scroll  my-6">
-      <Table highlightOnHover className="min-w-[800px]">
+      <Table highlightOnHover className="w-full">
         {/* Table Header */}
         <thead className="bg-blue-900 text-white">
           {table?.getHeaderGroups().map((headerGroup, index)=>

@@ -20,15 +20,21 @@ export default function TopNav() {
             opened={opened} 
             onClose={close} 
             withCloseButton={false}
-            size={"xs"}
+            size={"65%"}
             styles={{
               body:{
                 padding:'0px',
-              }
+                // border:'1px solid red',
+                height: '100vh',
+                
+              },
+              
             }}
         >
-          <div className="h-screen">
-            <AdminSidebar/>
+          <div className="h-full">
+            <AdminSidebar
+              onSelectTab={close}
+            />
           </div>
       </Drawer>
       <div className=" mx-auto px-6 py-5 flex items-center justify-between">
