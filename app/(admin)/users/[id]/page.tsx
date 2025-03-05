@@ -144,7 +144,7 @@ const UserProfile = () => {
 
                 </div>
 
-                <div className="flex-1 bg-white rounded-xl py-7 lg:px-7 px-4 mt-7">
+                <div className="flex-1 bg-white rounded-xl py-7 lg:px-7 px-4 lg:mt-0 mt-7">
                     <div className="text font-medium text-2xl mb-7">Sqwads Activity</div>
 
                     <div className="flex border-b ">
