@@ -50,7 +50,7 @@ const AdminSidebar = ({
             onClick={onSelectTab}   
             href="/projects" 
             className={`flex items-center gap-3 p-2 rounded-md ${
-              isActive('/projects') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
+              pathname.startsWith('/projects') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
             }`}
           >
             <FaProjectDiagram size={20} /> Projects
@@ -59,7 +59,7 @@ const AdminSidebar = ({
             onClick={onSelectTab}   
             href="/users" 
             className={`flex items-center gap-3 p-2 rounded-md ${
-              isActive('/users') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
+              pathname.startsWith('/users') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
             }`}
           >
             <FaUsers size={20} /> Users

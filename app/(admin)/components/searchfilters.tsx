@@ -10,6 +10,7 @@ const SearchFilters = ({
   onChange,
   handleNextPage,
   handlePrevPage,
+  showExportBtn,
   currentPage,
   totalRecords,
   pageSize
@@ -19,7 +20,8 @@ const SearchFilters = ({
   handlePrevPage:()=>void,
   currentPage: number,
   totalRecords:number,
-  pageSize:number
+  pageSize:number,
+  showExportBtn?: boolean
 }) => {
  
   const pageStart = ((currentPage -1) * pageSize )+ 1
@@ -33,7 +35,7 @@ const SearchFilters = ({
       {/* Search & Filters */}
       <div className="flex flex-col md:flex-row gap-3 items-center w-full md:w-auto">
         {/* Search Input */}
-        <div className="w-full md:max-w-[40rem]">
+        <div className="w-full md:w-[20rem]">
           <TextInput
             placeholder="Search"
             leftSection={<FiSearch size={16} className="text-gray-500" />}
@@ -64,18 +66,15 @@ const SearchFilters = ({
           >
             Filters
           </Button>
+          {showExportBtn &&
           <button
-            className="flex lg:hidden lg:text-base text-sm  items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200"
-            aria-label="Export as CSV"
-          >
-            Export as CSV
-            {/* <Image 
-              src="/images/download.png"
-              alt="download"
-              width={30}
-              height={20}
-            /> */}
-          </button>
+              className="flex lg:hidden lg:text-base text-sm  items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200"
+              aria-label="Export as CSV"
+            >
+              Export as CSV
+            
+            </button>
+            }
           {/* <Button
             variant="outline"
             leftSection={<BsFilter size={16} />}

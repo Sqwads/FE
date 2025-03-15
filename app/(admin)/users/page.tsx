@@ -251,7 +251,7 @@ const UserListPage = () => {
         <div className="flex justify-between items-center  rounded-lg">
           {/* Title and Subtitle */}
           <div>
-            <h1 className="lg:text-3xl text-2xl font-medium text-[#0234B8]">Sqwads Users</h1>
+            <h1 className="lg:text-2xl text-2xl  text-[#0234B8]">Sqwads Users</h1>
             <p className="text-gray-500 mt-1">An Overview of all sqwads users over the years</p>
           </div>
     
@@ -277,6 +277,7 @@ const UserListPage = () => {
             totalRecords = {usersData?.data?.totalNoOfRecords}
             currentPage = {currentPage}
             pageSize = {pageSize}
+            showExportBtn
          />
 
         <AppTable

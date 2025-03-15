@@ -40,7 +40,7 @@ const UserProfile = () => {
 
 
     return (
-        <div className="py-10 lg:px-7 px-3 ">
+        <div className="py-10 lg:px-7 px- ">
             <div className='flex g:mb-10 mb-5 lg:text-2xl text-xl items-center'>
                 <Link href={"/users"}>
                     <MdKeyboardArrowLeft size={35} className='cursor-pointer' />
@@ -48,7 +48,7 @@ const UserProfile = () => {
                 </Link>
                 Profile
             </div>
-            <div className="lg:flex block  lg:mb-0  gap-y-5 rounded-2xl bg-white py-5 lg:px-14 px-5 w-full items-center">
+            <div className="lg:flex block  lg:mb-0  gap-y-5 rounded-2xl bg-white shadow-sm py-5 lg:px-14 px-5 w-full items-center">
                 <div className="flex lg:mr-20  mb-7  items-center justify-center">
                     <img src="/images/alex.png" className='h-20 w-20 mr-3 rounded-full object-cover' alt="" />
                     <div className='flex-1'>
@@ -73,15 +73,15 @@ const UserProfile = () => {
                     </div>
                     <div className="">
                         <div className="text text-[#16181B80]"> Date Joined </div>
-                        <div className="font-medium xl:text-lg text-lg">{moment(user?.profile?.createdAt ).format('MMMM Do YYYY')} </div>
+                        <div className="lg:font-medium xl:text-lg text-base">{moment(user?.profile?.createdAt ).format('MMMM Do YYYY')} </div>
                     </div>
                 </div>
 
             </div>
 
-            <div className="lg:flex mt-10 gap-x-5 ">
+            <div className="lg:flex lg:mt-5 mt-5 gap-x-5 ">
                 <div className="lg:w-2/5  rounded-xl bg-white py-7 px-4">
-                    <div className="font-semibold text-2xl mb-7">Profile Information</div>
+                    <div className="font- text-2xl mb-7">Profile Information</div>
 
                     <div className='mb-7'>
                         <div className="mb-4">
@@ -145,7 +145,7 @@ const UserProfile = () => {
                 </div>
 
                 <div className="flex-1 bg-white rounded-xl py-7 lg:px-7 px-4 lg:mt-0 mt-7">
-                    <div className="text font-medium text-2xl mb-7">Sqwads Activity</div>
+                    <div className="text font- text-2xl mb-7">Sqwads Activity</div>
 
                     <div className="flex border-b ">
                         {tabs.map((item, idx) =>
@@ -159,7 +159,7 @@ const UserProfile = () => {
                         )}
                     </div>
 
-                    {tabs[0].isActive && <ProjectTab />}
+                    {tabs[0].isActive && <ProjectTab projects={user?.projects} />}
                     {tabs[1].isActive && <div>Conversations</div>}
                     {tabs[2].isActive && <div>Portfolio</div>}
 
