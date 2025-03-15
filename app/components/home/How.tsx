@@ -30,21 +30,21 @@ const How = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section className="bg-white lg:py-1 py-7 px-6 md:px-12 lg:px-20">
+    <section className="bg-white  lg:py-7 py-3 px-6 md:px-12 lg:px-20">
       <div className="mb-8">
-        <button className="bg-purple-100 text-purple-700 py-2 px-4 rounded-full font-medium hover:bg-purple-200 transition duration-300">
-          ⚡ TO GET STARTED
+        <button className="border border-[#9900C7] text-purple-700 py-2 px-4 rounded-md text-sm font-medium  transition duration-300">
+          ⚡ <span className="bg-gradient-to-r from-[#001D69] via-[#7C96DB] via-[#9900C7] to-[#FF00FB] bg-clip-text text-transparent">TO GET STARTED</span> 
         </button> 
       </div>
 
-      <h2 className="text-4xl font-medium text-gray-900 md:text-4xl lg:mb-4">
-        <div className='mb-2'>How Sqwads works</div> 
+      <h2 className="text-2xl font-medium text-gray-900 md:text-3xl lg:mb-4">
+        <div className='mb'>How Sqwads works</div> 
         <span className="text-blue-600">in 3 steps</span>
       </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div>
-          <div className="space-y-4 my-10 border-l-2 border-[#f0efef]">
+          <div className="space-y-3 my-10 border-l-2 border-[#f0efef]">
             {steps.map((step, index) => (
               <div
                 key={index}
@@ -55,7 +55,7 @@ const How = () => {
                   <div className="flex items-center justify-center h-12 w-12 rounded-full bg-[#F5F5F5] text-gray-900 text-xl font-bold">
                     {step.number}
                   </div>
-                  <p className={`lg:text-lg text-base font-medium ${index === activeStep ? 'text-gray-900' : 'text-gray-500'}`}>
+                  <p className={`lg:text-base text-base font-medium ${index === activeStep ? 'text-gray-900' : 'text-gray-500'}`}>
                     {step.text}
                   </p>
                 </div>

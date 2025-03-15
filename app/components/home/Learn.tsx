@@ -3,14 +3,14 @@ import React from "react";
 
 const Learn = () => {
   return (
-    <section className="bg-[#F9FDFF] py-16 px-8 lg:px-16">
+    <section className="bg-[#F9FDFF] py-16 px-8 lg:px-24">
       {/* Container */}
-      <div className="max-w-6xl mx-auto space-y-16">
+      <div className="mal mx-auto space-y-16">
         {/* First Section: Header + Intro */}
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
           {/* Left Column: Header */}
           <div className="lg:w-1/2">
-            <h2 className="text-4xl font-medium text-gray-800">
+            <h2 className="text-2xl lg:text-3xl font-medium text-gray-800">
               Learn by Doing: <br />
               <span className="text-blue-600 underline">Real Projects, Real Impact</span>
             </h2>
@@ -29,7 +29,7 @@ const Learn = () => {
         {/* Second Section: Image + Description */}
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Left Column: Image */}
-          <div className="relative lg:w-1/2">
+          <div className=" lg:w-1/2">
             <Image
               src="/images/learn.png"
               alt="People collaborating on a project for educational development"
@@ -70,7 +70,7 @@ const Learn = () => {
             <h3 className="text-3xl font-semibold text-gray-800">
               Analyze Data for a Non-Profit to Drive Better Decisions
             </h3>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 lg:text-lg">
               Leverage data insights to support impactful decision-making,
               optimize resources, and enhance the effectiveness of programs,
               helping the non-profit achieve its mission.

@@ -7,7 +7,7 @@ const ShowCase = () => {
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 max-w-6xl mx-auto">
         <div>
-        <h2 className="lg:text-4xl text-3xl font-medium text-blue-600 leading-tight">
+        <h2 className="lg:text-4xl text-3xl font-medium text-[#0234B8] leading-tight">
                 Showcase Your Work <br />
             <span className="text-gray-800">Impress Employers</span>
           </h2>
@@ -24,7 +24,7 @@ const ShowCase = () => {
         </div>
 
         <div className='lg:w-1/2'>
-                <p className="text-lg text-gray-600 leading-relaxed">
+                <p className="lg:text-lg text-gray-600 leading-relaxed">
                   Build a portfolio that highlights your best projects, complete with mentor feedback and
                   real-world applications. Use Sqwads’ Portfolio Builder to create a shareable link or
                   download a professional portfolio PDF.
@@ -39,7 +39,7 @@ const ShowCase = () => {
         {/* Left Image */}
         <div className="flex-shrink-0">
           <Image
-            src="/portfolio.png"
+            src="/images/portfolio.png"
             alt="Portfolio Screenshot 1"
             width={800}
             height={600}

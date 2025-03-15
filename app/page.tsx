@@ -15,8 +15,8 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <div
-        className="hero-bg min-h-screen py-4 lg:py-7 px-2 md:px-5 lg:px-14"
-        style={{ backgroundImage: 'url("/images/sqwads-bg.png")' }}
+        className="hero-bg min-h-screen pt-4 lg:pt-7 px-2 md:px-5 lg:px-14"
+        style={{ backgroundImage: 'url("/images/hero.png")', backgroundSize:'cover', backgroundPosition:'center' }}
       >
         <Navbar />
         <Hero />

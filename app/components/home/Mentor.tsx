@@ -7,9 +7,10 @@ const Mentor = () => {
     
 
       {/* Title and Subtitle */}
-      <div className="text-center mb-12 max-w-[700px] mx-auto">
-        <button className="bg-purple-600 text-white rounded-full px-6 py-2 uppercase text-sm mb-7">
-          Learn From the Best
+      <div className="text-center mb-12 px-3 max-w-[700px] mx-auto">
+        <button className="border border-[#9900C7] text-white rounded-md px-6 py-2 uppercase text-sm mb-7">
+        <span className="bg-gradient-to-r from-[#001D69] via-[#7C96DB] via-[#9900C7] to-[#FF00FB] bg-clip-text text-transparent">Learn From the Best</span> 🥰
+          
         </button>
         <h2 className="text-3xl md:text-4xl font-medium mb-5 text-[#1b3c91]">Get Mentored by Industry Experts</h2>
         <p className="text-gray-600 text-base  mt-4">

@@ -13,10 +13,10 @@ const Value = () => {
           {/* Section Title */}
           <div className="text-center">
             <button
-              className="bg-purple-100 border border-[##FF00FB] text-[#FF00DD] py-2 px-4 rounded-md font-medium hover:bg-purple-200 transition duration-300">
-              Benefits 🥰
+              className=" border  py-2 px-4 rounded-md font-medium border-[#9900C7]">
+              <span className="bg-gradient-to-r from-[#001D69] via-[#7C96DB] via-[#9900C7] to-[#FF00FB] bg-clip-text text-transparent">Benefits</span> 🥰
             </button>
-            <h2 className="mt-4 text-3xl font-medium text-[#1b3c91] sm:text-4xl">
+            <h2 className="mt-4 text-3xl font-medium text-[#001D69] sm:text-3xl">
               Value Proposition
             </h2>
           </div>
@@ -26,9 +26,9 @@ const Value = () => {
             {/* Card 1 */}
             <div className="flex flex-col  bg-gray-50 p-8 rounded-lg  border border-[#dfdede]">
 
-              <RiLightbulbLine className="text-indigo-600 mb-5" size={35} />
+              <RiLightbulbLine className="text-[#0234B8] mb-5" size={35} />
 
-              <h3 className="text-2xl font-medium  text-[#1b3c91]">
+              <h3 className="text-2xl font-medium  text-[#001D69]">
                 Hands-On Experience
               </h3>
               <p className="mt-4 text-gray-500 ">
@@ -38,8 +38,8 @@ const Value = () => {
 
             {/* Card 2 */}
             <div className="flex flex-col  bg-gray-50 p-8 rounded-lg  border border-[#dfdede]">
-              <LuUsers className="text-indigo-600 mb-5" size={35} />
-              <h3 className="text-2xl font-medium  text-[#1b3c91]">
+              <LuUsers className="text-[#0234B8] mb-5" size={35} />
+              <h3 className="text-2xl font-medium  text-[#001D69]">
                 Mentorship
               </h3>
               <p className="mt-4 text-gray-500 ">
@@ -49,8 +49,8 @@ const Value = () => {
 
             {/* Card 3 */}
             <div className="flex flex-col  bg-gray-50 p-8 rounded-lg  border border-[#dfdede]">
-              <BsPersonVcard className="text-indigo-600 mb-5" size={35} />
-              <h3 className="text-2xl font-medium text-[#1b3c91]">
+              <BsPersonVcard className="text-[#0234B8] mb-5" size={35} />
+              <h3 className="text-2xl font-medium text-[#001D69]">
                 Portfolio Building
               </h3>
               <p className="mt-4 text-gray-500 ">
@@ -65,7 +65,7 @@ const Value = () => {
         <div className="max-w-7xl mx-auto px-3 lg:px-8">
           <div className="relative xl:flex items-center">
             {/* Image Section */}
-            <div className="xl:w-[60%] xl:mb-0 mb-7">
+            <div className="xl:w-[70%] xl:mb-0 mb-1">
               <Image
                 src={mission}
                 alt="Mission"
@@ -74,8 +74,8 @@ const Value = () => {
             </div>
 
             {/* Text Section */}
-            <div className="xl:w-[40%] xl:-ml-10 relative z-10">
-              <div className="bg-blue-900 text-white p-10 rounded-3xl shadow-lg">
+            <div className="xl:w-[35%] xl:-ml-10 relative z-10">
+              <div className=" bg-gradient-to-b from-[#0636D4] to-[#001D69] text-white p-10 rounded-3xl shadow-lg">
                 <h3 className="text-2xl  mb-6">
                   <span className="text-[#9BB7FF]">Mission: </span>To empower Africa&apos;s aspiring professionals with open-source projects and hands-on learning opportunities.
                 </h3>

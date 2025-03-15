@@ -84,10 +84,10 @@ const Stories = () => {
     <section className="bg-white py-8 px-6 md:px-12 lg:px-20">
       {/* Header */}
       <div className="mb-8 text-left">
-        <button className="bg-purple-100 text-purple-700 py-1 px-3 rounded-full font-medium hover:bg-purple-200 transition">
+        <button className="border border-[#9900C7] bg-gradient-to-r from-[#001D69] via-[#7C96DB] via-[#9900C7] to-[#FF00FB] bg-clip-text text-transparent py-1 px-3 rounded-md font-medium hover:bg-purple-200 transition">
           TESTIMONIALS
         </button>
-        <h2 className="text-4xl font-medium text-gray-900 mt-4">
+        <h2 className="text-3xl font-medium text-gray-900 mt-4">
           Stories from <br />
           <span className="text-blue-600">Sqwad Graduates</span>
         </h2>

@@ -6,19 +6,27 @@ import hero from '../../../public/images/hero-image.png';
 const Hero = () => {
   return (
     <section 
-      className="flex flex-col items-center justify-center px-6 w-full text-white rounded-xl relative"
+      className="flex flex-col items-center justify-center lg:px-6 px-3 w-full text-white rounded-xl relative"
     >
       {/* Centered Content */}
-      <div className="flex flex-col items-center text-center gap-6 max-w-2xl">
-        <h1 className=" text-[2.5rem] text-[#F5F5F5] font-bold">
-          Bridge the Gap Between  <br /><span className="text-[#4900A5]">Learning</span> <span className="text-[#4900A5]">and Doing</span>
-        </h1>
+      <div className="flex flex-col lg:items-center lg:text-center tracking-tighter px-3 max-w-[]">
+        <div className="mb-7">
+          <div className=" lg:text-[3.3rem] leading-[2.7rem] lg:leading-[3rem]  text-[2.2rem]  text-[#F5F5F5] font-medium">
+            Bridge the Gap Between {" "} 
+            <span className="bg-gradient-to-r inline lg:hidden bg-clip-text text-transparent lg:mt-[-1rem] from-[#D6E1FF] via-[#C379FF] to-[#5080FF] lg:text-[3rem]  text-[2.2rem] font-semibold tracking-tighter">
+              Learning and doing
+            </span>
+          </div>
+          <div className="bg-gradient-to-r hidden lg:block bg-clip-text text-transparent  from-[#D6E1FF] via-[#C379FF] to-[#5080FF] lg:text-[3rem]  text-[2.4rem] font-semibold tracking-tighter">
+            Learning and doing
+          </div>
+        </div>
 
-        <p className="lg:text-xm text-[#D5D7DA]">
+        <div className="lg:text-xl text-sm text-[#D5D7DA] lg:leading-[2rem] mb-10">
           Transform your skills into practical experience by working on open-source projects <br /> with guidance from industry experts.
-        </p>
+        </div>
 
-        <button className="h-30 flex items-center text-white rounded-md bg-[#0234B8] py-3 px-6 hover:bg-blue-700 transition duration-300">
+        <button className="flex w-fit items-center text-white rounded-md bg-[#0234B8] border border-[#5483FF] lg:py-3 py-2 lg:text-base text-sm px-6 hover:bg-blue-700 transition duration-300">
           Learn More <FaLongArrowAltRight size={23} className="ml-2 animate-bounce w-6 h-6" />
         </button>
       </div>
@@ -26,12 +34,11 @@ const Hero = () => {
       {/* Hero Image Container */}
       <div className="w-full max-w-5xl relative mt-20">
         {/* Sparkle Image */}
-        <div className="absolute -top-8 -left-8 z-10">
-          <Image
+        <div className="absolute lg:-top-8 -top-10 lg:-left-20 -left-[-17rem] z-10">
+          <img
             src='/images/Sparkle_2.png'
             alt="sparkle"
-            width={50}
-            height={50}
+            className="lg:h-14 h-10 object-cover w-20"
           />
         </div>
 

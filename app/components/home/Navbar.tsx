@@ -15,10 +15,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flexBetween px-6 py-4 rounded-lg relative z-30 mb-7 shadow-md">
+    <nav className="flexBetween px-6 py-4 rounded-lg relative z-30 mb-16 shadow-md">
       {/* Logo */}
       <Link href="/">
-        <Image src="/images/sqwads-logo.png" alt="logo" width={200} height={50} />
+        <img src="/images/sqwads-logo.png" alt="logo" className="h-10 lg:h-12 lg:w-42 w-40 object-cover " />
       </Link>
 
       {/* Desktop Navigation */}
@@ -69,7 +69,7 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="absolute top-16 left-0 w-full bg-blue-950 rounded-lg shadow-md">
+        <div className="absolute top-16 py-5 left-0 w-full bg-blue-950 rounded-lg shadow-md">
           <ul className="flex flex-col items-center gap-4 py-4">
             {NAV_LINKS.map((link) => (
               <li key={link.key} className="flex items-center">
