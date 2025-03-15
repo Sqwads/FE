@@ -5,14 +5,14 @@ import hero from '../../../public/images/hero-image.png';
 
 const Hero = () => {
   return (
-    <section 
+    <section
       className="flex flex-col items-center justify-center lg:px-6 px-3 w-full text-white rounded-xl relative"
     >
       {/* Centered Content */}
       <div className="flex flex-col lg:items-center lg:text-center tracking-tighter px-3 max-w-[]">
         <div className="mb-7">
           <div className=" lg:text-[3.3rem] leading-[2.7rem] lg:leading-[3rem]  text-[2.2rem]  text-[#F5F5F5] font-medium">
-            Bridge the Gap Between {" "} 
+            Bridge the Gap Between {" "}
             <span className="bg-gradient-to-r inline lg:hidden bg-clip-text text-transparent lg:mt-[-1rem] from-[#D6E1FF] via-[#C379FF] to-[#5080FF] lg:text-[3rem]  text-[2.2rem] font-semibold tracking-tighter">
               Learning and doing
             </span>
@@ -22,7 +22,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="lg:text-xl text-sm text-[#D5D7DA] lg:leading-[2rem] mb-10">
+        <div className="lg:text-xl text-base text-[#D5D7DA] lg:leading-[2rem] mb-10">
           Transform your skills into practical experience by working on open-source projects <br /> with guidance from industry experts.
         </div>
 
@@ -43,7 +43,7 @@ const Hero = () => {
         </div>
 
         {/* Hero Image */}
-        <Image 
+        <Image
           src={hero}
           alt="hero"
           className="rounded-lg shadow-lg w-full"
