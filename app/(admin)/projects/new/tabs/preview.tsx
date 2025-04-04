@@ -74,7 +74,7 @@ const Preview = ({
 
             <div className="mt-16">
                 <button 
-                    className={`py-3 px-5 rounded-md bg-[#001D69] rounded-md w-full text-[white] disabled:opacity-50 disabled:cursor-not-allowed`}
+                    className={`py-3 px-5 bg-[#001D69] rounded-md w-full text-[white] disabled:opacity-50 disabled:cursor-not-allowed`}
                     disabled = {projectCreatnIsPending}
                     onClick={handleSubmit}
                 >

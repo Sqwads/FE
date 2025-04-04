@@ -93,22 +93,26 @@ const Projects = () => {
                 </div>
         },
         {
-            header:'Action',
-            id:'action',
-            cell:({ row})=>  
-            <Menu position="bottom-end" shadow="md" width={200}>
-            <Menu.Target>
-                <Button variant="subtle" size="compact-icon">
-                <BsThreeDotsVertical />
-                </Button>
-            </Menu.Target>
-            <Menu.Dropdown>
-                <Menu.Item >View Project</Menu.Item>
-                <Menu.Item className="!cursor-not-allowed">Edit Project</Menu.Item>
-                <Menu.Item className="!cursor-not-allowed">Archive Project</Menu.Item>
-            </Menu.Dropdown>
-            </Menu>
+            header: 'Action',
+            id: 'action',
+            cell: ({ row }) => (
+                <Menu position="bottom-end" shadow="md" width={200}>
+                    <Menu.Target>
+                        <Button variant="subtle" size="compact-icon">
+                            <BsThreeDotsVertical />
+                        </Button>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                        <Menu.Item component={Link} href={`/projects/${row.original._id}`}>
+                            View Project
+                        </Menu.Item>
+                        <Menu.Item className="!cursor-not-allowed">Edit Project</Menu.Item>
+                        <Menu.Item className="!cursor-not-allowed">Archive Project</Menu.Item>
+                    </Menu.Dropdown>
+                </Menu>
+            )
         }
+    
     ]
 
     const {data: response, isPending} = useQuery({
