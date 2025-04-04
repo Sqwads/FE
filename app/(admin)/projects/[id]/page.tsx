@@ -66,7 +66,7 @@ const ProjectView: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-0 p-6 w-full min-h-screen bg-gray-50">
-      {/* Left Content Section - Adjusted to 3/4 width */}
+
       <div className="lg:col-span-3 pr-6 lg:border-r border-gray-200">
         <div className="rounded-2xl p-6">
           {/* Project Header */}
@@ -124,9 +124,8 @@ const ProjectView: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Sidebar - Adjusted to 1/4 width */}
       <div className="space-y-0 pl-6">
-        {/* Archive Project Button - Moved to right section */}
+
         <div className="flex justify-end mb-4">
           <button className="flex items-center gap-2 border border-blue-600 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
