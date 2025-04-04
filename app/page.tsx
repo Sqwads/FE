@@ -9,6 +9,7 @@ import Stories from "@/app/components/home/Stories";
 import Join from "@/app/components/home/Join";
 import Browse from "@/app/components/home/Browse";
 import Footer from "@/app/components/Footer"; // Import Footer component
+import Core from "./components/home/Core";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
 
       {/* Content Sections */}
       <Value />
+      <Core />
       <How />
       <Learn />
       <div>
