@@ -12,13 +12,14 @@ import { instance } from '@/src/api/instance';
 import { formatTextToSentenceCase } from '@/src/common';
 import SearchFilters from '../components/searchfilters';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 
 const Projects = () => {
 
     const colorCodes = {
         COMPLETED: ['#01C5691A','#01C569'],
-        ARCHIVE: [ '#FFA52F1A', '#FFA52F'],
+        ARCHIVE: [ '#5339161a', '#FFA52F'],
         ONGOING: ['#36BFFA1A','#36BFFA'],
         OVERDUE: ['#F532251A', '#F53225']
     }
@@ -26,6 +27,9 @@ const Projects = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [pageSize] = useState(5)
+    const router = useRouter()
+   
+
     const projectDtHeader: ColumnDef<any>[] = [
         {
             header: 'Project Name',
@@ -104,7 +108,7 @@ const Projects = () => {
             </Menu.Target>
             <Menu.Dropdown>
                 <Menu.Item >View Project</Menu.Item>
-                <Menu.Item className="!cursor-not-allowed">Edit Project</Menu.Item>
+                <Menu.Item onClick={()=>router.push(`/projects/new?mode=edit&project=${row.original._id}`)} className="">Edit Project</Menu.Item>
                 <Menu.Item className="!cursor-not-allowed">Archive Project</Menu.Item>
             </Menu.Dropdown>
             </Menu>

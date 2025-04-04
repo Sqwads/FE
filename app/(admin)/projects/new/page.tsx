@@ -1,6 +1,6 @@
 "use client"
 
-import React, {  useEffect, useState } from 'react';
+import React, {  Suspense, useEffect, useState } from 'react';
 import BasicDetails from './tabs/basicDetails';
 import toast from 'react-hot-toast';
 import { useForm, UseFormReturnType, yupResolver } from '@mantine/form';
@@ -12,7 +12,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '@/src/api/instance';
 import Others from './tabs/others';
 import Preview from './tabs/preview';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const CreateProject = () => {
 
@@ -25,6 +25,7 @@ const CreateProject = () => {
     }
 
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [imageSrc, setImageSrc] = useState<any>(null);
     const [file, setFile] = useState<any>(null);
     const [skills, setSkills] = useState<any[]>([])
@@ -33,6 +34,63 @@ const CreateProject = () => {
     const [membersOptions, setMembersOptions] = useState<{ label: string; value: string }[]>([]);
     const [selectedProjectLead, setSelectedProjectLead] = useState('')
     const [searchQuery, setSearchQuery] = useState('')
+
+    const projectId = searchParams.get('project')
+   
+   
+
+    const {data: fetchedProject} = useQuery({
+        queryFn: ()=>instance.get(`/project/${projectId}`),
+        queryKey: ['projects', projectId],
+        enabled: !!projectId
+    })
+
+    useEffect(()=>{
+        const data = fetchedProject?.data
+
+        if(data?.coverImage){
+            setImageSrc(data?.coverImage)
+        }
+
+        form.setValues({
+            name: data?.name,
+            features: data?.features,
+            description: data?.description,
+            overview: data?.overview
+        })
+        
+        timelineForm.setValues({
+            startDate: new Date(data?.startDate),
+            endDate:new Date(data?.endDate)
+        })
+
+        setSkills(data?.skills?.map((item:any)=>item?.name))
+        setSelectedTools(data?.skills || [])
+        const availableUserOptions = data?.teamMembers?.map((item:any)=>({
+            label: `${item?.user?.firstName} ${item?.user?.lastName} - ${item?.role}`,
+            value: item?.user?._id
+        })) || []
+
+        setMembersOptions( removeDuplicates(
+            [
+                ...availableUserOptions, 
+                {
+                    label: `${data?.projectLead?.firstName} ${data?.projectLead?.lastName}`,
+                    value: data?.projectLead?._id
+                }
+            ]
+        ))
+
+        setSelectedMembers(availableUserOptions)
+        setSelectedProjectLead(data?.projectLead?._id)
+        additionalInfoForm.setValues({
+            additionalInfo: data?.additionalInfo
+        })
+
+        
+     
+
+    }, [fetchedProject?.data])
 
     const form = useForm({
         initialValues: {
@@ -43,7 +101,7 @@ const CreateProject = () => {
 
     const timelineForm = useForm({
         initialValues: {
-            startDate: '', endDate: ''
+            startDate: '' as string | Date, endDate: '' as string | Date
         },
         validate: yupResolver(TimeLineValidator)
     })
@@ -136,14 +194,14 @@ const CreateProject = () => {
         setSearchQuery(query)
     };
 
-    function removeDuplicates(arr: any) {
+
+    function removeDuplicates(arr: any[]) {
         const seen = new Set();
-        return arr.filter((item:any) => {
-          const serialized = JSON.stringify(item);
-          if (seen.has(serialized)) {
+        return arr.filter((item: any) => {
+          if (seen.has(item.value)) {
             return false;
           } else {
-            seen.add(serialized);
+            seen.add(item.value);
             return true;
           }
         });
@@ -155,6 +213,7 @@ const CreateProject = () => {
                 label: `${user?.firstName} ${user?.lastName} - ${user?.skills_of_interest[0]}`, // Display name
                 value: user._id, // Unique ID
             }));
+           
             setMembersOptions(removeDuplicates([...formattedOptions, ...membersOptions]));
         }
     }, [usersData]);
@@ -223,6 +282,20 @@ const CreateProject = () => {
         },
     })
 
+    const {mutate:editProject, isPending: projectEditIsPending} = useMutation({
+        mutationFn: (data:any)=>instance.patch(`/project`, data),
+        mutationKey: ['projectEdit'],
+        onSuccess() {
+            toast.success('Project Edited Successfully')
+            router.push('/projects')
+        },
+        onError(error:any) {
+            toast.error('Project Edit Failed')
+            console.log(error?.response?.data)
+        },
+    })
+
+
     const handleSUbmit = ()=>{
         
         // const isBasicDetailsValidated = 
@@ -261,7 +334,12 @@ const CreateProject = () => {
             formdata.append('file', file)
         }
 
-        createProject(formdata)
+        if(projectId){
+            formdata.append('projectId', projectId)
+            editProject(formdata)
+        }else{
+            createProject(formdata)
+        }
 
 
     }
@@ -339,7 +417,7 @@ const CreateProject = () => {
                             membersOptions={membersOptions}
                             selectedProjectead={selectedProjectLead}
                             handleSubmit={handleSUbmit}
-                            projectCreatnIsPending={projectCreatnIsPending}
+                            projectCreatnIsPending={projectCreatnIsPending || projectEditIsPending}
                         />
                     }
                 </div>
@@ -349,4 +427,10 @@ const CreateProject = () => {
     );
 }
 
-export default CreateProject;
+export default function CreateProjectWrapper (){
+    return(
+        <Suspense>
+            <CreateProject/>
+        </Suspense>
+    )
+};
