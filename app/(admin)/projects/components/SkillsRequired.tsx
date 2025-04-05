@@ -40,7 +40,7 @@ const SkillsRequired: React.FC<SkillsRequiredProps> = ({
         <h3 className="text-lg font-semibold text-[#001D69]">SKILLS REQUIRED</h3>
         <button 
           onClick={onEdit}
-          className="text-#001D69 text-sm hover:underline"
+          className="text-[#001D69] text-sm hover:underline"
         >
           Edit Skills
         </button>

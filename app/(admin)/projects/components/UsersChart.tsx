@@ -23,13 +23,13 @@ const UsersChart: React.FC<UsersChartProps> = ({
   const getRoleColor = (role: string) => {
     switch (role) {
       case 'Product Design':
-        return 'bg-blue-500';
+        return 'bg-[#38428D]';
       case 'Front-end dev':
-        return 'bg-teal-500';
+        return 'bg-[#36BFFA]';
       case 'Back-end dev':
-        return 'bg-red-500';
+        return 'bg-[#F53225]';
       case 'Product Mgt':
-        return 'bg-purple-500';
+        return 'bg-[#EE46BC]';
       default:
         return 'bg-gray-500';
     }
@@ -41,7 +41,7 @@ const UsersChart: React.FC<UsersChartProps> = ({
         <h3 className="text-lg font-semibold text-blue-900">USERS</h3>
         <button 
           onClick={onEdit}
-          className="text-blue-600 text-sm hover:underline"
+          className="text-[#001D69] text-sm hover:underline"
         >
           Edit Users
         </button>
@@ -53,9 +53,9 @@ const UsersChart: React.FC<UsersChartProps> = ({
         <div className="space-y-2 mb-4 md:mb-0">
           {users.map((user, index) => (
             <div key={index} className="flex items-center">
-              <div className={`w-3 h-3 rounded-full ${getRoleColor(user.role)} mr-2`}></div>
+              <div className={`w-3 h-3  rounded-full ${getRoleColor(user.role)} mr-2`}></div>
               <span className="text-gray-700">{user.role}</span>
-              <span className="ml-auto font-medium">{user.count}</span>
+              <span className="ml-auto pl-4 font-medium">{user.count}</span>
             </div>
           ))}
         </div>

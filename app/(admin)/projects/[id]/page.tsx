@@ -8,6 +8,7 @@ import Timeline from '../components/Timeline';
 import SkillsRequired from '../components/SkillsRequired';
 import UsersChart from '../components/UsersChart';
 import ProjectDescription from '../components/ProjectDescription';
+import timelineImg from "../../../../public/images/timeline.png"
 
 const ProjectView: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Description');
@@ -56,10 +57,10 @@ const ProjectView: React.FC = () => {
       { name: 'Product', color: 'blue' }
     ],
     users: [
-      { role: 'Product Design', count: 4, color: 'blue' },
-      { role: 'Front-end dev', count: 4, color: 'teal' },
-      { role: 'Back-end dev', count: 2, color: 'red' },
-      { role: 'Product Mgt', count: 2, color: 'purple' }
+      { role: 'Product Design', count: 4, color: '#38428D' },
+      { role: 'Front-end dev', count: 4, color: '#207194' },
+      { role: 'Back-end dev', count: 2, color: '#8F1D16' },
+      { role: 'Product Mgt', count: 2, color: '#88286B' }
     ],
     totalUsers: 12
   };
@@ -139,10 +140,8 @@ const ProjectView: React.FC = () => {
         <div className="rounded-2xl p-6">
           <div className="w-full h-48 relative rounded-lg overflow-hidden">
             <Image 
-              src="/images/timeline.png" 
-              alt="Weather Forecast App" 
-              width={60}
-              height={20}
+              src={timelineImg}
+              alt='timeline'
               className="w-full h-full"
             />
           </div>
