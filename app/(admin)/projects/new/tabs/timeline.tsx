@@ -49,7 +49,7 @@ const Timeline = ({
 
                 {!previewMode &&
                 <div className="flex justify-end mt-10">
-                    <button type='submit' className='py-3 px-5 rounded-md bg-[#001D69] rounded-md text-sm text-[white]'>Proceed to Next</button>
+                    <button type='submit' className='py-3 px-5 bg-[#001D69] rounded-md text-sm text-[white]'>Proceed to Next</button>
                 </div>
                 }
             </form>
