@@ -14,7 +14,7 @@ const Value = () => {
           <div className="text-center">
             <button
               className=" border  py-2 px-4 rounded-md font-medium border-[#9900C7]">
-              <span className="bg-gradient-to-r from-[#001D69] via-[#7C96DB] via-[#9900C7] to-[#FF00FB] bg-clip-text text-transparent">Benefits</span> 🥰
+              <span className="bg-gradient-to-r from-[#001D69] via-[#9900C7] to-[#FF00FB] bg-clip-text text-transparent">Benefits</span> 🥰
             </button>
             <h2 className="mt-4 text-3xl font-medium text-[#001D69] sm:text-3xl">
               Value Proposition
