@@ -14,14 +14,14 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
   const tabs = ['Description', 'Members', 'Discussion'];
   
   return (
-    <div className="flex space-x-6 border-b mt-4 mb-6">
+    <div className="flex space-x-6 border-b mt-10 mb-6">
       {tabs.map((tab) => (
         <button
           key={tab}
           className={`pb-2 font-medium ${
             activeTab === tab
-              ? 'border-b-2 border-blue-600 text-blue-600'
-              : 'text-gray-600 hover:text-blue-600'
+              ? 'border-b-2 rounded border-[#001D69] text-[#001D69]'
+              : 'text-gray-400 hover:text-blue-600'
           }`}
           onClick={() => onTabChange(tab)}
         >

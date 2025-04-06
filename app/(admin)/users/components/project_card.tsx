@@ -48,6 +48,7 @@ const ProjectCard = ({
                     {tools?.map((item: string, idx: number)=>
                         <button 
                             className={`px-2 py-1 text-xs rounded-md `}
+                            key={idx}
                             style={{
                                 background: customColors[idx % customColors.length].light,
                                 color:  customColors[idx % customColors.length].deep,
