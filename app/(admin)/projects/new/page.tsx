@@ -46,6 +46,7 @@ const CreateProject = () => {
     })
 
     useEffect(()=>{
+        if(!projectId) return
         const data = fetchedProject?.data
 
         if(data?.coverImage){

@@ -29,7 +29,6 @@ const Projects = () => {
     const [pageSize] = useState(5)
     const router = useRouter()
    
-
     const projectDtHeader: ColumnDef<any>[] = [
         {
             header: 'Project Name',
