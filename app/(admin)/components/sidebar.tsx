@@ -66,7 +66,7 @@ const AdminSidebar = ({
           </Link>
           <Link
             onClick={onSelectTab}   
-            href="/mentors" 
+            href="/mentorship" 
             className={`flex items-center gap-3 p-2 rounded-md ${
               isActive('/mentors') ? 'bg-blue-900 text-white' : 'text-gray-700 hover:bg-blue-100'
             }`}
