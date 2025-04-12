@@ -29,7 +29,7 @@ const LoginPage = () => {
     mutationKey: ['auth', 'login'],
     onSuccess(response) {
       console.log(response.data)
-      if (response.data?.data?.role == 'ADMIN') {
+      if (response.data?.data?.role == 'ADMIN' || response.data?.data?.role == 'SUPER_ADMIN') {
         cookieStorage.setItem('access_token', response.data?.data?.access_token)
         toast.success('Authentication Successful !!!')
         router.push('/admin_dashboard')

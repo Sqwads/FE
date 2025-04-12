@@ -227,7 +227,7 @@ const CreateProject = () => {
 
 
     const handleProceed = () => {
-        console.log('good')
+        // console.log('good')
         const nextIdx = tabs.findIndex(item => item.isActive) + 1
         goToNextTab(nextIdx)
     }

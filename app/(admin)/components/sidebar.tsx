@@ -19,7 +19,7 @@ const AdminSidebar = ({
     user: state.user,
   }));
 
-  console.log(user)
+  // console.log(user)
   // Function to check if the link is active
   const isActive = (path: string): boolean => pathname === path;
 

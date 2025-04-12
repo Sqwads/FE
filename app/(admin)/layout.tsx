@@ -17,7 +17,7 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
     setUser: state.setUser,
     user: state.user
   }))
-  console.log(user?.firstName)
+  // console.log(user?.firstName)
   const { data: response, isPending: userInfoIsLoading } = useQuery({
     queryFn: () => instance.get('/user/admin'),
     queryKey: ['admin'],
