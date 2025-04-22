@@ -28,7 +28,7 @@ const KPICard: React.FC<KPICardProps> = ({
       <div className="flex justify-between items-start">
         <div>
           <h3 className="text-sm text-gray-600 font-medium">{title}</h3>
-          <p className="text-3xl font-bold mt-1">{value}</p>
+          <p className="text-3xl font-semibold text-[#16181B] mt-1">{value}</p>
           <div className="flex items-center mt-1">
             <span className={`text-xs ${change.isIncrease ? 'text-green-500' : 'text-red-500'} flex items-center`}>
               {change.isIncrease ? (
@@ -40,7 +40,7 @@ const KPICard: React.FC<KPICardProps> = ({
             </span>
           </div>
         </div>
-        <div className={`${iconBgColor} p-2 rounded-full`}>
+        <div className={`${iconBgColor} p-3 rounded-full`}>
           {icon}
         </div>
       </div>

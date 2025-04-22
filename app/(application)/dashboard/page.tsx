@@ -4,6 +4,7 @@ function Dashboard() {
     return (
         <div>
             <h1>Welcome to the SQWADS Dashboard...</h1>
+           
         </div>
     );
 }
