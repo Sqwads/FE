@@ -3,7 +3,7 @@
 import { Table} from "@mantine/core";
 import { RxCaretSort, RxCaretDown, RxCaretUp } from "react-icons/rx";
 import { flexRender, Table as ReactTable } from "@tanstack/react-table";
-// Import from separate file
+
 
 const AppTable = (
   {

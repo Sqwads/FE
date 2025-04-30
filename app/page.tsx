@@ -8,7 +8,7 @@ import ShowCase from "@/app/components/home/ShowCase";
 import Stories from "@/app/components/home/Stories";
 import Join from "@/app/components/home/Join";
 import Browse from "@/app/components/home/Browse";
-import Footer from "@/app/components/Footer"; // Import Footer component
+import Footer from "@/app/components/Footer"; 
 import Core from "./components/home/Core";
 
 export default function Home() {

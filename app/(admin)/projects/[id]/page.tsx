@@ -179,7 +179,7 @@ const ProjectView: React.FC = () => {
         {/* Project Image */}
         <div className="rounded-2xl p-6">
           <div className="w-full h-48 relative rounded-lg overflow-hidden">
-            <img 
+            <Image 
               src={fetchedProject?.data?.coverImage || '/images/proj-placeholder.jpg'}
               alt='timeline'
               className="w-full h-full object-cover"
