@@ -1,11 +1,12 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { FaProjectDiagram, FaUsers, FaUserTie, FaBriefcase } from 'react-icons/fa';
 import { HiOutlineHome } from 'react-icons/hi';
 import Link from 'next/link';
 import Image from 'next/image';
 import { userWrapper } from '@/src/store';
+import { cookieStorage } from '@ibnlanre/portal';
 // import { userWrapper } from '@/src/store';
 
 const AdminSidebar = ({
@@ -15,9 +16,16 @@ const AdminSidebar = ({
 }) => {
  
   const pathname = usePathname(); // Get current route
+  const router = useRouter()
   const { user } = userWrapper((state) => ({
     user: state.user,
   }));
+
+  const logout = ()=>{
+    cookieStorage.clear()
+    localStorage.clear()
+    router.push('/admin_login')
+  }
 
   // console.log(user)
   // Function to check if the link is active
@@ -94,6 +102,8 @@ const AdminSidebar = ({
             <p className="text-xs text-[#16181BB2]">{user?.email}</p>
           </div>
         </div>
+
+        <div onClick={logout} className="text-[red] cursor-pointer  text-center font-semibold">Logout</div>
       </div>
     </>
   );
