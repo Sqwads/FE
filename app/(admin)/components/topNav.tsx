@@ -5,7 +5,7 @@ import {AiOutlineMenu} from 'react-icons/ai'
 import { Drawer, Menu, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import AdminSidebar from "./sidebar";
-import { userWrapper } from "@/src/store";
+import { userWrapper } from "../../../src/store";
 import { LuLogOut } from "react-icons/lu";
 import { cookieStorage } from "@ibnlanre/portal";
 import { useRouter } from "next/navigation";

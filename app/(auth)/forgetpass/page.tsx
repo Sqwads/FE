@@ -3,7 +3,7 @@ import { TextInput } from '@mantine/core';
 import { MdOutlineEmail } from 'react-icons/md';
 import { useForm, yupResolver } from '@mantine/form';
 import Image from 'next/image';
-import { Registervalidator } from '@/src/validators/validators';
+import { Registervalidator } from '../../../src/validators/validators';
 
 const ForgetPasswordPage = () => {
   // Mantine useForm hook

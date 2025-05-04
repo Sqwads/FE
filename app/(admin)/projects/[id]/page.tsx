@@ -11,7 +11,7 @@ import ProjectDescription from './tabs/ProjectDescription';
 import timelineImg from "../../../../public/images/timeline.png"
 import Members from './tabs/members';
 import { useParams, useSearchParams } from 'next/navigation';
-import { instance } from '@/src/api/instance';
+import { instance } from '../../../../src/api/instance';
 import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
 

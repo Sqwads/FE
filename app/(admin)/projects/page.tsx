@@ -5,14 +5,15 @@ import Card from './components/card';
 import { ColumnDef } from '@tanstack/react-table';
 import moment from 'moment';
 import { Button, Menu } from '@mantine/core';
-import { useCustomTable } from '@/src/hooks/useCustomTable';
+import { useCustomTable } from '../../../src/hooks/useCustomTable';
 import AppTable from '../components/appTable';
 import { useQuery } from '@tanstack/react-query';
-import { instance } from '@/src/api/instance';
-import { formatTextToSentenceCase } from '@/src/common';
+import { instance } from '../../../src/api/instance';
+import { formatTextToSentenceCase } from '../../../src/common';
 import SearchFilters from '../components/searchfilters';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 
 const Projects = () => {
@@ -53,7 +54,7 @@ const Projects = () => {
                   {row.original.teamMembers?.slice(0,2)?.map((item:any)=>
                     <>
                         {item?.user?.profileImage ?
-                         <img src={item?.user?.profileImage} className='h-8 w-8 rounded-full border object-cover' alt="image" />:
+                         <Image src={item?.user?.profileImage} className='h-8 w-8 rounded-full border object-cover' alt="image" />:
                          <div 
                             className='rounded-full h-8 w-8 bg-blue-600 text-white font-medium ml-[-0.4rem] items-center justify-center flex text-lg'
                         >

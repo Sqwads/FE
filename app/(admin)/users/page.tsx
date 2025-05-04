@@ -3,20 +3,20 @@ import Image from "next/image";
 import SearchFilters from "../components/searchfilters";
 import AppTable from "../components/appTable";
 import { ColumnDef } from "@tanstack/react-table";
-import { useCustomTable } from "@/src/hooks/useCustomTable";
+import { useCustomTable } from "../../../src/hooks/useCustomTable";
 import { Avatar, Badge, Button, Checkbox, Menu, Modal, NumberInput, Select, Textarea } from "@mantine/core";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { instance } from "@/src/api/instance";
+import { instance } from "../../../src/api/instance";
 import moment from 'moment'
 import { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm, yupResolver } from "@mantine/form";
-import { UserSuspensionValidator } from "@/src/validators/validators";
+import { UserSuspensionValidator } from "../../../src/validators/validators";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { formatTextToSentenceCase } from "@/src/common";
+import { formatTextToSentenceCase } from "../../../src/common";
 
 const UserListPage = () => {
   const router = useRouter()
@@ -412,7 +412,7 @@ const UserListPage = () => {
             >
 
                 <div className="py-4 flex flex-col items-center justify-center">
-                    <img src="/images/bin.png" className="mb-7" alt="bin" />
+                    <Image src="/images/bin.png" className="mb-7" alt="bin" />
                     <div className="text-2xl font-medium mb-2">Confirm Suspension</div>
                     <div className="text-[#16181BB2] px-7 text-sm mb-7 text-center">
                       Confirm suspension of <span className="font-bold">{selectedUser?.firstName} {selectedUser?.lastName} ({selectedUser?.email})</span> 

@@ -1,6 +1,6 @@
 'use client';
 
-import { customColors } from '@/src/common/data';
+import { customColors } from '../../../../src/common/data';
 import React from 'react';
 
 interface Skill {

@@ -1,7 +1,7 @@
 "use client"
-import AppTable from '@/app/(admin)/components/appTable';
-import { formatTextToSentenceCase } from '@/src/common';
-import { useCustomTable } from '@/src/hooks/useCustomTable';
+import AppTable from '../../../../../app/(admin)/components/appTable';
+import { formatTextToSentenceCase } from '../../../../../src/common';
+import { useCustomTable } from '../../../../../src/hooks/useCustomTable';
 import { Badge, Button, Menu, TextInput } from '@mantine/core';
 import { ColumnDef } from '@tanstack/react-table';
 import moment from 'moment';

@@ -1,6 +1,6 @@
 "use client"
-import { sortList } from '@/src/common';
-import { customColors, skills } from '@/src/common/data';
+import { sortList } from '../../../../../src/common';
+import { customColors, skills } from '../../../../../src/common/data';
 import { MultiSelect } from '@mantine/core';
 import React from 'react';
 

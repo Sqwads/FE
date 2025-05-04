@@ -5,7 +5,7 @@ import { FaProjectDiagram, FaUsers, FaUserTie, FaBriefcase } from 'react-icons/f
 import { HiOutlineHome } from 'react-icons/hi';
 import Link from 'next/link';
 import Image from 'next/image';
-import { userWrapper } from '@/src/store';
+import { userWrapper } from '../../../src/store';
 // import { userWrapper } from '@/src/store';
 
 const AdminSidebar = ({

@@ -9,7 +9,7 @@ import Timeline from './tabs/timeline';
 import Skills from './tabs/skills';
 import Members from './tabs/members';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { instance } from '@/src/api/instance';
+import { instance } from '../../../../src/api/instance';
 import Others from './tabs/others';
 import Preview from './tabs/preview';
 import { useRouter, useSearchParams } from 'next/navigation';

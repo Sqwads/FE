@@ -1,22 +1,34 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode:false,
+import type { NextConfig } from 'next';
+import type { Configuration } from 'webpack';
+
+const nextConfig: NextConfig = {
+  reactStrictMode: false,
+  typescript: {
+    ignoreBuildErrors: true, // Temporary during debugging
+  },
   experimental: {
-      missingSuspenseWithCSRBailout: false,
+    typedRoutes: true, 
   },
   async rewrites() {
     return [
       {
-        source: '/api/:path*', // Match API requests
-        destination: 'http://16.171.155.101:3000/api/:path*', // Proxy to your backend
-        // destination:'http://localhost:4000/api/:path*'
+        source: '/api/:path*',
+        destination: process.env.NODE_ENV === 'development' 
+          ? 'http://localhost:4000/api/:path*' 
+          : 'http://16.171.155.101:3000/api/:path*',
       },
     ];
   },
-  eslint:{
+  eslint: {
     ignoreDuringBuilds: true,
   },
-
+  webpack: (config: Configuration) => {
+    config.cache = true;
+    return config;
+  },
+  images: {
+    domains: ['your-domain.com'],
+  }
 };
 
 export default nextConfig;

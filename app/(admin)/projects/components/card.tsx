@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import  React from 'react';
 
 const Card = ({
@@ -25,7 +26,7 @@ const Card = ({
                     className="rounded-full mr-5 flex justify-center items-center lg:h-14 lg:w-14 w-12 h-12 mb-3 lg:mb-0" 
                     style={{background: iconBackground }}
                 >
-                    <img src={`/images/${icon}`} alt="icon" />
+                    <Image src={`/images/${icon}`} alt="icon" />
                </div>
                     
                <div className="flex-1">

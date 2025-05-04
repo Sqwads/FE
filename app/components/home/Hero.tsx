@@ -35,9 +35,11 @@ const Hero = () => {
       <div className="w-full max-w-5xl relative mt-20">
         {/* Sparkle Image */}
         <div className="absolute lg:-top-8 -top-10 lg:-left-20 -left-[-17rem] z-10">
-          <img
+          <Image
             src='/images/Sparkle_2.png'
             alt="sparkle"
+            width={50}
+            height={50}
             className="lg:h-14 h-10 object-cover w-20"
           />
         </div>

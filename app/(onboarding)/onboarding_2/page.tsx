@@ -1,5 +1,5 @@
 "use client";
-import { instance } from "@/src/api/instance";
+import { instance } from "../../../src/api/instance";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

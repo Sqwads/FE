@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { instance } from '@/src/api/instance';
-import { userWrapper } from '@/src/store';
+import { userWrapper } from '@/store';
 import { FiClock, FiCompass, FiStar } from 'react-icons/fi';
 import { BsCircleFill } from 'react-icons/bs';
 import { IoPersonCircleOutline } from 'react-icons/io5';

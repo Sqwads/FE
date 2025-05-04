@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { cookieStorage } from "@ibnlanre/portal";
 import { MdOutlineEmail } from 'react-icons/md';
 import { CiLock } from 'react-icons/ci';
-import { LoginVlidator } from '@/src/validators/validators';
+import { LoginVlidator } from '../../../src/validators/validators';
 import { useMutation } from '@tanstack/react-query';
-import { instance } from '@/src/api/instance';
+import { instance } from '../../../src/api/instance';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 

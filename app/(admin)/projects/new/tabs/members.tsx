@@ -1,5 +1,5 @@
 "use client"
-import { instance } from '@/src/api/instance';
+import { instance } from '../../../../../src/api/instance';
 import { MultiSelect, Select } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import  React, { useEffect, useState } from 'react';

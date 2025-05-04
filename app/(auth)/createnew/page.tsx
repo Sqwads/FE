@@ -1,5 +1,5 @@
 "use client"
-import { Registervalidator } from '@/src/validators/validators';
+import { Registervalidator } from '../../../src/validators/validators';
 import { PasswordInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import Image from 'next/image';

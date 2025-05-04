@@ -4,6 +4,7 @@ import {  UseFormReturnType } from '@mantine/form';
 import React, { useEffect, useRef, useState } from 'react';
 import { BsUpload } from 'react-icons/bs';
 import { BasicDetailsValidator } from '../validators';
+import Image from 'next/image';
 
 const BasicDetails = ({
     handleProceed,
@@ -37,7 +38,7 @@ const BasicDetails = ({
             {!previewMode &&
             <div className={`border mb-4 lg:mx-0 mx-auto rounded flex flex-col items-center justify-center w-48 h-40`}>
                 {imageSrc ?
-                    <img
+                    <Image
                         src={imageSrc} className='h-full rounded w-full object-cover cursor-pointer'
                         onClick={handleImageClick}
                     /> :

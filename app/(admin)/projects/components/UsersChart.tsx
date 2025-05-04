@@ -1,7 +1,7 @@
 'use client';
 
-import { formatTextToSentenceCase } from '@/src/common';
-import { customColors } from '@/src/common/data';
+import { formatTextToSentenceCase } from '../../../../src/common';
+import { customColors } from '../../../../src/common/data';
 import React from 'react';
 
 interface UserCategory {

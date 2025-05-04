@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { instance } from "@/src/api/instance";
+import { instance } from "../../../src/api/instance";
 import { cookieStorage } from "@ibnlanre/portal";
 
 const EmailAuthForm = () => {

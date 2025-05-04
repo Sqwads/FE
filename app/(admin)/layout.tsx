@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import AdminSidebar from './components/sidebar';
 import TopNav from './components/topNav';
 import { useRouter } from 'next/navigation';
-import { instance } from '@/src/api/instance';
+import { instance } from '../../src/api/instance';
 import { cookieStorage } from '@ibnlanre/portal';
 import { useQuery } from '@tanstack/react-query';
 import '@mantine/core/styles.css';
-import { userWrapper } from '@/src/store';
+import { userWrapper } from '../../src/store';
 import { LoadingOverlay } from '@mantine/core';
 
 export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {

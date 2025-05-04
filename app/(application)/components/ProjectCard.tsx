@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import { FiBookmark } from 'react-icons/fi';
+import Image from 'next/image';
 
 interface ProjectCardProps {
   title: string;
@@ -25,7 +26,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   return (
     <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
       <div className="relative h-40 overflow-hidden">
-        <img 
+        <Image 
           src={image} 
           alt={title} 
           className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"

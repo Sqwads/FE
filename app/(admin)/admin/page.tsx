@@ -8,12 +8,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Button, Menu, Modal } from '@mantine/core';
 import moment from 'moment';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { instance } from '@/src/api/instance';
+import { instance } from '../../../src/api/instance';
 import SearchFilters from '../components/searchfilters';
 import AppTable from '../components/appTable';
-import { useCustomTable } from '@/src/hooks/useCustomTable';
+import { useCustomTable } from '../../../src/hooks/useCustomTable';
 import toast from 'react-hot-toast';
 import { useDisclosure } from '@mantine/hooks';
+import Image from 'next/image';
 
 const Admin = () => {
 
@@ -270,7 +271,7 @@ const Admin = () => {
             >
 
                 <div className="py-4 flex flex-col items-center justify-center">
-                    <img src="/images/bin.png" className="mb-7" alt="bin" />
+                    <Image src="/images/bin.png" className="mb-7" alt="bin" />
                     <div className="text-2xl font-medium mb-2">Confirm {`${grammerDict[selectedStatus] }`}</div>
                     <div className="text-[#16181BB2] px-7 text-sm mb-7 text-center">
                         Confirm {grammerDict[selectedStatus]} of 

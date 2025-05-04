@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { HiOutlineArrowRight } from 'react-icons/hi';
+import Image from 'next/image';
 
 interface ActionCardProps {
   title: string;
@@ -29,7 +30,7 @@ const ActionCard: React.FC<ActionCardProps> = ({
         {icon && <div className="mr-3 mt-1">{icon}</div>}
         {illustration && (
           <div className="flex-shrink-0 mr-4">
-            <img src={illustration} alt={title} className="w-16 h-16 object-contain" />
+            <Image src={illustration} alt={title} className="w-16 h-16 object-contain" />
           </div>
         )}
         <div className="flex-1">

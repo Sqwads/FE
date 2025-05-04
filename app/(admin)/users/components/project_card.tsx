@@ -1,6 +1,7 @@
-import CustomProgress from '@/app/components/charts/progressbar';
-import { trimSentence } from '@/src/common';
-import { customColors } from '@/src/common/data';
+import Image from 'next/image';
+import CustomProgress from '../../../../app/components/charts/progressbar';
+import { trimSentence } from '../../../../src/common';
+import { customColors } from '../../../../src/common/data';
 import moment from 'moment';
 import  React from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
@@ -38,7 +39,7 @@ const ProjectCard = ({
      
     return ( 
         <div className='border rounded-lg'>
-            <img src={project?.coverImage? project?.coverImage: "/images/signup_bg.png" }className='w-full object-cover h-32 rounded-lg border' alt="project" />
+            <Image src={project?.coverImage? project?.coverImage: "/images/signup_bg.png" }className='w-full object-cover h-32 rounded-lg border' alt="project" />
             <div className="py-5 px-3 border-b">
                 <div className="text-lg font-semibold mb-2">{project?.name}</div>
                 <div className="text-sm text-[#16181BB2] mb-7 min-h-10">

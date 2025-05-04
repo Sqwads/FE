@@ -8,8 +8,8 @@ import { MdOutlineEmail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import Link from "next/link";
 import { useMutation } from "@tanstack/react-query";
-import { instance } from "@/src/api/instance";
-import { Registervalidator } from "@/src/validators/validators";
+import { instance } from "../../../src/api/instance";
+import { Registervalidator } from "../../../src/validators/validators";
 import toast from "react-hot-toast";
 
 

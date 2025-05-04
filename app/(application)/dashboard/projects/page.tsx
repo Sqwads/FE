@@ -1,9 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { instance } from '@/src/api/instance';
-import { userWrapper } from '@/src/store';
+import { userWrapper } from '@/store';
 import { FiClock, FiCompass, FiStar, FiArrowLeft } from 'react-icons/fi';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { MdOutlineWavingHand } from 'react-icons/md';
