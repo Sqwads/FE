@@ -8,8 +8,8 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*', // Match API requests
-        // destination: 'http://16.171.155.101:3000/api/:path*', // Proxy to your backend
-        destination:'http://localhost:4000/api/:path*'
+        destination: 'http://16.171.155.101:3000/api/:path*', // Proxy to your backend
+        // destination:'http://localhost:4000/api/:path*'
       },
     ];
   },
