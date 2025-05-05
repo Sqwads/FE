@@ -3,7 +3,7 @@ import React from 'react';
 function Dashboard() {
     return (
         <div>
-            <h1>Welcome to the SQWADS Dashboard...</h1>
+            <h1>Hi there</h1>
            
         </div>
     );
