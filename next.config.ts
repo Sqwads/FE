@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode:false,
   experimental: {
-      missingSuspenseWithCSRBailout: false,
+      // missingSuspenseWithCSRBailout: false,
   },
   async rewrites() {
     return [

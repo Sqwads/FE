@@ -1,13 +1,13 @@
 "use client"
 import React, { useEffect } from 'react';
 import Sidebar from './components/sidebar';
-import { instance } from '@/src/api/instance';
+import { instance } from '../../src/api/instance';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { cookieStorage } from '@ibnlanre/portal';
 import { LoadingOverlay } from '@mantine/core';
 
-import { userWrapper } from '@/src/store';
+import { userWrapper } from '../../src/store';
 import TopNav from './components/topNav';
 
 export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
