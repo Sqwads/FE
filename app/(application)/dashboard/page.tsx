@@ -171,6 +171,7 @@ export default function DashboardPage() {
           {exploreProjectResponse?.data?.projects?.map((item:any, idx:number)=>
               <ProjectCard 
                 key={idx} 
+                projectId={item?._id}
                 image={item?.coverImage}
                 title={item?.name}
                 description = {item?.description}
@@ -188,6 +189,7 @@ export default function DashboardPage() {
         {projectResponse?.data?.projects?.map((item:any, idx:number)=>
             <ProjectCard 
               key={idx} 
+              projectId={item?._id}
               image={item?.coverImage}
               title={item?.name}
               description = {item?.description}
