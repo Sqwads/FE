@@ -35,7 +35,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       <p className="text-gray-600 mb-10 max-w-lg text-sm mx-auto">{description}</p>
       {actionLink && actionText && (
       <Link 
-        href={actionLink} 
+        href={"#"} 
         className="bg-blue-600 cursor-not-allowed text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors"
       >
         {actionText}

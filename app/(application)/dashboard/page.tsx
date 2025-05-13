@@ -24,14 +24,17 @@ export default function DashboardPage() {
     user: state.user,
   }));
 
+  console.log(user)
+
   const { data: projectResponse, isLoading: projectIsLoading } = useQuery({ 
     queryFn: () => instance.get('/project/all', {
       params: { 
-        userId: user?.id ,
+        userId: user?._id ,
         pageSize: 3
       },
     }), 
-    queryKey: ['projects'],
+    queryKey: ['user-projects'],
+    enabled: !!user?._id
   });
 
   const { data: exploreProjectResponse, isLoading: exploreProjectIsLoading } = useQuery({ 

@@ -35,12 +35,13 @@ export default function MyProjectsPage() {
   const { data: projectResponse, isLoading: projectIsLoading } = useQuery({ 
       queryFn: () => instance.get('/project/all', {
         params: { 
-          userId: user?.id ,
+          userId: user?._id ,
           pageSize,
           page
         },
-  }), 
+    }), 
       queryKey: ['projects'],
+       enabled: !!user?._id
     });
 
   // Sample data for active projects
