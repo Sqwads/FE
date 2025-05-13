@@ -36,7 +36,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
       {actionLink && actionText && (
       <Link 
         href={actionLink} 
-        className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors"
+        className="bg-blue-600 cursor-not-allowed text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors"
       >
         {actionText}
       </Link>

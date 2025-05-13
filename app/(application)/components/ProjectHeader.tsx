@@ -20,7 +20,7 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({ title, type, duration, de
           <div className="text-xs font-medium text-blue-600 uppercase mb-2">
             {type} • {duration}
           </div>
-          <h1 className="text-2xl font-bold mb-2">{title}</h1>
+          <h1 className="text-2xl font-semibold mb-2">{title}</h1>
           <p className="text-gray-600 max-w-2xl">{description}</p>
         </div>
       </div>

@@ -28,6 +28,9 @@ const Sidebar = ({
     return localPart.length > 5 ? `${localPart.slice(0, 5)}...@${domain}` : email;
   };
 
+  const activeClasses = 'bg-[#001D69] text-white font-medium';
+  const inactiveClasses = 'text-gray-700 hover:bg-blue-100 rounded-md';
+
   return (
     <>
       {/* Sidebar */}
@@ -44,11 +47,17 @@ const Sidebar = ({
           <Link 
               onClick={onSelectTab} 
               href="/dashboard" 
-              className={`flex items-center gap-x-3 px-4 py-3  rounded-md ${['/dashboard'].includes(pathname) ? 'bg-[#001D69] text-white font-medium': 'text-gray-700'}`}
+              className={`flex items-center gap-x-3 px-4 py-3  rounded-md 
+                ${['/dashboard'].includes(pathname) ?activeClasses:inactiveClasses}`}
           >
             <HiOutlineHome size={20} /> Home
           </Link>
-          <Link onClick={onSelectTab} href="/projects" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
+          <Link 
+              onClick={onSelectTab} 
+              href="/user-projects" 
+              className={`flex items-center gap-3 px-4 py-3 text-gray-700  rounded-md
+              ${['/user-projects'].includes(pathname) ?activeClasses:inactiveClasses}`}
+            >
             <FaProjectDiagram size={20} /> Projects
           </Link>
           <Link onClick={onSelectTab} href="/board" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">

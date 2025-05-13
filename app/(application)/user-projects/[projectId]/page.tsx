@@ -7,20 +7,26 @@ import { HiOutlineArrowRight } from 'react-icons/hi';
 import Image from 'next/image';
 
 // Components
-import ProjectHeader from '../../../components/ProjectHeader';
-import NavigationTabs from '../../../components/NavigationTabs';
-import ProjectTimeline from '../../../components/ProjectTimeline';
-import ProjectSidebar from '../../../components/ProjectSidebar';
-import DiscussionTabContent from '../../../components/DiscussionTabContent';
-import ErrorBoundary from '../../../components/ErrorBoundary';
+import ProjectHeader from '../../components/ProjectHeader';
+import NavigationTabs from '../../components/NavigationTabs';
+import ProjectTimeline from '../../components/ProjectTimeline';
+import ProjectSidebar from '../../components/ProjectSidebar';
+import DiscussionTabContent from '../../components/DiscussionTabContent';
+import ErrorBoundary from '../../components/ErrorBoundary';
+import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { instance } from '@/api/instance';
+import { getDayDifference, getTimeDifference } from '@/common';
 
-function ProjectDetailsContent({ params }: any) {
-  const [activeTab, setActiveTab] = useState('Description'); 
+function ProjectDetailsContent() {
+  const [activeTab, setActiveTab] = useState('Description');
   const [isMember, setIsMember] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null); // Changed to any
+  const params = useParams()
+  const projectId = params.projectId
 
-  // Initialize with safe defaults
+
   const [projectData, setProjectData] = useState<any>({
     id: '',
     title: '',
@@ -37,18 +43,24 @@ function ProjectDetailsContent({ params }: any) {
     additionalParticipants: 0
   });
 
+  const {data: fetchedProject} = useQuery({
+      queryFn: ()=>instance.get(`/project/${projectId}`),
+      queryKey: ['projects', projectId],
+      enabled: !!projectId
+  })
+
   useEffect(() => {
     // Simulate API fetch
     const fetchProjectData = async () => {
       try {
         // Using mock data for now
         const mockData: any = {
-          id: params?.projectId || '1',
+          id:  '1',
           title: 'Weather Forecast App',
           type: 'UX/UI DESIGN PROJECT',
           duration: '3 WEEKS DURATION',
           description: 'Design a Weather Forecast Application for the Nigeria National Space Research and Development Agency (NASRDA)',
-          image: '/images/weather_1.png', 
+          image: '/images/weather_1.png',
           startDay: 0,
           endDay: 21,
           daysLeft: 2,
@@ -58,16 +70,16 @@ function ProjectDetailsContent({ params }: any) {
             { title: 'Location-Based Forecasting', description: 'Users will see weather for their current location.' }
           ],
           skills: [
-            { name: 'Xd', icon: 'Xd' }, 
-            { name: 'Figma', icon: 'Fi' } 
+            { name: 'Xd', icon: 'Xd' },
+            { name: 'Figma', icon: 'Fi' }
           ],
           participants: [
-            { name: 'Michael Jordan', role: 'Project Lead', image: '/images/woman_av.png'},
+            { name: 'Michael Jordan', role: 'Project Lead', image: '/images/woman_av.png' },
             { name: 'Chuku Mike', role: '', image: '/images/woman_av.png' }
           ],
           additionalParticipants: 12
         };
-        
+
         setProjectData(mockData);
         setLoading(false);
       } catch (err) {
@@ -85,19 +97,13 @@ function ProjectDetailsContent({ params }: any) {
     console.log(isMember ? 'Leaving project...' : 'Joining project...');
   };
 
-  if (loading) {
-    return <div className="p-6 text-center">Loading project details...</div>;
-  }
-
-  if (error) {
-    return <div className="p-6 text-red-500">{error}</div>;
-  }
+  
 
   return (
-    <div className="p-4 sm:p-6">
+    <div className="px-4 lg:px-8 py-14">
       {/* Back Navigation */}
       <div className="mb-4">
-        <Link href="/dashboard/projects" className="text-blue-600 text-sm font-medium inline-flex items-center">
+        <Link href="/user-projects" className="text-blue-600 text-sm font-medium inline-flex items-center">
           <FiArrowLeft className="mr-1" /> Back to Projects
         </Link>
       </div>
@@ -108,25 +114,27 @@ function ProjectDetailsContent({ params }: any) {
           {/* Project Header & Join Button */}
           <div className="mb-6">
             <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-              <ProjectHeader 
-                title={projectData.title}
-                type={projectData.type}
-                duration={projectData.duration}
-                description={projectData.description}
+              <ProjectHeader
+                title={fetchedProject?.data?.name}
+                type={`${fetchedProject?.data?.skills[0]?.name} ${fetchedProject?.data?.skills[1]?.name} Project  `}
+                duration={`${getTimeDifference(fetchedProject?.data?.startDate, fetchedProject?.data?.endDate)}`}
+                description={fetchedProject?.data?.description}
               />
               <div className="mt-4 md:mt-0 flex-shrink-0">
-                <button 
+                <button
                   onClick={handleButtonClick}
-                  className={`${isMember ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-900 hover:bg-blue-800'} text-white px-4 py-2 rounded-md flex items-center transition-colors duration-200 text-sm sm:text-base`}
+                  className={`${isMember ? 'bg-red-600 cursor-not-allowed hover:bg-red-700' : 'bg-blue-900 cursor-not-allowed hover:bg-blue-800'} text-white px-4 py-2 rounded-md flex items-center transition-colors duration-200 text-sm sm:text-base`}
                 >
-                  {isMember ? 'Leave Project' : 'Join Project'} 
-                  {isMember ? <FiX className="ml-2" /> : <HiOutlineArrowRight className="ml-2" />}
+                  Leave Project
+                  {/* {isMember ? 'Leave Project' : 'Join Project'}
+                  L
+                  {isMember ? <FiX className="ml-2" /> : <HiOutlineArrowRight className="ml-2" />} */}
                 </button>
               </div>
             </div>
           </div>
 
-          <NavigationTabs 
+          <NavigationTabs
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             tabs={['Description', 'Timelines', 'Discussion', 'Members']}
@@ -135,20 +143,18 @@ function ProjectDetailsContent({ params }: any) {
           {/* Tab Content */}
           {activeTab === 'Description' && (
             <div>
-              <ProjectTimeline startDay={projectData.startDay} endDay={projectData.endDay} />
+              <ProjectTimeline 
+                  currentDay={getDayDifference(fetchedProject?.data?.startDate, fetchedProject?.data?.endDate).currentDay} 
+                  endDay={getDayDifference(fetchedProject?.data?.startDate, fetchedProject?.data?.endDate).endDay}
+                />
               <h2 className="text-xl font-bold mb-4">Description</h2>
               <div className="mb-6">
                 <h3 className="font-medium mb-2">Project Overview</h3>
-                <p className="text-gray-700 mb-4 whitespace-pre-line">{projectData.overview}</p>
+                <p className="text-gray-700 mb-4 whitespace-pre-line">{fetchedProject?.data?.description}</p>
               </div>
               <div>
                 <h3 className="font-medium mb-3">Key Features and Design Goals</h3>
-                {projectData.keyFeatures.map((feature: any, index: any) => (
-                  <div key={index} className="mb-4">
-                    <p className="font-medium text-gray-800 mb-1">• {feature.title}</p>
-                    <p className="text-gray-700 pl-4 whitespace-pre-line">{feature.description}</p>
-                  </div>
-                ))}
+               {fetchedProject?.data?.features}
               </div>
             </div>
           )}
@@ -170,12 +176,12 @@ function ProjectDetailsContent({ params }: any) {
           )}
         </div>
 
-        <ProjectSidebar 
-          image={projectData.image}
+        <ProjectSidebar
+          image={fetchedProject?.data?.coverImage}
           title={projectData.title}
           daysLeft={projectData.daysLeft}
-          skills={projectData.skills}
-          participants={projectData.participants}
+          skills={fetchedProject?.data?.skills?.flatMap((item:any)=> item?.tools).slice(0,3)|| []}
+          participants={fetchedProject?.data?.teamMembers}
           additionalParticipants={projectData.additionalParticipants}
         />
       </div>

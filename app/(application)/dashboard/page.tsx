@@ -45,49 +45,14 @@ export default function DashboardPage() {
   });
 
 
-  // Sample data for projects
-  const exploreProjects = [
-    {
-      title: "Kilan Portfolio Website",
-      description: "Build a responsive portfolio website to show your projects and skills while learning...",
-      image: "/images/kilan.png",
-      tags: ["HTML", "CSS", "JavaScript"],
-      duration: "3 weeks",
-      collaborators: 4
-    },
-    {
-      title: "Weather Forecast App",
-      description: "Build a real-time weather app with location-based forecasts...",
-      image: "/images/weather_1.png",
-      tags: ["React", "API", "CSS"],
-      duration: "2 month",
-      collaborators: 3
-    },
-    {
-      title: "Cybersecurity Tool",
-      description: "Develop a tool to educate users on common cyber threats and best practices...",
-      image: "/images/cyber.png",
-      tags: ["Python", "Security", "Education"],
-      duration: "3 month",
-      collaborators: 3
-    },
-    {
-      title: "Data Insights Dashboard",
-      description: "Create a dashboard to visualize trends and key metrics from datasets...",
-      image: "/images/data_dash.png",
-      tags: ["Tableau", "SQL", "Analytics"],
-      duration: "3 weeks",
-      collaborators: 4
-    }
-  ];
+ 
 
   const { data: response, isLoading } = useQuery({
     queryFn: () => instance.get('/analytics/user'), // Replace with your API endpoint
     queryKey: ['project-analytics'],
   });
 
-  // Duplicate for top projects
-  const topProjects = [...exploreProjects];
+  
 
   return (
     <div className="lg:px-8 px-3 py-14">
@@ -104,7 +69,7 @@ export default function DashboardPage() {
 
       {/* Status Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-2 lg:gap-y-6 mb-6">
-        <Link href="/dashboard/projects" className="block">
+        <Link href="/user-projects" className="block">
           <StatusCard 
             title="MY PROJECTS" 
             count={response?.data?.data?.totalProjects || 0} 
@@ -165,7 +130,7 @@ export default function DashboardPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <SectionHeader title="My Projects" icon={<FiClock size={20} />} />
-          <Link href="/dashboard/projects" className="text-blue-600 text-sm font-medium inline-flex items-center">
+          <Link href="/user-projects" className="text-blue-600 text-sm font-medium inline-flex items-center">
             See all <HiOutlineArrowRight className="ml-1" />
           </Link>
         </div>
@@ -183,6 +148,7 @@ export default function DashboardPage() {
         {projectResponse?.data?.projects?.map((item:any, idx:number)=>
             <ProjectCard 
               key={idx} 
+              projectId={item?._id}
               image={item?.coverImage}
               title={item?.name}
               description = {item?.description}
@@ -197,7 +163,7 @@ export default function DashboardPage() {
 
       {/* Explore Projects Section */}
       <div className="mb-8">
-        <SectionHeader title="Explore Projects" icon={<FiCompass size={20} />} showSeeAll={true} />
+        <SectionHeader title="Explore Projects" icon={<FiCompass size={20} />} seeAllLink='/user-projects' showSeeAll={true} />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {exploreProjectResponse?.data?.projects?.map((item:any, idx:number)=>
               <ProjectCard 
@@ -214,7 +180,7 @@ export default function DashboardPage() {
 
       {/* Top Projects Section */}
       <div className="mb-8">
-        <SectionHeader title="Top Projects for you" icon={<FiStar size={20} />} showSeeAll={true} />
+        <SectionHeader title="Top Projects for you" icon={<FiStar size={20} />} seeAllLink='/user-projects' showSeeAll={true} />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {projectResponse?.data?.projects?.map((item:any, idx:number)=>
             <ProjectCard 

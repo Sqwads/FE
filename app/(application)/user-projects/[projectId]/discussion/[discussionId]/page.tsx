@@ -6,12 +6,12 @@ import { FiArrowLeft, FiX } from 'react-icons/fi';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
 // Import components with absolute paths (recommended)
-import ProjectHeader from '../../../../../components/ProjectHeader';
-import NavigationTabs from '../../../../../components/NavigationTabs';
-import ProjectSidebar from '../../../../../components/ProjectSidebar';
-import DiscussionPost from '../../../../../components/DiscussionPost';
-import ReactionButtons from '../../../../../components/ReactionButtons';
-import CommentInput from '../../../../../components/CommentInput';
+import ProjectHeader from '../../../../components/ProjectHeader';
+import NavigationTabs from '../../../../components/NavigationTabs';
+import ProjectSidebar from '../../../../components/ProjectSidebar';
+import DiscussionPost from '../../../../components/DiscussionPost';
+import ReactionButtons from '../../../../components/ReactionButtons';
+import CommentInput from '../../../../components/CommentInput';
 
 export default function DiscussionThreadPage({ params }: any) {
   // Destructure with defaults to ensure type safety
@@ -73,8 +73,8 @@ export default function DiscussionThreadPage({ params }: any) {
   return (
     <div className="p-6 bg-white min-h-screen">
       <div className="mb-4">
-        <Link 
-          href={`/dashboard/projects/${projectId}`} 
+        <Link
+          href={`/dashboard/projects/${projectId}`}
           className="text-blue-600 text-sm font-medium inline-flex items-center"
           prefetch={false}
         >
@@ -86,18 +86,18 @@ export default function DiscussionThreadPage({ params }: any) {
         <div className="lg:w-2/3">
           <div className="mb-6">
             <div className="flex flex-col md:flex-row justify-between items-start">
-              <ProjectHeader 
+              <ProjectHeader
                 title={projectData.title}
                 type={projectData.type}
                 duration={projectData.duration}
                 description={projectData.description}
               />
               <div className="mt-4 md:mt-0 flex-shrink-0">
-                <button 
+                <button
                   onClick={handleButtonClick}
                   className={`${isMember ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-900 hover:bg-blue-800'} text-white px-4 py-2 rounded-md flex items-center transition-colors duration-200`}
                 >
-                  {isMember ? 'Leave Project' : 'Join Project'} 
+                  {isMember ? 'Leave Project' : 'Join Project'}
                   {isMember ? <FiX className="ml-2" /> : <HiOutlineArrowRight className="ml-2" />}
                 </button>
               </div>
@@ -106,7 +106,7 @@ export default function DiscussionThreadPage({ params }: any) {
 
           <NavigationTabs activeTab={activeTab} setActiveTab={setActiveTab} tabs={tabs} />
 
-          <DiscussionPost 
+          <DiscussionPost
             authorName={discussionData.authorName}
             avatarUrl={discussionData.avatarUrl}
             postedTime={discussionData.postedTime}
@@ -115,9 +115,9 @@ export default function DiscussionThreadPage({ params }: any) {
             upvotes={discussionData.upvotes}
             commentsCount={discussionData.commentsCount}
           />
-          
+
           <ReactionButtons reactions={discussionData.reactions} />
-          
+
           <div className="mb-6">
             <h3 className="text-lg font-medium mb-4">Comments ({discussionData.commentsCount})</h3>
             <p className="text-gray-500">Comments will be displayed here.</p>
@@ -126,7 +126,7 @@ export default function DiscussionThreadPage({ params }: any) {
           <CommentInput onCommentSubmit={handleCommentSubmit} />
         </div>
 
-        <ProjectSidebar 
+        <ProjectSidebar
           image={projectData.image}
           title={projectData.title}
           daysLeft={projectData.daysLeft}

@@ -14,6 +14,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import { instance } from '@/src/api/instance';
 import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
+import { getDayDifference, getTimeDifference } from '@/common';
 
 const ProjectView: React.FC = () => {
   const searchParams = useSearchParams()
@@ -29,46 +30,7 @@ const ProjectView: React.FC = () => {
       enabled: !!projectId
   })
 
-  const getTimeDifference = (startDateString: string, endDateString: string) => {
-    const startDate = moment(startDateString); // Convert to Moment.js date
-    const endDate = moment(endDateString); // Get today's date
 
-    const isFuture = startDate.isAfter(endDate, "day"); // Check if the date is in the future
-
-    const monthsDiff = Math.abs(endDate.diff(startDate, "months"));
-    const weeksDiff = Math.abs(endDate.diff(startDate, "weeks"));
-    const daysDiff = Math.abs(endDate.diff(startDate, "days"));
-
-    let timeDifference;
-    
-    if (monthsDiff >= 1) {
-        timeDifference = `${monthsDiff} month${monthsDiff > 1 ? "s" : ""}`;
-    } else if (weeksDiff >= 1) {
-        timeDifference = `${weeksDiff} week${weeksDiff > 1 ? "s" : ""}`;
-    } else {
-        timeDifference = `${daysDiff} day${daysDiff > 1 ? "s" : ""}`;
-    }
-
-    return timeDifference
-  };
-
-  const getDayDifference = (startDateString: string, endDateString: string)=>{
-    const startDate = moment(startDateString); // Convert to Moment.js date
-    const endDate = moment(endDateString); // Get today's date
-    const todayDate = moment()
-
-    
-
-    const endDay = Math.abs(endDate.diff(startDate, "days"));
-    const currentDay =  Math.abs(todayDate.diff(startDate, "days"));
-
-   
-
-    return{
-      endDay,
-      currentDay
-    }
-  }
  
   const projectData = {
     title: 'Weather Forecast App',
