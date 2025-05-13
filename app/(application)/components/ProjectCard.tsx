@@ -13,8 +13,16 @@ const ProjectCard = ({
   tags, 
   duration, 
   collaborators = [] ,
-  projectId
+  projectId,
+  completionPercentage = 0,
+  showProgress = false
 }: any) => {
+
+  const getProgressColor = (percentage: any) => {
+    if (percentage < 30) return 'bg-red-500';
+    if (percentage < 70) return 'bg-yellow-500';
+    return 'bg-green-500';
+  };
 
   return (
     <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
@@ -45,6 +53,22 @@ const ProjectCard = ({
             </span>
           ))}
         </div>
+
+
+        {showProgress &&
+        <div className="mb-4">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-sm font-medium">Completion Level</span>
+              <span className="text-sm font-medium">{completionPercentage}%</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div 
+                className={`${getProgressColor(completionPercentage)} h-2 rounded-full`} 
+                style={{ width: `${completionPercentage}%` }}
+              ></div>
+            </div>
+        </div>
+        }
         
         <div className="flex items-center justify-between mt-4">
           <div className="flex -space-x-2">

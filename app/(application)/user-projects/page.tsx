@@ -199,6 +199,8 @@ export default function MyProjectsPage() {
          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {projectResponse?.data?.projects?.map((item:any, idx:number)=>
               <ProjectCard 
+                showProgress={true}
+                completionPercentage={item?.completionPercentage || 20}
                 key={idx} 
                 projectId={item?._id}
                 image={item?.coverImage}
