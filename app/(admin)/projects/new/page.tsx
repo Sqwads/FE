@@ -72,6 +72,8 @@ const CreateProject = () => {
             value: item?.user?._id
         })) || []
 
+        console.log(availableUserOptions)
+
         setMembersOptions( removeDuplicates(
             [
                 ...availableUserOptions, 
@@ -82,8 +84,8 @@ const CreateProject = () => {
             ]
         ))
 
-        setSelectedMembers(availableUserOptions)
-        setSelectedProjectLead(data?.projectLead?._id)
+        setSelectedMembers(removeDuplicates(availableUserOptions))
+        // setSelectedProjectLead(data?.projectLead?._id || '' )
         additionalInfoForm.setValues({
             additionalInfo: data?.additionalInfo
         })
@@ -198,6 +200,8 @@ const CreateProject = () => {
 
     function removeDuplicates(arr: any[]) {
         const seen = new Set();
+        arr = arr.filter((item: any) => item.value !== undefined);
+        // console.log(arr)
         return arr.filter((item: any) => {
           if (seen.has(item.value)) {
             return false;

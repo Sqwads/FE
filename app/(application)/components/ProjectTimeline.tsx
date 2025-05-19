@@ -29,9 +29,9 @@ const ProjectTimeline: React.FC<ProjectTimelineProps> = ({
           <p className="text-xs sm:text-sm text-gray-500">Day {endDay}</p>
         </div>
       </div>
-      <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+      <div className="w-full bg-gray-200 h-2  overflow-hidden">
         <div 
-          className="bg-blue-600 h-2 rounded-full transition-width duration-500 ease-in-out" 
+          className="bg-blue-800 opacity-50 h-2  transition-width duration-500 ease-in-out" 
           style={{ width: `${progressWidth}%` }}
         ></div>
       </div>

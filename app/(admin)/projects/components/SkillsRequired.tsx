@@ -23,18 +23,18 @@ const SkillsRequired: React.FC<SkillsRequiredProps> = ({
     <div className="rounded-2xl p-6 ">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold text-[#001D69]">SKILLS REQUIRED</h3>
-        <button 
+        {/* <button 
           onClick={onEdit}
           className="text-[#001D69] text-sm hover:underline"
         >
           Edit Skills
-        </button>
+        </button> */}
       </div>
       
       <hr className="my-4 border-gray-100" />
       
       {skills?.map((item:any, idx:number)=>
-       <div className="mb-4">
+       <div className="mb-4" key={idx}>
           <h4 className="font-medium mb-2">{item?.name}</h4>
           <div className="flex flex-wrap gap-x-1 gap-y-2">
             {item?.tools?.map((skill:any, idx:number) => (

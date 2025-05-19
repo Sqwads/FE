@@ -17,7 +17,7 @@ const Timeline: React.FC<TimelineProps> = ({
     <div className="rounded-2xl p-6">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold text-[#001D69]">TIMELINE</h3>
-        <button className="text-[#001D69] text-sm hover:underline">Edit</button>
+        {/* <button className="text-[#001D69] text-sm hover:underline">Edit</button> */}
       </div>
       
       <hr className="my-4 border-gray-100" />

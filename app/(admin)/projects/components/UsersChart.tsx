@@ -35,12 +35,12 @@ const UsersChart: React.FC<UsersChartProps> = ({
     <div className="rounded-2xl p-6">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold text-blue-900">USERS</h3>
-        <button 
+        {/* <button 
           onClick={onEdit}
           className="text-[#001D69] text-sm hover:underline"
         >
           Edit Users
-        </button>
+        </button> */}
       </div>
       
       <hr className="my-4 border-gray-100" />

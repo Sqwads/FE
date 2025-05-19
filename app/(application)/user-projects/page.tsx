@@ -44,72 +44,7 @@ export default function MyProjectsPage() {
        enabled: !!user?._id
     });
 
-  // Sample data for active projects
-  const activeProjects: any = [
-    {
-      title: "Cybersecurity Awareness Tool",
-      description: "Develop a tool to educate users on common cyber threats and best practices...",
-      image: "/images/cyber.png",
-      tags: ["Python", "Security", "Education"],
-      completionPercentage: 47,
-      daysRemaining: 32
-    },
-    {
-      title: "Weather Forecast App",
-      description: "Build a real-time weather app with location-based forecasts, dynamic updates, and weather alerts tailored to your region.",
-      image: "/images/weather_1.png",
-      tags: ["React", "API", "CSS"],
-      completionPercentage: 14,
-      daysRemaining: 18
-    },
-    {
-      title: "Data Insights Dashboard",
-      description: "Create a dashboard to visualize trends and key metrics from datasets...",
-      image: "/images/data_dash.png",
-      tags: ["Tableau", "SQL", "Data Visualization"],
-      completionPercentage: 88,
-      daysRemaining: 4
-    }
-  ];
 
-  // Sample data for explore projects
-  const exploreProjects: any = [
-    {
-      title: "Kilan Portfolio Website",
-      description: "Build a responsive portfolio website to show your projects and skills while learning...",
-      image: "/images/kilan.png",
-      tags: ["HTML", "CSS", "JavaScript"],
-      duration: "3 weeks",
-      collaborators: 4
-    },
-    {
-      title: "Weather Forecast App",
-      description: "Build a real-time weather app with location-based forecasts...",
-      image: "/images/weather_1.png",
-      tags: ["React", "API", "CSS"],
-      duration: "2 month",
-      collaborators: 3
-    },
-    {
-      title: "Cybersecurity Tool",
-      description: "Develop a tool to educate users on common cyber threats and best practices...",
-      image: "/images/cyber.png",
-      tags: ["Python", "Security", "Education"],
-      duration: "3 month",
-      collaborators: 3
-    },
-    {
-      title: "Data Insights Dashboard",
-      description: "Create a dashboard to visualize trends and key metrics from datasets...",
-      image: "/images/data_dash.png",
-      tags: ["Tableau", "SQL", "Analytics"],
-      duration: "3 weeks",
-      collaborators: 4
-    }
-  ];
-
-  // Duplicate for top projects
-  const topProjects: any = [...exploreProjects];
 
   return (
     <div className="p-6">
@@ -200,7 +135,7 @@ export default function MyProjectsPage() {
           {projectResponse?.data?.projects?.map((item:any, idx:number)=>
               <ProjectCard 
                 showProgress={true}
-                completionPercentage={item?.completionPercentage || 20}
+                completionPercentage={item?.completionLevel || 0}
                 key={idx} 
                 projectId={item?._id}
                 image={item?.coverImage}

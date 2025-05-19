@@ -5,7 +5,7 @@ import { FiSearch, FiFilter, FiChevronDown } from 'react-icons/fi';
 import DiscussionItem from './DiscussionItem'; 
 
 // Sample Data (based on user's text file and screenshot)
-const sampleDiscussions = [
+export const sampleDiscussions = [
   {
     authorName: "Squads Admin",
     avatarUrl: "/images/avatar1.jpg", // Placeholder image path

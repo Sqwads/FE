@@ -15,46 +15,45 @@ import { Skill, Participant } from '../type';
 // Define interfaces for props based on user's ProjectData structure
 interface ProjectSidebarProps {
   image?: string | null;
-  title: string; // Needed for alt text
-  daysLeft: number;
-  skills: any[]; // Use imported Skill type
-  participants: any[]; // Use imported Participant type
-  additionalParticipants: number;
+  title?: string; // Needed for alt text
+  daysLeft?: number;
+  skills?: any[]; // Use imported Skill type
+  participants?: any[]; // Use imported Participant type
+  projectLead?: any;
+  additionalParticipants?: number;
   // Add alertMessage prop if it's dynamic, otherwise define inside
   alertMessage?: string; 
 }
 
 const ProjectSidebar: React.FC<ProjectSidebarProps> = ({ 
   image, 
-  title,
+  title='',
   daysLeft, 
   skills, 
-  participants, 
+  participants=[], 
   additionalParticipants,
+  projectLead,
   alertMessage = "Review and finalize tasks" // Default message from user's code
 }) => {
   return (
-    <div className="lg:w-1/3">
+    <div className={`space-y-0 border-l px-7  w-[300px] sticky top-5 `}>
       {/* Image with Alert Overlay */}
       <div className="relative mb-6">
         <div className="w-full h-40 bg-gray-200 rounded-lg overflow-hidden">
           {image ? (
              <img src={image} alt={title} className='h-48 w-full object-cover' />
           ) : (
-             <Image src={"/images/proj-placeholder.jpg"} alt={title} layout="fill" objectFit="cover" />
+             <Image src={"/images/proj-placeholder.jpg"} alt={title || ''} layout="fill" objectFit="cover" />
           )}
         </div>
-        {/* <div className="absolute top-0 right-0 left-0 p-2">
-         
-          <AlertNotification message={alertMessage} daysLeft={daysLeft} />
-        </div> */}
+       
       </div>
 
       {/* Skills Required */}
       <div className="mb-8">
-        <h3 className="text-lg font-bold mb-4">Skills Required</h3>
+        <h3 className="text-lg text-[#001D69] font-bold mb-4">Skills Required</h3>
         <div className="flex flex-wrap gap-x-4">
-          {skills.map((skill, index) => (
+          {skills?.map((skill, index) => (
             // Use SkillBadge component
             <SkillBadge key={index} name={skill} icon={skill[0]} />
           ))}
@@ -63,7 +62,12 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
       {/* Participants */}
       <div>
-        <h3 className="text-lg font-bold mb-4">Participants</h3>
+        <h3 className="text-lg text-[#001D69] font-bold mb-4">Participants</h3>
+        <ParticipantCard
+          name={`${projectLead?.firstName} ${projectLead?.lastName}`}
+          role={'Project Lead'}
+          image={projectLead?.image}
+        />
         {participants?.slice(0,2)?.map((participant, index) => (
           // Use ParticipantCard component
           <ParticipantCard 
@@ -81,7 +85,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
                   <div key={`add-${i}`} className="w-8 h-8 rounded-full bg-gray-400 border-2 border-white"></div>
                 ))}
              </div>
-             {participants.length > 2 && <span className="text-sm text-gray-600">+{participants?.length - 3} more</span>}
+             {participants?.length > 2 && <span className="text-sm text-gray-600">+{participants?.length - 3} more</span>}
           </div>
         )}
       </div>
