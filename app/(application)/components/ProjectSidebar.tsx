@@ -34,7 +34,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   alertMessage = "Review and finalize tasks" // Default message from user's code
 }) => {
   return (
-    <div className="lg:w-1/3">
+    <div className="lg:w-1/3 lg:ml-7">
       {/* Image with Alert Overlay */}
       <div className="relative mb-6">
         <div className="w-full h-40 bg-gray-200 rounded-lg overflow-hidden">

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { FiArrowUp, FiMessageSquare, FiMoreVertical } from 'react-icons/fi';
 
 interface DiscussionItemProps {
+  id?:string;
   authorName: string;
   authorRole?: string;
   avatarUrl: string;
@@ -16,6 +17,7 @@ interface DiscussionItemProps {
 }
 
 const DiscussionItem: React.FC<DiscussionItemProps> = ({ 
+  id='1',
   authorName, 
   authorRole, 
   avatarUrl, 

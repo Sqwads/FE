@@ -6,12 +6,12 @@ import { FiArrowLeft, FiX } from 'react-icons/fi';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
 // Import components with absolute paths (recommended)
-import ProjectHeader from '../../../../../components/ProjectHeader';
-import NavigationTabs from '../../../../../components/NavigationTabs';
-import ProjectSidebar from '../../../../../components/ProjectSidebar';
-import DiscussionPost from '../../../../../components/DiscussionPost';
-import ReactionButtons from '../../../../../components/ReactionButtons';
-import CommentInput from '../../../../../components/CommentInput';
+import ProjectHeader from '../../../../components/ProjectHeader';
+import NavigationTabs from '../../../../components/NavigationTabs';
+import ProjectSidebar from '../../../../components/ProjectSidebar';
+import DiscussionPost from '../../../../components/DiscussionPost';
+import ReactionButtons from '../../../../components/ReactionButtons';
+import CommentInput from '../../../../components/CommentInput';
 
 export default function DiscussionThreadPage({ params }: any) {
   // Destructure with defaults to ensure type safety
@@ -74,7 +74,7 @@ export default function DiscussionThreadPage({ params }: any) {
     <div className="p-6 bg-white min-h-screen">
       <div className="mb-4">
         <Link 
-          href={`/dashboard/projects/${projectId}`} 
+          href={`/dashboard/projects/${projectId}/discussion/${discussionId}`} 
           className="text-blue-600 text-sm font-medium inline-flex items-center"
           prefetch={false}
         >

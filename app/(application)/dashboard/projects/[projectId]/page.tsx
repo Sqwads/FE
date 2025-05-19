@@ -102,7 +102,7 @@ function ProjectDetailsContent({ params }: any) {
         </Link>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row mr-0">
         {/* Main Content Column */}
         <div className="lg:w-2/3">
           {/* Project Header & Join Button */}
@@ -169,6 +169,9 @@ function ProjectDetailsContent({ params }: any) {
             </div>
           )}
         </div>
+
+        {/* Vertical Divider */}
+  <div className="hidden lg:block w-px bg-gray-200 mx-0"></div>
 
         <ProjectSidebar 
           image={projectData.image}

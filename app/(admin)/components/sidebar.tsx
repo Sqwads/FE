@@ -6,7 +6,7 @@ import { HiOutlineHome } from 'react-icons/hi';
 import Link from 'next/link'; 
 import type { Route } from 'next'; 
 import Image from 'next/image';
-import { userWrapper } from '@/src/store'; 
+import { userWrapper } from '@/src/store';
 import { cookieStorage } from '@ibnlanre/portal';
 
 const AdminSidebar = ({
@@ -81,6 +81,7 @@ const AdminSidebar = ({
             <p className="text-xs text-[#16181BB2]">{user?.email}</p>
           </div>
         </div>
+
         <button 
           onClick={logout} 
           className="w-full text-red-500 cursor-pointer text-center font-semibold py-2"
