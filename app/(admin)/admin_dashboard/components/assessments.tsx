@@ -1,11 +1,7 @@
 import React from "react";
 
-const assessments = [
-  { name: "Nneoma Onyekachi", score: "100%", lastActivity: "Yesterday, 06:05pm" },
-  { name: "Fatima Yusuf", score: "95%", lastActivity: "06/01/2025, 01:00pm" },
-  { name: "Abdullahi Suleiman", score: "95%", lastActivity: "Yesterday, 06:05pm" },
-  { name: "Adebayo Ademola", score: "90%", lastActivity: "Yesterday, 06:05pm" },
-];
+const assessments:any = [
+]
 
 const Assessments = () => {
   return (
@@ -14,7 +10,7 @@ const Assessments = () => {
         <h2 className="text-lg font-semibold">Assessments 🏆</h2>
         <button className="text-blue-500">View all</button>
       </div>
-      {assessments.map((assessment, index) => (
+      {assessments.map((assessment:any, index:number) => (
         <div key={index} className="flex justify-between items-center border-b py-3">
           <div>
             <p className="font-medium">{assessment.name}</p>
@@ -23,6 +19,10 @@ const Assessments = () => {
           <span className="text-blue-500">{assessment.score}</span>
         </div>
       ))}
+
+      {assessments.length === 0 && (
+        <div className="flex items-center justify-center h-64 text-gray-500"> No Assessment Available </div>  
+      )}
     </div>
   );
 };

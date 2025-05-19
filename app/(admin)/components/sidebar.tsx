@@ -9,22 +9,26 @@ import Image from 'next/image';
 import { userWrapper } from '@/src/store';
 import { cookieStorage } from '@ibnlanre/portal';
 
+
 const AdminSidebar = ({
   onSelectTab
 }: {
   onSelectTab?: () => void;
 }) => {
-  const pathname = usePathname();
-  const router = useRouter();
+
+ 
+  const pathname = usePathname(); // Get current route
+  const router = useRouter()
   const { user } = userWrapper((state) => ({
     user: state.user,
   }));
 
-  const logout = () => {
-    cookieStorage.clear();
-    localStorage.clear();
-    router.push('/admin_login');
-  };
+
+  const logout = ()=>{
+    cookieStorage.clear()
+    localStorage.clear()
+    router.push('/admin_login')
+  }
 
   const isActive = (path: string): boolean => pathname === path;
 
@@ -88,6 +92,7 @@ const AdminSidebar = ({
         >
           Logout
         </button>
+
       </div>
     </div>
   );
