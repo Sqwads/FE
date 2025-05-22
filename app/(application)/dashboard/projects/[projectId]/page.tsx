@@ -135,7 +135,7 @@ function ProjectDetailsContent({ params }: any) {
           {/* Tab Content */}
           {activeTab === 'Description' && (
             <div>
-              <ProjectTimeline startDay={projectData.startDay} endDay={projectData.endDay} />
+              {/* <ProjectTimeline startDay={projectData.startDay} endDay={projectData.endDay} /> */}
               <h2 className="text-xl font-bold mb-4">Description</h2>
               <div className="mb-6">
                 <h3 className="font-medium mb-2">Project Overview</h3>

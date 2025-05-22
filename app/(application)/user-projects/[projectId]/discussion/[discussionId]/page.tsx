@@ -73,13 +73,16 @@ export default function DiscussionThreadPage({ params }: any) {
   return (
     <div className="p-6 bg-white min-h-screen">
       <div className="mb-4">
+<<<<<<<< HEAD:app/(application)/dashboard/projects/discussion/[discussionId]/page.tsx
         <Link 
           href={`/dashboard/projects/${projectId}/discussion/${discussionId}`} 
-
-          // href={`/dashboard/projects/${projectId}`}
+========
+        <Link
+          href={`/dashboard/projects/${projectId}`}
+>>>>>>>> 2c7dde52e68f110ec723ca175fab3d8b48808198:app/(application)/user-projects/[projectId]/discussion/[discussionId]/page.tsx
           className="text-blue-600 text-sm font-medium inline-flex items-center"
           prefetch={false}
-  >
+        >
           <FiArrowLeft className="mr-1" /> Back to Project Details
         </Link>
       </div>

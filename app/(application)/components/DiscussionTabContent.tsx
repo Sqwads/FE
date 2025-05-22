@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { FiSearch, FiFilter, FiChevronDown } from 'react-icons/fi';
 import DiscussionItem from './DiscussionItem'; 
 
-
-const sampleDiscussions = [
+// Sample Data (based on user's text file and screenshot)
+export const sampleDiscussions = [
   {
     authorName: "Squads Admin",
     avatarUrl: "/images/woman_av.png",

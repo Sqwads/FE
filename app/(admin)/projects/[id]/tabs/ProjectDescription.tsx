@@ -20,9 +20,9 @@ const ProjectDescription: React.FC<ProjectDescriptionProps> = ({
 
   const progressWidth = (Number(currentDay) / Number(endDay)) * 100
   return (
-    <div className="mt-6">
+    <div className="mt-6 lg:pr-36">
       {/* Timeline Progress (visible on left panel) */}
-      <div className="mb-6">
+      <div className="mb-6 max-w-[600px] ">
         <div className="flex justify-between">
           <div>
             <h2 className="font-bold text-[#001D69] text-lg">Start</h2>
@@ -33,20 +33,20 @@ const ProjectDescription: React.FC<ProjectDescriptionProps> = ({
             <p className="text-[#16181B80]">Day {endDay}</p>
           </div>
         </div>
-        <div className="w-full h-2 bg-gray-200 rounded-full mt-2">
-          <div className=" h-full bg-blue-500 rounded-full" style={{width: `${progressWidth> 100? 100: progressWidth}%`}}></div>
+        <div className="h-2 bg-gray-200 opacity-50 mt-2">
+          <div className=" h-full bg-blue-800 rounded-full" style={{width: `${progressWidth> 100? 100: progressWidth}%`}}></div>
         </div>
       </div>
       <h2 className="text-xl font-semibold">Description</h2>
       
       <div className="mt-4">
         <h3 className="font-medium text-gray-700">Project Overview</h3>
-        <p className="text-gray-600 mt-2 leading-relaxed">{overview}</p>
+        <p className="text-gray-600 mt-2 leading-relaxed whitespace-pre-line">{overview}</p>
       </div>
       
       <div className="mt-6">
-        <h3 className="font-medium text-gray-700">Key Features and Design Goals</h3>
-        <p className="text-gray-600 mt-2 leading-relaxed">{features}</p>
+        <h3 className="font-medium text-gray-700 ">Key Features and Design Goals</h3>
+        <p className="text-gray-600 mt-2 leading-relaxed whitespace-pre-line">{features}</p>
       </div>
 
       

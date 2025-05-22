@@ -14,9 +14,9 @@ const ActionCard = ({
   actionText 
 }: any) => {
   return (
-    <div className="bg-white rounded-lg p-5 border border-gray-100 shadow-sm">
+    <div className="bg-white rounded-lg p-5 border  shadow-sm">
       <div className="flex items-start">
-        {icon && <div className="mr-3 mt-1">{icon}</div>}
+        {icon && <div className="mr-3 mt-1 rounded-full h-10 w-10 flex justify-center items-center bg-[#9BB7FF66]">{icon}</div>}
         {illustration && (
           <div className="flex-shrink-0 mr-4">
             {/* Using img instead of Next.js Image */}
@@ -30,8 +30,8 @@ const ActionCard = ({
           </div>
         )}
         <div className="flex-1">
-          <h3 className="font-bold text-lg mb-1">{title}</h3>
-          <p className="text-gray-600 text-sm mb-3">{description}</p>
+          <h3 className="font-medium text-xl mb-1">{title}</h3>
+          <p className="text-gray-600 text-sm mb-7">{description}</p>
           
           {progress !== undefined && (
             <div className="w-full bg-gray-200 rounded-full h-2 mb-2">

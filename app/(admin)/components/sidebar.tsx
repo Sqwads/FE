@@ -37,7 +37,7 @@ const AdminSidebar = ({
     { href: '/projects', icon: <FaProjectDiagram size={20} />, label: 'Projects' },
     { href: '/users', icon: <FaUsers size={20} />, label: 'Users' },
     { href: '/mentorship', icon: <FaUserTie size={20} />, label: 'Sqwad Mentors' },
-    { href: '/admin', icon: <FaBriefcase size={20} />, label: 'Admin Control' },
+    { href: '/admin-control', icon: <FaBriefcase size={20} />, label: 'Admin Control' },
   ];
 
   return (

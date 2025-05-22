@@ -50,8 +50,8 @@ const Projects = () => {
             accessorKey:'firstName',
             cell:({ row})=>
               <div className="flex">
-                  {row.original.teamMembers?.slice(0,2)?.map((item:any)=>
-                    <>
+                  {row.original.teamMembers?.slice(0,2)?.map((item:any, index:any)=>
+                    <div key={index}>
                         {item?.user?.profileImage ?
                          <img src={item?.user?.profileImage} className='h-8 w-8 rounded-full border object-cover' alt="image" />:
                          <div 
@@ -60,7 +60,7 @@ const Projects = () => {
                             {item.user?.firstName[0]}
                         </div>
                         }
-                    </>
+                    </div>
                   )}
                   {
                    ( row.original?.teamMembers?.length - 2) > 0 &&

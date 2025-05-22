@@ -96,7 +96,7 @@ const UserListPage = () => {
     {
       header:'Domain',
       accessorKey:'domain' ,
-      cell:({ row})=> formatTextToSentenceCase(row.original?.skills_of_interest[0]),
+      cell:({ row})=> formatTextToSentenceCase(row.original?.skills_of_interest[0] || ''),
     },
     {
       header:'Email',

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { formatTextToSentenceCase } from '@/common';
 
 // Define TypeScript interfaces for component props
 interface ParticipantCardProps {
@@ -24,7 +25,7 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({ name, role, image }) 
       </div>
       <div>
         <h4 className="font-medium text-sm sm:text-base">{name}</h4>
-        {role && <p className="text-sm text-blue-600">{role}</p>}
+        {role && <p className="text-sm text-blue-600">{formatTextToSentenceCase(role)}</p>}
       </div>
     </div>
   );
