@@ -7,7 +7,7 @@ import Link from "next/link";
 import Button from "../../components/Button";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
-const Navbar = () => {
+const MentorNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -27,7 +27,7 @@ const Navbar = () => {
           <li key={link.key} className="flex items-center">
             <Link
               href={link.href}
-              className="regular-16 text-[#D5D7DA] flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
+              className="regular-16 text-[#16181B] flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
             >
               {link.label}
             </Link>
@@ -37,8 +37,8 @@ const Navbar = () => {
                 <Image
                   src="/images/coming.png"
                   alt="coming_soon"
-                  width={80} // Adjust width as needed
-                  height={30} // Adjust height as needed
+                  width={80}
+                  height={30}
                 />
               </div>
             )}
@@ -107,4 +107,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default MentorNav;

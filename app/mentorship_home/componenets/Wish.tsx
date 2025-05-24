@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const FinalCTASection = () => {
   return (
@@ -30,13 +31,43 @@ const FinalCTASection = () => {
               </Link>
             </div>
             
-            {/* Right decorative area */}
-            <div className="md:w-1/2 relative">
-              {/* Blue gradient background - this simulates the abstract blue shapes in the design */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200 opacity-50"></div>
-              
-              {/* You can replace this with an actual image if you have one */}
-              <div className="h-full w-full min-h-[200px]"></div>
+            {/* Right decorative area with fixed-size container for ellipses */}
+            <div className="md:w-1/2 relative flex items-center justify-center">
+              {/* Fixed-size container with overflow hidden for clean edges */}
+              <div className="relative w-[300px] h-[300px] overflow-hidden bg-blue-50">
+                {/* Ellipse 740 - Very light blue */}
+                <div className="absolute" style={{ left: '-50px', top: '0px' }}>
+                  <Image 
+                    src="/images/Ellipse740.png" 
+                    alt="Light blue circle" 
+                    width={300} 
+                    height={300}
+                    style={{ opacity: 0.7 }}
+                  />
+                </div>
+                
+                {/* Ellipse 739 - Medium blue */}
+                <div className="absolute" style={{ left: '50px', top: '0px' }}>
+                  <Image 
+                    src="/images/Ellipse739.png" 
+                    alt="Medium blue circle" 
+                    width={300} 
+                    height={300}
+                    style={{ opacity: 0.8 }}
+                  />
+                </div>
+                
+                {/* Ellipse 737 - Medium blue */}
+                <div className="absolute" style={{ left: '0px', top: '50px' }}>
+                  <Image 
+                    src="/images/Ellipse737.png" 
+                    alt="Medium blue circle" 
+                    width={300} 
+                    height={300}
+                    style={{ opacity: 0.9 }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

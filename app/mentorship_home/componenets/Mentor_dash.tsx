@@ -4,7 +4,7 @@ import React from 'react';
 
 const MentorDashboard = () => {
   return (
-    <div className="py-20 ">
+    <div className="">
     
       {/* Title and Subtitle */}
       <div className="text-center mb-12 px-3 max-w-[800px] mx-auto">

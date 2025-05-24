@@ -4,7 +4,10 @@ import React from 'react';
 
 const Mentor = () => {
   return (
-    <div className="py-20 ">
+    <div className="py-20"
+         style={{ backgroundImage: 'url("/images/vector_bg.png")', backgroundSize:'cover', backgroundPosition:'center' }}
+
+    >
     
       {/* Title and Subtitle */}
       <div className="text-center mb-12 px-3 max-w-[700px] mx-auto">
@@ -81,25 +84,24 @@ const Mentor = () => {
 
       {/* Mentorship Call-to-Action Section */}
       <div className="py-16 px-4 relative overflow-hidden mt-16">
-        {/* Left Quote Image - Repositioned to be closer to content */}
+
         <div className="absolute left-[10%] md:left-[15%] bottom-[20%] z-0">
           <Image 
             src="/images/left-coolicon.png" 
             alt="Left quote" 
             width={120} 
             height={120}
-            className="opacity-30" // Lighter appearance to match reference
+            className="opacity-30"
           />
         </div>
         
-        {/* Right Quote Image - Repositioned to be closer to content */}
         <div className="absolute right-[10%] md:right-[15%] top-[20%] z-0">
           <Image 
             src="/images/top-coolicon.png" 
             alt="Right quote" 
             width={120} 
             height={120}
-            className="opacity-30" // Lighter appearance to match reference
+            className="opacity-30"
           />
         </div>
         
@@ -107,7 +109,7 @@ const Mentor = () => {
           {/* Badge/Pill */}
           <div className="inline-flex items-center justify-center mb-6">
             <div className="bg-white border border-purple-400 rounded-full px-4 py-1 text-sm flex items-center">
-              {/* Badge Icon - Replace with your local image */}
+
               <div className="mr-1 flex items-center">
                 <Image 
                   src="/images/woman-icon.png" 
