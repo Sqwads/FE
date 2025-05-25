@@ -15,7 +15,8 @@ export default function middleware(req: NextRequest) {
     '/welcome',
     '/admin_emailauth',
     '/admin_signup',
-    '/admin_login'
+    '/admin_login',
+    '/mentorship_home'
   ]
 
   const user = req.cookies.get("access_token")?.value

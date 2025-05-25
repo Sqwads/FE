@@ -16,7 +16,7 @@ const ShowCase = () => {
         {/* Small Image */}
         <div className="mb-4">
           <Image
-            src="/woman-icon.png"
+            src="/images/woman-icon.png"
             alt="Icon between heading and text"
             width={40}
             height={40}
