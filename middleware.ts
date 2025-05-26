@@ -16,6 +16,12 @@ export default function middleware(req: NextRequest) {
     '/admin_emailauth',
     '/admin_signup',
     '/admin_login',
+    '/mentor_signup',
+    '/mentor_email_auth',
+    '/mentor_info',
+    '/mentor_availability',
+    '/mentor_individual_intro',
+    '/mentor_login',
     '/project-public',
     '/mentorship_home'
   ]
