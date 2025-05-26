@@ -4,11 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { use, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { IoMdPeople } from "react-icons/io";
 import { FaProjectDiagram } from 'react-icons/fa';
 import { HiOutlineHome, HiOutlineClipboardList } from 'react-icons/hi';
 import { BsDatabase } from 'react-icons/bs';
 import { usePathname } from 'next/navigation';
 import { userWrapper } from '@/store';
+import { IoBagRemove } from 'react-icons/io5';
 
 const Sidebar = ({
   onSelectTab
@@ -60,11 +62,16 @@ const Sidebar = ({
             >
             <FaProjectDiagram size={20} /> Projects
           </Link>
-          <Link onClick={onSelectTab} href="/board" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
-            <HiOutlineClipboardList size={20} /> Board
+          <Link onClick={onSelectTab} href="/sqwad-mentors" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
+            <IoMdPeople /> Sqwad Mentors
           </Link>
-          <Link onClick={onSelectTab} href="/database" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
-            <BsDatabase size={20} /> Database
+          <Link 
+              onClick={onSelectTab} 
+              href="/portfolio" 
+             className={`flex items-center gap-3 px-4 py-3 text-gray-700  rounded-md
+              ${pathname?.startsWith('/portfolio') ?activeClasses:inactiveClasses}`}
+          >
+            <IoBagRemove /> Portfolio
           </Link>
         </nav>
 

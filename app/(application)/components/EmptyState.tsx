@@ -16,7 +16,8 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   description, 
   actionText, 
   actionLink,
-  illustration 
+  illustration,
+   
 }) => {
   return (
     <div className="bg-gradient-to-b from-white via-[#f9fafb] to-[#f1f5f9] rounded-lg px-8 py-10 border shadow-sm text-center">
