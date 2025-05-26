@@ -31,7 +31,6 @@ const MentorOverviewCard: React.FC<MentorOverviewCardProps> = ({
     <div className="bg-white rounded-lg p-6 mb-8 flex flex-col md:flex-row items-start md:items-center gap-6">
       <div className="flex items-center">
         <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden mr-4">
-          {/* Avatar placeholder - will be replaced with actual image */}
           <div className="w-full h-full flex items-center justify-center text-gray-500">
             {!avatarUrl && name.split(' ').map(n => n[0]).join('')}
           </div>

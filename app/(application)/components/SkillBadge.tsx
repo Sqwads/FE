@@ -17,7 +17,7 @@ const SkillBadge: React.FC<SkillBadgeProps> = ({ name, icon }) => {
         {typeof icon === 'string' ? (
           <span className="text-lg sm:text-xl font-bold text-gray-600">{icon}</span> 
         ) : (
-          icon // Render if it's already a ReactNode
+          icon 
         )}
       </div>
       <span className="text-xs sm:text-sm text-center">{name}</span>
