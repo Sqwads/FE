@@ -8,7 +8,7 @@ import DiscussionItem from './DiscussionItem';
 export const sampleDiscussions = [
   {
     authorName: "Squads Admin",
-    avatarUrl: "/images/avatar1.jpg", // Placeholder image path
+    avatarUrl: "/images/woman_av.png",
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -17,7 +17,7 @@ export const sampleDiscussions = [
   },
   {
     authorName: "Squads Admin",
-    avatarUrl: "/images/avatar2.jpg", // Placeholder image path
+    avatarUrl: "/images/woman_av.png",
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -26,7 +26,7 @@ export const sampleDiscussions = [
   },
   {
     authorName: "Adebayo Lawal",
-    avatarUrl: "/images/avatar3.jpg", // Placeholder image path
+    avatarUrl: "/images/woman_av.png",
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -35,7 +35,7 @@ export const sampleDiscussions = [
   },
   {
     authorName: "Olutimi Odunwole",
-    avatarUrl: "/images/avatar4.jpg", // Placeholder image path
+    avatarUrl: "/images/woman_av.png", // Placeholder image path
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -44,7 +44,7 @@ export const sampleDiscussions = [
   },
     {
     authorName: "Olutimi Odunwole",
-    avatarUrl: "/images/avatar5.jpg", // Placeholder image path
+    avatarUrl: "/images/woman_av.png", // Placeholder image path
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -53,7 +53,7 @@ export const sampleDiscussions = [
   },
     {
     authorName: "Olutimi Odunwole",
-    avatarUrl: "/images/avatar6.jpg", // Placeholder image path
+    avatarUrl: "/images/woman_av.png", // Placeholder image path
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -62,7 +62,7 @@ export const sampleDiscussions = [
   },
     {
     authorName: "Olutimi Odunwole",
-    avatarUrl: "/images/avatar7.jpg", // Placeholder image path
+    avatarUrl: "/images/woman_av.png", // Placeholder image path
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,

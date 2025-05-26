@@ -79,7 +79,7 @@ export default function DiscussionThreadPage({ params }: any) {
           // href={`/dashboard/projects/${projectId}`}
           className="text-blue-600 text-sm font-medium inline-flex items-center"
           prefetch={false}
-      >
+  >
           <FiArrowLeft className="mr-1" /> Back to Project Details
         </Link>
       </div>
