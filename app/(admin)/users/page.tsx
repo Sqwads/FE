@@ -140,7 +140,7 @@ const UserListPage = () => {
           </Button>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item onClick={()=>router.push(`/users/${row.original.userId}`)}>View Profile</Menu.Item>
+          <Menu.Item onClick={()=>router.push(`/users/${row.original._id}`)}>View Profile</Menu.Item>
           <Menu.Item className="!cursor-not-allowed">Edit User</Menu.Item>
           {row.original?.status == 'ACTIVE' && <Menu.Item onClick={()=>handleSuspendUser(row.original)} color="red">Suspend User</Menu.Item>}
           {row.original?.status == 'SUSPENDED' && <Menu.Item onClick={()=>handleActivateUser(row.original?.userId)}  color="#028d4c">Activate User</Menu.Item>}

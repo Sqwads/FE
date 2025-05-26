@@ -35,7 +35,7 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
     }
 
     return(
-       <div className="flex h-screen">
+       <div className="flex h-screen ">
              <LoadingOverlay visible={userInfoIsLoading} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} />
              {/* Main Content Area */}
              <div className="w-64 hidden md:block">
@@ -44,9 +44,9 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
        
               
              {/* Main Content */}
-             <div className="flex-1 h-screen overflow-y-scroll   ">
+             <div  className="flex-1 h-screen overflow-y-scroll   ">
                <TopNav />
-               <div>
+               <div  className='  '>
                    {children}
                </div>
              </div>
