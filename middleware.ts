@@ -23,7 +23,7 @@ export default function middleware(req: NextRequest) {
     '/mentor_individual_intro',
     '/mentor_login',
     '/project-public',
-    '/mentorship_home'
+    '/mentorship_home',
   ]
 
   const user = req.cookies.get("access_token")?.value
