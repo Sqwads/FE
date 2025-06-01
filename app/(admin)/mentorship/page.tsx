@@ -15,7 +15,6 @@ const MentorDashboard: React.FC = () => {
   const [sortColumn, setSortColumn] = useState('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   
-  // Add this handler function
   const handleSuspendMentor = (mentorId: string) => {
     console.log(`Toggling mentor status for mentor ID: ${mentorId}`);
     // Implement actual suspension logic here

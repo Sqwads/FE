@@ -35,7 +35,7 @@ export const sampleDiscussions = [
   },
   {
     authorName: "Olutimi Odunwole",
-    avatarUrl: "/images/woman_av.png", // Placeholder image path
+    avatarUrl: "/images/woman_av.png",
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -44,7 +44,7 @@ export const sampleDiscussions = [
   },
     {
     authorName: "Olutimi Odunwole",
-    avatarUrl: "/images/woman_av.png", // Placeholder image path
+    avatarUrl: "/images/woman_av.png",
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -53,7 +53,7 @@ export const sampleDiscussions = [
   },
     {
     authorName: "Olutimi Odunwole",
-    avatarUrl: "/images/woman_av.png", // Placeholder image path
+    avatarUrl: "/images/woman_av.png",
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,
@@ -62,7 +62,7 @@ export const sampleDiscussions = [
   },
     {
     authorName: "Olutimi Odunwole",
-    avatarUrl: "/images/woman_av.png", // Placeholder image path
+    avatarUrl: "/images/woman_av.png",
     lastCommentTime: "12 hours ago",
     title: "This Project has an official Whatsapp Group",
     upvotes: 25,

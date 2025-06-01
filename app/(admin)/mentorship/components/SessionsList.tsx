@@ -51,7 +51,6 @@ const SessionsList: React.FC<SessionsListProps> = ({ sessions }) => {
                     >
                       {participant.avatar ? (
                         <div className="w-full h-full">
-                          {/* Avatar placeholder - will be replaced with actual image */}
                           <div className="w-full h-full flex items-center justify-center">
                             {participant.name.charAt(0)}
                           </div>

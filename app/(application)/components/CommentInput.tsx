@@ -6,7 +6,6 @@ import { FiSmile, FiPaperclip } from 'react-icons/fi';
 // Define interface for props
 interface CommentInputProps {
   onCommentSubmit: (commentText: string) => void;
-  // Add props for handling attachments or emojis if needed
 }
 
 const CommentInput: React.FC<CommentInputProps> = ({ onCommentSubmit }) => {

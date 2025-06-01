@@ -9,8 +9,9 @@ const MentorDashboard = () => {
       {/* Title and Subtitle */}
       <div className="text-center mb-12 px-3 max-w-[800px] mx-auto">
 
-        <h2 className="text-9xl md:text-4xl font-medium mb-5 text-[#1b3c91]">Lead with Purpose. Mentor with Sqwads.</h2>
-        <p className="text-gray-600 text-lg  mt-4">
+        {/* Updated heading size: Removed text-9xl and md:text-4xl, applied text-4xl consistently */}
+        <h2 className="text-4xl font-medium mb-5 text-[#1b3c91]">Lead with Purpose. Mentor with Sqwads.</h2>
+        <p className="text-gray-600 text-lg mt-4">
         Share your knowledge, inspire rising talent, and grow as a leader — where your experience meets real impact.
         </p>
       </div>
@@ -30,7 +31,7 @@ const MentorDashboard = () => {
       {/* Image Section */}
       <div className="flex justify-center mb-12 px-3">
         <Image
-          src="/images/mentors.png"
+          src="/images/mentors.png" // Ensure this path is correct in your project
           alt="Mentorship"
           width={800}
           height={400}
@@ -42,3 +43,4 @@ const MentorDashboard = () => {
 };
 
 export default MentorDashboard;
+
