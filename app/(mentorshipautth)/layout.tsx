@@ -7,7 +7,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 export default function AuthLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div
-      className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-5 md:px-10 px-3"
+      className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-5 md:px-10 px-2"
       style={{ backgroundImage: 'url("/images/signup_bg.png")' }}
     >
       <div className="flex w-full md:mb-0 mb-7  ">

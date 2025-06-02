@@ -1,14 +1,37 @@
 'use client';
 
 import React, { useState } from 'react';
-import ProfileHeader from '../../components/ProfileHeader';
-import MentorOverviewCard from '../../components/MentorOverviewCard';
-import PersonalInfo from '../../components/PersonalInfo';
-import ActivityTabs from '../../components/ActivityTabs';
-import SessionsSubTabs from '../../components/SessionsSubTabs';
-import SessionsList, { SessionItem } from '../../components/SessionsList';
+import ProfileHeader from '../components/ProfileHeader';
+import MentorOverviewCard from '../components/MentorOverviewCard';
+import PersonalInfo from '../components/PersonalInfo';
+import ActivityTabs from '../components/ActivityTabs';
+import SessionsSubTabs from '../components/SessionsSubTabs';
+import SessionsList, { SessionItem } from '../components/SessionsList';
+import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { instance } from '@/api/instance';
+import moment from 'moment';
 
 const MentorProfile: React.FC = () => {
+
+  const params = useParams()
+  const mentorId = params.id
+
+  const { data: response, isPending} = useQuery({
+    queryFn: ()=>instance.get(`/mentors/${mentorId}`),
+    queryKey: ['mentor', mentorId],
+    enabled: !!mentorId
+  })
+
+  
+  const trimText = (email: string) => {
+    if(!email) return null;
+    const [localPart, domain] = email?.split('@');
+    return localPart.length > 5 ? `${localPart.slice(0, 5)}...@${domain}` : email;
+  };
+
+  const mentor = response?.data?.data
+
   const [activeTab, setActiveTab] = useState<'sessions' | 'reviews'>('sessions');
   const [activeSubTab, setActiveSubTab] = useState<'upcoming' | 'pending' | 'past' | 'cancelled'>('upcoming');
 
@@ -136,7 +159,7 @@ const MentorProfile: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="lg:px-6 px-3 py-6 bg-gray-50 min-h-screen">
       <ProfileHeader 
         title="Mentor Profile" 
         subtitle="Manage" 
@@ -145,21 +168,30 @@ const MentorProfile: React.FC = () => {
       />
 
       <MentorOverviewCard 
-        name={mentorData.name}
-        joinDate={mentorData.joinDate}
-        stats={mentorData.stats}
+        name={`${mentor?.firstName} ${mentor?.lastName}`}
+        joinDate={moment(mentor?.created_at as string ).format('MMMM Do YYYY').toUpperCase()}
+        stats={{
+          sessions: 0,
+          rating: '5.0',
+          duration:'0 Hours',
+          email: trimText(mentor?.email || ''),
+          lastSession: 'N/A'
+        }}
+        avatarUrl={mentor?.profileImage}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Personal Information */}
         <div className="lg:col-span-1">
           <PersonalInfo 
-            fullName={mentorData.personalInfo.fullName}
-            email={mentorData.personalInfo.email}
-            role={mentorData.personalInfo.role}
-            organization={mentorData.personalInfo.organization}
-            bio={mentorData.personalInfo.bio}
-            socialLinks={mentorData.personalInfo.socialLinks}
+            fullName={`${mentor?.firstName} ${mentor?.lastName}`}
+            email={mentor?.email}
+            role={mentor?.title}
+            organization={mentor?.company}
+            bio={mentor?.bio}
+            socialLinks={{
+              linkedin: mentor?.linkedln_url
+            }}
           />
         </div>
 

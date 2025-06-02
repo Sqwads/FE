@@ -1,18 +1,39 @@
 "use client"
-import { Select, TextInput } from "@mantine/core";
-import { useForm } from '@mantine/form';
+import { PasswordInput, Select, TextInput } from "@mantine/core";
+import { useForm, yupResolver } from '@mantine/form';
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import { FiUpload, FiUser } from "react-icons/fi";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import * as Yup from 'yup';
+import { useMutation } from "@tanstack/react-query";
+import { instance } from "@/api/instance";
+import toast from "react-hot-toast";
+import { base64encode } from "nodejs-base64";
 
 const MentorSignupPage = () => {
   const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  
+  const fileInputRef = useRef<any>(null);
+  const handleImageClick = () => {
+      fileInputRef.current.click();
+  };
+
+  const validator = Yup.object({
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    phoneNumber: Yup.string().required('Phone number is required'),
+    gender: Yup.string().required('Gender is required'),
+    location: Yup.string().required('Location is required'),
+    password: Yup.string()
+      .min(6, 'Password must be at least 6 characters')
+  })
 
   const onboardingForm = useForm({
     initialValues: {
@@ -21,14 +42,10 @@ const MentorSignupPage = () => {
       email: '',
       phoneNumber: '',
       gender: '',
-      location: ''
+      location: '',
+      password: ''
     },
-    validate: {
-      firstName: (value) => value.trim().length === 0 ? 'First name is required' : null,
-      lastName: (value) => value.trim().length === 0 ? 'Last name is required' : null,
-      email: (value) => !/^\S+@\S+$/.test(value) ? 'Invalid email address' : null,
-      phoneNumber: (value) => value.trim().length === 0 ? 'Phone number is required' : null,
-    }
+    validate: yupResolver(validator)
   });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,17 +62,48 @@ const MentorSignupPage = () => {
     }
   };
 
+  const {mutate, isPending} = useMutation({
+      mutationFn: (data:any)=>instance.post(`/mentors/register`, data),
+      mutationKey: ['mentor'],
+      onSuccess(response, vars) {
+          console.log(response.data)
+          toast.success('Registration successful')
+          // alert('what.........')
+          router.push(`/mentor_email_auth?email=${base64encode(`${onboardingForm.values.email}`)}`)
+      },
+      onError(error:any) {
+          toast.error(error?.response?.data?.message || 'Registration Failed')
+          console.log(error?.response?.data)
+      },
+  })
+
+
   const handleSubmit = (values: any) => {
     console.log('Form values:', values);
     console.log('Selected file:', selectedFile);
-  
+    
+
+    const formData = new FormData();
+    formData.append('firstName', values.firstName);
+    formData.append('lastName', values.lastName);
+    formData.append('email', values.email);
+    formData.append('phoneNumber', values.phoneNumber);
+    formData.append('gender', values.gender)
+    formData.append('location', values.location)
+    formData.append('password', values.password);
+
+    if(selectedFile){
+      formData.append('file', selectedFile)
+    }
+    mutate(formData);
+    // mutate(formData)
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <div className="bg-white p-8 rounded-3xl shadow-sm w-full">
+    <div className="lg:max-w-3xl mx-aut lg:px-6 lg:py-6">
+      <div className="bg-white px-8 py-8 rounded-3xl shadow-sm w-full">
         {/* Header */}
-        <h1 className="text-4xl text-center text-[#001D69] font-semibold mb-2">
+        <h1 className="lg:text-4xl text-3xl text-center text-[#001D69] font-semibold mb-2">
           Hey there! Let's hear your journey.
         </h1>
         <p className="text-center text-gray-600 mb-8">
@@ -68,7 +116,7 @@ const MentorSignupPage = () => {
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Upload profile photo</label>
             <div className="flex flex-col">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 overflow-hidden">
+              <div onClick={handleImageClick} className="w-24 cursor-pointer h-24 bg-gray-100 rounded-full flex items-center justify-center mb-2 overflow-hidden">
                 {previewUrl ? (
                   <img src={previewUrl} alt="Profile preview" className="w-full h-full object-cover" />
                 ) : (
@@ -84,6 +132,7 @@ const MentorSignupPage = () => {
                   className="hidden" 
                   accept="image/*"
                   onChange={handleFileChange}
+                  ref={fileInputRef}
                 />
                 <p className="text-xs text-gray-500 mt-1">Maximum file size is 2mb</p>
               </label>
@@ -120,7 +169,7 @@ const MentorSignupPage = () => {
             </div>
           </div>
 
-          {/* Email and Phone */}
+          {/* Email and password */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium mb-2">Email Address</label>
@@ -131,6 +180,32 @@ const MentorSignupPage = () => {
               />
             </div>
             <div>
+              <label className="block text-sm font-medium mb-2">Password</label>
+              <PasswordInput
+                // leftSection={<FaPhoneAlt className="text-gray-400" />}
+                placeholder="Enter Password"
+                {...onboardingForm.getInputProps('password')}
+              />
+            </div>
+          </div>
+
+          {/* Gender and phone */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium mb-2">What gender do you identify as?</label>
+              <Select
+                placeholder="Select Gender"
+                data={[
+                  { value: 'male', label: 'Male' },
+                  { value: 'female', label: 'Female' },
+                  { value: 'non-binary', label: 'Non-binary' },
+                  { value: 'prefer-not-to-say', label: 'Prefer not to say' }
+                ]}
+                {...onboardingForm.getInputProps('gender')}
+              />
+            </div>
+
+            <div>
               <label className="block text-sm font-medium mb-2">Phone Number</label>
               <TextInput
                 leftSection={<FaPhoneAlt className="text-gray-400" />}
@@ -139,21 +214,7 @@ const MentorSignupPage = () => {
               />
             </div>
           </div>
-
-          {/* Gender and Location */}
-          <div>
-            <label className="block text-sm font-medium mb-2">What gender do you identify as?</label>
-            <Select
-              placeholder="Select Gender"
-              data={[
-                { value: 'male', label: 'Male' },
-                { value: 'female', label: 'Female' },
-                { value: 'non-binary', label: 'Non-binary' },
-                { value: 'prefer-not-to-say', label: 'Prefer not to say' }
-              ]}
-              {...onboardingForm.getInputProps('gender')}
-            />
-          </div>
+        
 
           <div>
             <label className="block text-sm font-medium mb-2">Where do you live?</label>
@@ -170,15 +231,15 @@ const MentorSignupPage = () => {
             />
           </div>
 
-          {/* Continue Button */}
-          <Link href='/menor_info'>
+         
             <button
                 type="submit"
-                className="w-full mt-8 py-3 bg-[#001D69] text-white rounded-md hover:bg-[#001950] transition"
+                disabled={isPending}
+                className="w-full mt-8 py-3 bg-[#001D69] text-white rounded-md hover:bg-[#001950] transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                Continue
+                {isPending ? 'Saving...' : 'Continue'}
             </button>
-          </Link>
+         
           
 
           {/* Terms and Login Link */}

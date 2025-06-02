@@ -17,7 +17,7 @@ const MentorDashboard = () => {
       </div>
 
       <div className="flex justify-center">
-            <Link href={"/"}>
+            <Link href={"/mentor_signup"}>
                 <button className="bg-[#001D69] text-white px-8 py-3 mb-8 rounded flex items-center hover:bg-[#002a86] transition-colors">
                   Become a Mentor
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">

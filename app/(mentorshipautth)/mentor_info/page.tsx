@@ -1,66 +1,59 @@
 "use client"
-import { Select, TextInput } from "@mantine/core";
-import { useForm } from '@mantine/form';
+import { NumberInput, Select, TextInput } from "@mantine/core";
+import { useForm, yupResolver } from '@mantine/form';
 import { useRouter } from 'next/navigation'
 import { FiBriefcase } from "react-icons/fi";
 import { BsBuilding, BsLinkedin } from "react-icons/bs";
 import { MdOutlineWorkOutline } from "react-icons/md";
+import * as Yup from 'yup'
 import Link from "next/link";
+import { useMutation } from "@tanstack/react-query";
+import { instance } from "@/api/instance";
+import toast from "react-hot-toast";
 
 const MentorProfessionalInfoPage = () => {
   const router = useRouter();
+
+  const validator = Yup.object({
+    company: Yup.string().required('Company/School is required'),
+    title: Yup.string().required('Your title is required'),
+    years_of_experience: Yup.number().min(0, 'Years of experience must be a positive number').required('Years of experience is required'),
+    linkedln_url: Yup.string().url('Invalid URL format').optional(),
+  }) 
 
   const professionalInfoForm = useForm({
     initialValues: {
       company: '',
       title: '',
-      companyDetails: '',
-      experienceMonth: '',
-      experienceYear: '',
-      linkedinUrl: ''
+      years_of_experience:'', 
+      linkedln_url: ''
     },
-    validate: {
-      company: (value) => value.trim().length === 0 ? 'Company/School is required' : null,
-      title: (value) => value.trim().length === 0 ? 'Your title is required' : null,
-    }
+    validate: yupResolver(validator)
   });
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data: any) => instance.patch('/mentors', data),
+    mutationKey: ['mentor', 'editProfessionalInfo'],
+    onSuccess(data, variables, context) {
+        toast.success('Professional information updated successfully');
+        router.push('/mentor_availability');
+    },
+    onError(error:any, variables, context) {
+        toast.error(error?.response?.data?.message || 'Failed to update professional information');
+    },
+  })
 
   const handleSubmit = (values: any) => {
-    // Here you would handle the form submission
-    console.log('Form values:', values);
-    
-    // Navigate to next step
-    // router.push('/next-step');
+    mutate(values)
   };
 
-  // Generate month options
-  const monthOptions = [
-    { value: '1', label: 'January' },
-    { value: '2', label: 'February' },
-    { value: '3', label: 'March' },
-    { value: '4', label: 'April' },
-    { value: '5', label: 'May' },
-    { value: '6', label: 'June' },
-    { value: '7', label: 'July' },
-    { value: '8', label: 'August' },
-    { value: '9', label: 'September' },
-    { value: '10', label: 'October' },
-    { value: '11', label: 'November' },
-    { value: '12', label: 'December' }
-  ];
 
-  // Generate year options (last 50 years)
-  const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from({ length: 50 }, (_, i) => {
-    const year = currentYear - i;
-    return { value: year.toString(), label: year.toString() };
-  });
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="max-w-[500px] lg:mx-auto lg:py-10 w-full ">
       <div className="bg-white p-8 rounded-3xl shadow-sm w-full">
         {/* Header */}
-        <h1 className="text-3xl text-center text-[#0046FF] font-semibold mb-8">
+        <h1 className="lg:text-3xl text-2xl text-center text-[#0046FF] font-semibold mb-8">
           Almost there! Tell us more<br />about yourself?
         </h1>
 
@@ -87,30 +80,23 @@ const MentorProfessionalInfoPage = () => {
           </div>
 
           {/* Company/School Details */}
-          <div>
+          {/* <div>
             <label className="block text-sm text-[#16181B] font-medium mb-2">Company/School</label>
             <TextInput
-            //   leftSection={<BsBuilding className="text-gray-400" />}
+            
               placeholder="E.g Chippercash, Unilag"
               {...professionalInfoForm.getInputProps('companyDetails')}
             />
-          </div>
+          </div> */}
 
           {/* Years of Professional Experience */}
           <div>
             <label className="block text-sm text-[#16181B] font-medium mb-2">Years of Professional Experience</label>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Select
-                placeholder="Select Month"
-                data={monthOptions}
-                {...professionalInfoForm.getInputProps('experienceMonth')}
-                leftSection={<MdOutlineWorkOutline className="text-gray-400" />}
-              />
-              <Select
-                placeholder="Select Year"
-                data={yearOptions}
-                {...professionalInfoForm.getInputProps('experienceYear')}
-                leftSection={<MdOutlineWorkOutline className="text-gray-400" />}
+            <div className="">
+              <NumberInput
+                  hideControls
+                  placeholder="Enter years of experience"
+                  {...professionalInfoForm.getInputProps('years_of_experience')}
               />
             </div>
           </div>
@@ -125,7 +111,7 @@ const MentorProfessionalInfoPage = () => {
               <TextInput
                 className="flex-1"
                 placeholder="linkedin.com/in/"
-                {...professionalInfoForm.getInputProps('linkedinUrl')}
+                {...professionalInfoForm.getInputProps('linkedln_url')}
                 styles={{
                   input: {
                     borderTopLeftRadius: 0,
@@ -136,15 +122,15 @@ const MentorProfessionalInfoPage = () => {
             </div>
           </div>
 
-          {/* Continue Button */}
-          <Link href='/mentor_availability'>
+        
             <button
-                        type="submit"
-                        className="w-full py-3 bg-[#001D69] text-white rounded-md hover:bg-[#001950] transition mt-8"
-                    >
-                        Continue
-                    </button>
-          </Link>
+              type="submit"
+              disabled={isPending}
+              className="w-full py-3 bg-[#001D69] text-white rounded-md hover:bg-[#001950] transition mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isPending ? 'Submitting...' : 'Continue'}
+            </button>
+       
          
         </form>
       </div>

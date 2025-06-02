@@ -1,12 +1,15 @@
 "use client"
+import { instance } from "@/api/instance";
 import { Select, Switch } from "@mantine/core";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FiInfo, FiCalendar, FiX } from "react-icons/fi";
 
 // Define day type
-type DayOfWeek = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
+type DayOfWeek = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
 
 // Define time slot interface
 interface TimeSlot {
@@ -16,24 +19,24 @@ interface TimeSlot {
 
 // Define available days state interface
 interface AvailableDaysState {
-  sunday: boolean;
-  monday: boolean;
-  tuesday: boolean;
-  wednesday: boolean;
-  thursday: boolean;
-  friday: boolean;
-  saturday: boolean;
+  Sunday: boolean;
+  Monday: boolean;
+  Tuesday: boolean;
+  Wednesday: boolean;
+  Thursday: boolean;
+  Friday: boolean;
+  Saturday: boolean;
 }
 
 // Define time slots state interface
 interface TimeSlotsState {
-  sunday: TimeSlot[];
-  monday: TimeSlot[];
-  tuesday: TimeSlot[];
-  wednesday: TimeSlot[];
-  thursday: TimeSlot[];
-  friday: TimeSlot[];
-  saturday: TimeSlot[];
+  Sunday: TimeSlot[];
+  Monday: TimeSlot[];
+  Tuesday: TimeSlot[];
+  Wednesday: TimeSlot[];
+  Thursday: TimeSlot[];
+  Friday: TimeSlot[];
+  Saturday: TimeSlot[];
 }
 
 // Define time option interface
@@ -47,24 +50,24 @@ const MentorAvailabilityPage = () => {
   
   // Initial state matching the UI: Only Sunday available by default
   const [availableDays, setAvailableDays] = useState<AvailableDaysState>({
-    sunday: true,
-    monday: false,
-    tuesday: false,
-    wednesday: false,
-    thursday: false,
-    friday: false,
-    saturday: false
+    Sunday: true,
+    Monday: false,
+    Tuesday: false,
+    Wednesday: false,
+    Thursday: false,
+    Friday: false,
+    Saturday: false
   });
 
   // Initial time slots matching the UI: Only Sunday has a default slot
   const [timeSlots, setTimeSlots] = useState<TimeSlotsState>({
-    sunday: [{ startTime: "08:45 AM", endTime: "02:00 PM" }],
-    monday: [],
-    tuesday: [],
-    wednesday: [],
-    thursday: [],
-    friday: [],
-    saturday: []
+    Sunday: [{ startTime: "08:45 AM", endTime: "02:00 PM" }],
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: []
   });
 
   // Generate time options for dropdowns
@@ -81,6 +84,7 @@ const MentorAvailabilityPage = () => {
         });
       });
     });
+
     times.sort((a, b) => {
       const [timeA, periodA] = a.split(' ');
       const [hourA, minuteA] = timeA.split(':').map(Number);
@@ -156,32 +160,45 @@ const MentorAvailabilityPage = () => {
      }
   };
 
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data: any) => instance.patch('/mentors', data),
+    mutationKey: ['mentor', 'editAvailability'],
+    onSuccess(data, variables, context) {
+      toast.success('Availability updated successfully');
+      router.push('/mentor_individual_intro'); 
+    },
+    onError(error: any, variables, context) {
+      toast.error(error?.response?.data?.message || 'Failed to update availability');
+    },
+
+  })
+
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+  const handleSubmit = (): void => {
+   
     
     const formattedAvailability = Object.keys(availableDays).map(day => {
       const typedDay = day as DayOfWeek;
       return {
         day: typedDay,
-        available: availableDays[typedDay],
-        timeSlots: availableDays[typedDay] && timeSlots[typedDay].length > 0 ? timeSlots[typedDay] : []
+        // available: availableDays[typedDay],
+        timeRanges: availableDays[typedDay] && timeSlots[typedDay].length > 0 ? timeSlots[typedDay] : []
       };
     });
     
-    console.log('Availability data:', formattedAvailability);
-    // router.push('/next-step');
+    // console.log('Availability data:', formattedAvailability);
+    mutate({availability: formattedAvailability});
   };
 
-  // Handle back button
+  
   const handleBack = (): void => {
     // router.back();
   };
 
-  const daysOrder: DayOfWeek[] = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  const daysOrder: DayOfWeek[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="max-w-2xl w-full   lg:py-6">
       <div className="bg-white p-8 rounded-3xl shadow-sm w-full">
         <h1 className="text-3xl text-center text-[#001D69] font-bold mb-6">
           Set your availability
@@ -194,100 +211,102 @@ const MentorAvailabilityPage = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-6">
-            {daysOrder.map((day) => (
-              <div key={day} className="border-b pb-4 last:border-b-0">
-                {/* Main row for Switch, Day Name, and Right-side content */}
-                <div className="flex items-center justify-between mb-3">
-                  {/* Left side: Switch and Day Name */}
-                  <div className="flex items-center w-1/3"> {/* Give left side a width */} 
-                    <Switch 
-                      checked={availableDays[day]}
-                      onChange={() => handleDayToggle(day)}
-                      size="md"
-                      color="blue"
-                      classNames={{ track: availableDays[day] ? 'bg-blue-600' : 'bg-gray-200' }}
-                    />
-                    <span className="ml-3 font-medium text-[#001D69] uppercase tracking-wider text-sm">{day}S</span>
-                  </div>
-
-                  {/* Right side: Centered Unavailable text OR empty space, plus Calendar Icon */} 
-                  <div className="flex items-center justify-end flex-grow pl-4"> {/* Right side takes remaining space */} 
-                    {!availableDays[day] && (
-                       <span className="text-gray-500 text-sm text-center flex-grow">Unavailable</span>
-                    )}
-                    {/* Calendar Icon - Always visible */} 
-                    <button 
-                      type="button"
-                      className="text-blue-600 hover:text-blue-800 ml-4 flex-shrink-0" // Added flex-shrink-0
-                      onClick={() => handleAddTimeSlot(day)}
-                    >
-                      <FiCalendar className="h-5 w-5" />
-                    </button>
-                  </div>
+       
+        <div className="space-y-6">
+          {daysOrder.map((day) => (
+            <div key={day} className="border-b pb-4 last:border-b-0">
+              {/* Main row for Switch, Day Name, and Right-side content */}
+              <div className="flex items-center justify-between mb-3">
+                {/* Left side: Switch and Day Name */}
+                <div className="flex items-center w-1/3"> {/* Give left side a width */} 
+                  <Switch 
+                    checked={availableDays[day]}
+                    onChange={() => handleDayToggle(day)}
+                    size="md"
+                    color="blue"
+                    classNames={{ track: availableDays[day] ? 'bg-blue-600' : 'bg-gray-200' }}
+                  />
+                  <span className="ml-3 font-medium text-[#001D69] uppercase tracking-wider text-sm">{day}S</span>
                 </div>
 
-                {/* Time Slots (only if available and exist) - Indented */} 
-                {availableDays[day] && timeSlots[day].length > 0 && (
-                  <div className="ml-10 space-y-2">  
-                    {timeSlots[day].map((slot, index) => (
-                      <div key={index} className="flex items-center space-x-2"> 
-                        <Select
-                          data={timeOptions}
-                          value={slot.startTime}
-                          onChange={(value) => handleTimeChange(day, index, 'startTime', value)}
-                          className="w-36"
-                          searchable
-                          size="sm"
-                        />
-                        <span className="text-gray-500 text-sm">to</span>
-                        <Select
-                          data={timeOptions}
-                          value={slot.endTime}
-                          onChange={(value) => handleTimeChange(day, index, 'endTime', value)}
-                          className="w-36"
-                          searchable
-                          size="sm"
-                        />
-                        {/* Show remove button only if there's more than one slot */}
-                        {timeSlots[day].length > 1 && (
-                          <button 
-                            type="button" 
-                            onClick={() => handleRemoveTimeSlot(day, index)}
-                            className="text-gray-400 hover:text-red-500 p-1"
-                          >
-                            <FiX className="h-5 w-5" />
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                {/* Right side: Centered Unavailable text OR empty space, plus Calendar Icon */} 
+                <div className="flex items-center justify-end flex-grow pl-4"> {/* Right side takes remaining space */} 
+                  {!availableDays[day] && (
+                      <span className="text-gray-500 text-sm text-center flex-grow">Unavailable</span>
+                  )}
+                  {/* Calendar Icon - Always visible */} 
+                  <button 
+                    type="button"
+                    className="text-blue-600 hover:text-blue-800 ml-4 flex-shrink-0" // Added flex-shrink-0
+                    onClick={() => handleAddTimeSlot(day)}
+                  >
+                    <FiCalendar className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
-            ))}
 
-            {/* Navigation buttons - Aligned to the right */}
-            <div className="flex justify-end space-x-4 pt-6">
-              <button
-                type="button"
-                onClick={handleBack}
-                className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 text-sm font-medium"
-              >
-                Back
-              </button>
-              <Link href='/mentor_individual_intro'>
-                    <button
-                        type="submit"
-                        className="px-6 py-2 bg-[#001D69] text-white rounded-md hover:bg-blue-800 text-sm font-medium"
-                    >
-                        Continue
-                    </button>
-              </Link>
-              
+              {/* Time Slots (only if available and exist) - Indented */} 
+              {availableDays[day] && timeSlots[day].length > 0 && (
+                <div className="ml-10 space-y-2">  
+                  {timeSlots[day].map((slot, index) => (
+                    <div key={index} className="flex items-center space-x-2"> 
+                      <Select
+                        data={timeOptions}
+                        value={slot.startTime}
+                        onChange={(value) => handleTimeChange(day, index, 'startTime', value)}
+                        className="w-36"
+                        searchable
+                        size="sm"
+                      />
+                      <span className="text-gray-500 text-sm">to</span>
+                      <Select
+                        data={timeOptions}
+                        value={slot.endTime}
+                        onChange={(value) => handleTimeChange(day, index, 'endTime', value)}
+                        className="w-36"
+                        searchable
+                        size="sm"
+                      />
+                      {/* Show remove button only if there's more than one slot */}
+                      {timeSlots[day].length > 1 && (
+                        <button 
+                          type="button" 
+                          onClick={() => handleRemoveTimeSlot(day, index)}
+                          className="text-gray-400 hover:text-red-500 p-1"
+                        >
+                          <FiX className="h-5 w-5" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+          ))}
+
+          {/* Navigation buttons - Aligned to the right */}
+          <div className="flex justify-end space-x-4 pt-6">
+            {/* <button
+              type="button"
+              onClick={handleBack}
+              className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 text-sm font-medium"
+            >
+              Back
+            </button> */}
+            
+            <button
+                type="submit"
+                onClick={handleSubmit}
+                disabled={isPending}
+                className="px-6 py-2 bg-[#001D69] text-white rounded-md hover:bg-blue-800 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed "
+            >
+                {isPending? 'Saving...':'Continue'}
+            </button>
+            
+            
           </div>
-        </form>
+        </div>
+        
       </div>
     </div>
   );

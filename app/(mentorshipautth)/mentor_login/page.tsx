@@ -63,7 +63,7 @@ const MentorLoginPage = () => {
       <div className="bg-white md:mt-16 mt-5 max-w-[450px] py-8 px-7 rounded-xl shadow-lg">
         {/* Title */}
         <h1 className="text-3xl text-center text-[#001D69] mb-3 font-semibold">
-          Welcome Back, Sqwad Hero!
+          Welcome Back, Sqwad Mentor!
         </h1>
         <p className="text-sm text-center text-gray-700 mb-6">
           Sign up for free and start writing your Sqwads adventure!

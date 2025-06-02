@@ -19,31 +19,29 @@ const MentorEmailAuthForm = () => {
 
   // Mutation to verify email
   const { mutate: verifyEmail, isPending } = useMutation({
-    mutationFn: (data: any) => instance.post("/auth/verify-email", data),
+    mutationFn: (data: any) => instance.post("/mentors/verify-email", data),
     mutationKey: ["auth", "verifyMail"],
     onSuccess(response) {
-      console.log(response);
       toast.success("Verification Successful");
       cookieStorage.setItem("access_token", response.data?.data?.token);
-      router.push(`/onboarding`);
+      router.push(`/mentor_info`);
     },
     onError(error: any) {
-      console.error(error?.response?.data);
       toast.error(error?.response?.data?.message || "Action Failed");
     },
   });
 
   // Mutation to resend OTP
   const { mutate: resendOTP } = useMutation({
-    mutationFn: (data: any) => instance.post("/auth/resend-otp", data),
-    mutationKey: ["auth", "resendOtp"],
+    mutationFn: (data: any) => instance.post("/mentors/resend-otp", data),
+    mutationKey: ["mentor", "resendOtp"],
     onSuccess() {
       toast.success("OTP Resent Successfully");
       setTimer(30); // Start 30-second countdown
       setIsResendDisabled(true); // Disable button during countdown
     },
     onError(error: any) {
-      console.error(error?.response?.data);
+      // console.error(error?.response?.data);
       toast.error(error?.response?.data?.message || "Failed to resend OTP");
     },
   });
@@ -62,11 +60,9 @@ const MentorEmailAuthForm = () => {
     try {
       const decodedEmail = atob(email as string);
       const values = { otp, email: decodedEmail };
-      console.log("Submitting values:", values);
       verifyEmail(values);
     } catch (error) {
       toast.error("Failed to decode email. Please try again.");
-      console.error(error);
     }
   };
 

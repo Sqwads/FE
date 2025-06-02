@@ -8,12 +8,12 @@ interface MentorOverviewCardProps {
   joinDate: string;
   avatarUrl?: string;
   stats: {
-    sessions: number;
-    rating: number;
-    totalRatings: number;
-    duration: number;
-    mentorId: string;
-    lastSession: string;
+    sessions?: number | string;
+    rating?: number | string;
+    totalRatings?: number | string;
+    duration?: number | string;
+    email?: string | null;
+    lastSession?: string;
   };
 }
 
@@ -31,9 +31,15 @@ const MentorOverviewCard: React.FC<MentorOverviewCardProps> = ({
     <div className="bg-white rounded-lg p-6 mb-8 flex flex-col md:flex-row items-start md:items-center gap-6">
       <div className="flex items-center">
         <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden mr-4">
-          <div className="w-full h-full flex items-center justify-center text-gray-500">
-            {!avatarUrl && name.split(' ').map(n => n[0]).join('')}
+          {avatarUrl ?
+            <img className='h-full w-full object-cover border' src={avatarUrl} alt="" />:
+           <div className="w-full h-full flex items-center justify-center text-gray-500">
+            { name.split(' ').map(n => n[0]).join('')}
           </div>
+          }
+
+          
+         
         </div>
         <div>
           <h2 className="text-xl font-bold">{name}</h2>
@@ -52,14 +58,14 @@ const MentorOverviewCard: React.FC<MentorOverviewCardProps> = ({
         </div>
         <div>
           <p className="text-xs text-gray-500">Duration</p>
-          <p className="text-[#16181BB2] font-semibold">{stats.duration} minutes</p>
+          <p className="text-[#16181BB2] font-semibold">{stats.duration} </p>
         </div>
         <div>
-          <p className="text-xs text-gray-500">Mentor ID</p>
+          <p className="text-xs text-gray-500">Mentor Email</p>
           <div className="flex items-center">
-            <p className="font-semibold text-[#16181BB2] mr-2">{stats.mentorId}</p>
+            <p className="font-semibold text-[#16181BB2] mr-2">{stats.email}</p>
             <button 
-              onClick={() => copyToClipboard(stats.mentorId)}
+              onClick={() => copyToClipboard(stats?.email as string)}
               className="text-gray-400 hover:text-gray-600"
             >
               <FiCopy size={14} />

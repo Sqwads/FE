@@ -72,7 +72,7 @@ function AdminDashboard() {
     },
     {
       title: "Total Mentors",
-      value: 0,
+      value: response?.data?.data?.totalMentors || 0,
       icon: <FaUserFriends className="text-pink-400 text-2xl" />,
       trend: "+13% Up from last week",
       trendColor: "text-green-500",
