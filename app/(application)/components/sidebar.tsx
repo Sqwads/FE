@@ -78,9 +78,12 @@ const Sidebar = ({
         {/* Footer */}
         <div className="mt-auto text-xs text-gray-400 text-center">
         <div className="flex items-center gap-3 p-4 rounded-lg">
+         {user?.profileImage ?
+         <img src={user?.profileImage} className="w-10 h-10 rounded-full border object-cover" alt="" />
+         :
           <div className="w-10 h-10 flex items-center justify-center bg-blue-900 text-white font-bold rounded-full">
             {user?.firstName?.[0]}
-          </div>
+          </div>}
           <div>
             <h2 className="font-bold text-sm text-[#001D69]">
               {user?.firstName} {user?.lastName}
