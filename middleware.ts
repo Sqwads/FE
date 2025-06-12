@@ -24,6 +24,7 @@ export default function middleware(req: NextRequest) {
     '/mentor_login',
     '/project-public',
     '/mentorship_home',
+    '/mentor_dashboard'
   ]
 
   const user = req.cookies.get("access_token")?.value

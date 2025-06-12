@@ -31,7 +31,7 @@ const ProjectCard = ({
         <img 
           src={image} 
           alt={title} 
-          className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+          className="w-64 h-full object-cover transition-transform hover:scale-105 duration-300"
           
         />
       </div>
@@ -90,7 +90,7 @@ const ProjectCard = ({
         
         <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
           <Link href={`/user-projects/${projectId}`} className="text-blue-600 text-sm font-medium inline-flex items-center">
-            Learn more <HiOutlineArrowRight className="ml-1" />
+            Resume Work <HiOutlineArrowRight className="ml-1" />
           </Link>
           <span className="text-xs text-gray-500">{duration}</span>
         </div>
