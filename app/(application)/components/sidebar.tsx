@@ -11,6 +11,7 @@ import { BsDatabase } from 'react-icons/bs';
 import { usePathname } from 'next/navigation';
 import { userWrapper } from '@/store';
 import { IoBagRemove } from 'react-icons/io5';
+import { Collapse } from '@mantine/core';
 
 const Sidebar = ({
   onSelectTab
@@ -23,6 +24,7 @@ const Sidebar = ({
   const {user} = userWrapper((state: any) => ({
     user: state.user,
   }));
+  const [mentorsOpen , setMentorsOpen] = useState(false)
 
   const trimText = (email: string) => {
     if(!email) return null;
@@ -62,9 +64,23 @@ const Sidebar = ({
             >
             <FaProjectDiagram size={20} /> Projects
           </Link>
-          <Link onClick={onSelectTab} href="/sqwad-mentors" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
-            <IoMdPeople /> Sqwad Mentors
-          </Link>
+            <div className="flex flex-col">
+            <button
+              type="button"
+              onClick={() => setMentorsOpen((open) => !open)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-md w-full text-left ${
+              pathname?.startsWith('/mentors') ? activeClasses : inactiveClasses
+              }`}
+            >
+              <IoMdPeople /> Sqwad Mentors
+            </button>
+            <Collapse in={mentorsOpen}>
+              <div className="pl-7 pt-2 flex flex-col gap-2">
+              <Link href={'/mentors'} className={`py-2 cursor-pointer text-sm px-3 rounded-md ${pathname == '/mentors' && 'bg-blue-100'}`}>My Sessions </Link>
+              <Link href={'/mentors_explore'} className={`py-2 cursor-pointer px-3 text-sm rounded-md  ${pathname == '/mentors_explore' && 'bg-blue-100'}`}>Explore Mentor</Link>
+              </div>
+            </Collapse>
+            </div>
           <Link 
               onClick={onSelectTab} 
               href="/portfolio" 
@@ -78,9 +94,12 @@ const Sidebar = ({
         {/* Footer */}
         <div className="mt-auto text-xs text-gray-400 text-center">
         <div className="flex items-center gap-3 p-4 rounded-lg">
+         {user?.profileImage ?
+         <img src={user?.profileImage} className="w-10 h-10 rounded-full border object-cover" alt="" />
+         :
           <div className="w-10 h-10 flex items-center justify-center bg-blue-900 text-white font-bold rounded-full">
             {user?.firstName?.[0]}
-          </div>
+          </div>}
           <div>
             <h2 className="font-bold text-sm text-[#001D69]">
               {user?.firstName} {user?.lastName}

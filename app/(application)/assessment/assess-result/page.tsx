@@ -2,14 +2,14 @@ import React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import CircularProgress from '../../../../components/CircularProgress';
+import CircularProgress from '../../components/CircularProgress';
 import AssessmentHeader from '@/app/(application)/components/AssessmentHeader';
 import Link from 'next/link';
 
 const AssessmentResult: NextPage = () => {
   return (
     <div className="max-w-9xl mx-auto p-6 font-sans">
-      
+
       <AssessmentHeader />
 
       <div className="border rounded-lg p-8 mb-6 shadow-sm">
@@ -67,13 +67,13 @@ const AssessmentResult: NextPage = () => {
               </div>
             </div>
             <div className="mt-6 flex items-center justify-end">
-                <Link href='/assessment/assesment-start-page/assess-que-page/assess-result/leaderboard.tsx'>
-                        <button className="text-yellow-500 text-sm flex items-center font-medium">
-                        VIEW LEADERBOARD
-                        <span className="ml-1">▼</span>
-                    </button>
-                </Link>
-              
+              <Link href='/assessment/leaderboard.tsx'>
+                <button className="text-yellow-500 text-sm flex items-center font-medium">
+                  VIEW LEADERBOARD
+                  <span className="ml-1">▼</span>
+                </button>
+              </Link>
+
             </div>
           </div>
 
@@ -125,27 +125,27 @@ const AssessmentResult: NextPage = () => {
         {/* Circular Progress Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-6">
           {/* Percentile */}
-          <CircularProgress 
-            percentage={91.7} 
-            color="#ef4444" 
-            label="Percentile" 
-            rating="EXCELLENT" 
+          <CircularProgress
+            percentage={91.7}
+            color="#ef4444"
+            label="Percentile"
+            rating="EXCELLENT"
           />
 
           {/* Accuracy */}
-          <CircularProgress 
-            percentage={78} 
-            color="#3b82f6" 
-            label="Accuracy" 
-            rating="GOOD" 
+          <CircularProgress
+            percentage={78}
+            color="#3b82f6"
+            label="Accuracy"
+            rating="GOOD"
           />
 
           {/* Attempted */}
-          <CircularProgress 
-            percentage={86.6} 
-            color="#ec4899" 
-            label="Attempted" 
-            rating="EXCELLENT" 
+          <CircularProgress
+            percentage={86.6}
+            color="#ec4899"
+            label="Attempted"
+            rating="EXCELLENT"
           />
         </div>
       </div>

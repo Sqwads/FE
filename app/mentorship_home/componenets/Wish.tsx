@@ -21,7 +21,7 @@ const FinalCTASection = () => {
                 talents, and grow while giving back. Join Sqwads as a mentor.
               </p>
               <Link 
-                href="#" 
+                href="/mentor_signup" 
                 className="inline-flex items-center bg-[#001D69] text-white px-6 py-3 rounded-md hover:bg-blue-800 transition-colors"
               >
                 Become a mentor

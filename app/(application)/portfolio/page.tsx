@@ -21,7 +21,7 @@ const Portfolio = ({
 }) => {
 
     const searchParams = useSearchParams()
-    const [currentTab, setCurrentTab] = useState('Project');
+    const [currentTab, setCurrentTab] = useState('About');
     const [detailsMode, setDetailsMode] = useState(false);
     const [selectedProject, setSelectedProject] = useState<any>(null);
 
@@ -69,8 +69,8 @@ const Portfolio = ({
             
            {!detailsMode && 
             <>
-             <div className="bg-[#F5F5F5] h-48 flex flex-col items-center justify-center">
-               {!isPublic &&
+             <div className="bg-[#F5F5F5] h-36 flex flex-col items-center justify-center">
+               {(!isPublic && !user?.profileImage)&&
                <>
                 <div className="h-14 cursor-not-allowed border w-14 bg-[#E9E9E9] rounded-full flex items-center justify-center">
                     <MdOutlineFileUpload size={22} />
@@ -78,12 +78,16 @@ const Portfolio = ({
                 <div className="font-semibold text-sm">Upload a cover image</div>
                </>
                }
+
+               {user?.profileImage &&
+               <img src={user?.profileImage} className='h-full w-full object-cover' alt="" />
+               }
             </div>
 
             <div className="lg:px-10 px-4">
                 <div className="lg:flex  py-5 ">
-                    <img src="/images/profile.jpg" className='lg:h-32 lg:w-32 h-24 w-24 object-cover rounded-full border mt-[-70px]' alt="" />
-                    <div className='flex-1 ml-5 lg:mt-0 mt-3 lg:mb-0 mb-6'>
+                    <img src={user?.profileImage || "/images/profile.jpg"} className='lg:h-32 lg:w-32 h-24 w-24 object-cover rounded-full border mt-[-70px]' alt="" />
+                    <div className='flex-1 ml-5 lg:mt-0 mt-3 lg:mb-4 mb-6'>
                         <div className="text-xl font-medium mb-">{userId ? fetchedUser?.firstName: user?.firstName } {userId ? fetchedUser?.lastName: user?.lastName }</div>
                         <div className=" text-[#16181BB2] ">
                             {userId ? 
@@ -109,18 +113,20 @@ const Portfolio = ({
                 </div>
 
                 <div className='border-b lg:mt-6 flex gap-x-5'>
+                     <div 
+                        className={`${currentTab=='About' ? 'border-b-2 py-1  font-medium border-[#001D69] text-[#001D69]':'text-[#16181B80]'} font-normal cursor-pointer py-1 px-3 `}
+                        onClick={()=>setCurrentTab('About')}
+                    >
+                        About
+                    </div>
+
                     <div 
                         className={`${currentTab=='Project' ? 'border-b-2 py-1  font-medium border-[#001D69] text-[#001D69]':'text-[#16181B80]'} font-normal cursor-pointer py-1 px-3 `}
                         onClick={()=>setCurrentTab('Project')}>
                         Project
                     </div>
 
-                    <div 
-                        className={`${currentTab=='About' ? 'border-b-2 py-1  font-medium border-[#001D69] text-[#001D69]':'text-[#16181B80]'} font-normal cursor-pointer py-1 px-3 `}
-                        onClick={()=>setCurrentTab('About')}
-                    >
-                        About
-                    </div>
+                   
                 </div>
                 
                <div>

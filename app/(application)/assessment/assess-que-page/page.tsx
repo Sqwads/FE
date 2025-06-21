@@ -1,7 +1,7 @@
 "use client";
 import Image from 'next/image';
 import React, { useState } from 'react';
-import AssessmentHeader from '../../../components/AssessmentHeader'; 
+import AssessmentHeader from '../../components/AssessmentHeader';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import Link from 'next/link';
 
@@ -45,9 +45,9 @@ const AssessmentQuestionPage = () => {
           <div className="flex items-center gap-6 md:gap-8">
             {/* Timer */}
             <div className="flex items-center gap-2 text-blue-600 font-medium">
-              <Image 
-                src="/images/clock.png" 
-                alt="Timer icon" 
+              <Image
+                src="/images/clock.png"
+                alt="Timer icon"
                 width={22}
                 height={22}
                 className="flex-shrink-0"
@@ -55,15 +55,15 @@ const AssessmentQuestionPage = () => {
               <span className="text-lg">09:59</span>
             </div>
             {/* Button */}
-                <Link href='/assessment/assesment-start-page/assess-que-page/assess-result'>
-                <button
-                  // onClick={handleNextQuestion} 
-                  className="inline-flex items-center gap-3 px-6 py-3 bg-[#001D69] text-white rounded-md hover:bg-blue-800 transition-colors text-sm font-medium"
-                >
-                  Next  <FaLongArrowAltRight size={23} className="ml-2 animate-bounce w-6 h-6" />
-                </button>
+            <Link href='/assessment/assess-result'>
+              <button
+                // onClick={handleNextQuestion} 
+                className="inline-flex items-center gap-3 px-6 py-3 bg-[#001D69] text-white rounded-md hover:bg-blue-800 transition-colors text-sm font-medium"
+              >
+                Next  <FaLongArrowAltRight size={23} className="ml-2 animate-bounce w-6 h-6" />
+              </button>
             </Link>
-            
+
           </div>
         </div>
 
@@ -87,8 +87,8 @@ const AssessmentQuestionPage = () => {
                     <label
                       key={option.id}
                       className={`flex items-center gap-5 p-6 rounded-lg border cursor-pointer transition-colors ${isSelected
-                          ? 'bg-[#001D69] border-[#001D69] text-white shadow-lg'
-                          : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300'
+                        ? 'bg-[#001D69] border-[#001D69] text-white shadow-lg'
+                        : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300'
                         }`}
                     >
                       <input

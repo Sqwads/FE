@@ -1,156 +1,166 @@
 "use client";
-
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { userWrapper } from '@/store';
-import { FiClock, FiCompass, FiStar } from 'react-icons/fi';
-import { HiCheckBadge } from "react-icons/hi2";
-import { MdOutlineWavingHand } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { FaLongArrowAltRight } from 'react-icons/fa';
 import Link from 'next/link';
-import { HiOutlineArrowRight } from 'react-icons/hi';
+import AssessmentHeader from '../components/AssessmentHeader';
+// Removed react-icons import
 
-// Import components
-import StatusCard from '../components/StatusCard';
-import ActionCard from '../components/ActionCard';
-import ProjectCard from '../components/ProjectCard';
-import SectionHeader from '../components/SectionHeader';
-import EmptyState from '../components/EmptyState';
-import { FaCheckCircle, FaClock } from 'react-icons/fa';
-import { PiWarningOctagonFill } from "react-icons/pi";
-import { instance } from '@/api/instance';
+const AssessmentStartPage = () => {
+  const router = useRouter();
 
-export default function AssessmentDashboardPage() {
-  const { user } = userWrapper((state: any) => ({
-    user: state.user,
-  }));
+  const handleGetStarted = () => {
+    // Navigate to the first question page
+    // router.push('/assessment/question/1'); 
+    console.log("Navigating to assessment questions...");
+  };
 
-  console.log(user)
-
-  const { data: projectResponse, isLoading: projectIsLoading } = useQuery({ 
-    queryFn: () => instance.get('/project/all', {
-      params: { 
-        userId: user?._id ,
-        pageSize: 3
-      },
-    }), 
-    queryKey: ['user-projects'],
-    enabled: !!user?._id
-  });
-
-  const { data: exploreProjectResponse, isLoading: exploreProjectIsLoading } = useQuery({ 
-    queryFn: () => instance.get('/project/all', {
-      params: { 
-        // userId: user?.id ,
-        pageSize: 8
-      },
-    }), 
-    queryKey: ['projects-explore'],
-  });
-
-
- 
-
-  const { data: response, isLoading } = useQuery({
-    queryFn: () => instance.get('/analytics/user'), // Replace with your API endpoint
-    queryKey: ['project-analytics'],
-  });
-
-  
+  const testScopeItems = [
+    "User Understanding",
+    "Design Principles",
+    "User Empathy",
+    "Prototyping and testing",
+  ];
 
   return (
-    <div className="lg:px-8 px-3 py-14">
-      {/* Welcome Header */}
-      <div className="lg:mb-10 mb-5">
-        <h1 className="lg:text-3xl text-2xl  flex items-center">
-          Great to see you again, {user?.firstName || 'User'}!{' '}
-          <MdOutlineWavingHand className="ml-2 text-yellow-400" />
-        </h1>
-        <p className="text-gray-500 text-sm mt-1">
-          "The only way to do great work is to love what you do."
-        </p>
-      </div>
-
-      {/* Status Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-2 lg:gap-y-6 mb-6">
-        <Link href="/user-projects" className="block">
-          <StatusCard 
-            title="MY PROJECTS" 
-            count={response?.data?.data?.totalProjects || 0} 
-            description={
-                response?.data?.data?.totalProjects > 0 ? 
-                `You are currently working on ${ response?.data?.data?.totalProjects} projects. Stay focused and track your progress! ⚡️` : 
-                `You currently don't have any active projects. Explore projects!`
-            } 
-            bgColor="bg-indigo-500"
-            icon={<FaClock color='#6172F3' size={20} />}
-            iconBgColor='#DADEFF'
-          />
-        </Link>
-        <StatusCard 
-          title="COMPLETED PROJECTS" 
-          count={response?.data?.data?.totalCompletedProjects || 0} 
-          description={
-            response?.data?.data?.totalCompletedProjects > 0 ? 
-            `Well done! You've successfully completed ${response?.data?.data?.totalCompletedProjects} projects so far. 🥰` : 
-            `No completed projects yet. Start your first project to build your portfolio!`
-          }
-          bgColor="bg-cyan-500"
-          icon={<FaCheckCircle color='#36BFFA' size={24} />}
-          iconBgColor='#C7EEFF'
-        />
-        <StatusCard 
-          title="ONGOING PROJECTS" 
-          count={response?.data?.data?.totalInProgressProjects || 0} 
-          description={
-            response?.data?.data?.totalInProgressProjects > 0 ? 
-            `You have ${response?.data?.data?.totalInProgressProjects} projects due in ! Stay on track and finish them on time. Well-done 👏` : 
-            `No ongoing projects yet. Start your first project to build your portfolio!`  
-          }
-          bgColor="bg-pink-500"
-          icon={<PiWarningOctagonFill color='#EE46BC' size={24} />}
-          iconBgColor='#FFE7F8'
-        />
-      </div>
-
-      {/* Action Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <Link href='/assessment/assesment-start-page'>
-            <ActionCard 
-                    title="Asses yourself here and see how you stand with other Sqwad UI/UX Designers" 
-                    description="You're almost there! Just a few more details to set up a profile you love."
-                    icon={<HiCheckBadge color='#001D69' className="text-blue-600" size={20} />}
-                    progress={30}
-                    />
-        </Link>
-       
-        <ActionCard 
-          title="Finish Setting Up Your Profile" 
-          description="You're almost there! Just a few more details to set up a profile you love."
-          icon={<HiCheckBadge color='#001D69' className="text-blue-600" size={20} />}
-          progress={30}
-        />
-      </div>
-
-      {/* My Projects Section */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <SectionHeader title="My Projects" icon={<FiClock size={20} />} />
-          <Link href="/user-projects" className="text-blue-600 text-sm font-medium inline-flex items-center">
-            See all <HiOutlineArrowRight className="ml-1" />
-          </Link>
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+      <div className="max-w-9xl mx-auto">
+        <div className="text-center md:text-left">
+          <AssessmentHeader />
         </div>
 
-       {projectResponse?.data?.projects?.length < 1 &&
-        <EmptyState 
-          title="No Active Projects Yet!" 
-          description="You currently don't have any active projects. Start your first project to build your portfolio, showcase your skills, and take the next step in your journey."
-          actionText="Explore Project"
-          actionLink="/projects"
-        />
-       }
-      
+        {/* Main Content Card */}
+        <div className="bg-white p-6 md:p-10 rounded-lg shadow-md">
+          <div className="flex flex-col md:flex-row gap-8 md:gap-12">
+            {/* Left Column - Details */}
+            <div className="w-full md:w-1/3 space-y-5">
+              <div className="flex items-center gap-3">
+                {/* Replaced FiBarChart2 with img tag */}
+                <Image
+                  src="/images/bar-chart.png"
+                  alt="Type icon"
+                  width={30}
+                  height={20}
+                  className="h-5 w-5 flex-shrink-0"
 
+                />
+                <div>
+                  <p className="text-xs text-gray-500">Type</p>
+                  <p className="font-medium text-gray-700">General Based Assesment</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                {/* Replaced FiClock with img tag */}
+                <Image
+                  src="/images/duration.png"
+                  alt="Duration icon"
+                  width={30}
+                  height={20}
+                  className="h-5 w-5 flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-gray-500">Duration</p>
+                  <p className="font-medium text-gray-700">10 minutes</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                {/* Replaced FiGlobe with img tag */}
+                <Image
+                  src="/images/FlagFilled.png"
+                  alt="Language icon"
+                  width={30}
+                  height={20}
+                  className="h-5 w-5 flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-gray-500">Language</p>
+                  <p className="font-medium text-gray-700">English</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                {/* Replaced FiTrendingUp with img tag */}
+                <Image
+                  src="/images/trending-up.png"
+                  alt="Level icon"
+                  width={30}
+                  height={20}
+                  className="h-5 w-5 flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-gray-500">Level</p>
+                  <p className="font-medium text-gray-700">Basic</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Summary, Scope, Instructions */}
+            <div className="w-full md:w-2/3">
+              {/* Summary */}
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">Summary of the UI/UX Design test</h2>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  This UI/UX Design test assesses your knowledge of fundamental design processes and your ability to understand user needs. The test consists of 30 multiple-choice questions to be completed within 10 minutes. Your performance will be used to create a profile, which will be ranked among other Sqwad UI/UX Design users only if you choose to make your results public.
+                </p>
+              </div>
+
+              {/* Test Scope */}
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-3">Test Scope</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                  {testScopeItems.map((item, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      {/* Replaced FiCheckCircle with img tag */}
+                      <Image
+                        src="/images/VerifiedFilled.png"
+                        alt="Checkmark icon"
+                        width={30}
+                        height={20}
+                        className="h-4 w-4 flex-shrink-0" />
+                      <span className="text-sm text-gray-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Test Instructions */}
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">Test Instructions</h2>
+                <div className="text-sm text-gray-600 space-y-2 leading-relaxed">
+                  <p>
+                    Do not switch tabs or open other applications during the test. The system monitors tab switching and may flag your session if this occurs.
+                  </p>
+                  <p>
+                    This test is timed, with 10 minutes to complete 30 multiple-choice questions. A timer will display the remaining time. Plan accordingly to answer all questions within the allotted time.
+                  </p>
+                  <p>
+                    Refreshing the test page may cause your progress to be lost. Please avoid reloading or closing the test window.
+                  </p>
+                  <p>
+                    Once the timer runs out, your responses will be automatically submitted. Make sure to manage your time effectively to answer all questions.
+                  </p>
+                </div>
+              </div>
+
+              {/* Agreement and Button */}
+              <div>
+                <p className="text-xs text-gray-500 mb-3">
+                  By starting the test, you agree to adhere to these rules. Good luck!
+                </p>
+                <Link href='/assessment/assess-que-page'>
+                  <button
+                    onClick={handleGetStarted}
+                    className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#001D69] text-white rounded-md hover:bg-blue-800 transition-colors text-sm font-medium"
+                  >
+                    Get Started <FaLongArrowAltRight size={23} className="ml-2 animate-bounce w-6 h-6" />
+                  </button>
+                </Link>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default AssessmentStartPage;
+

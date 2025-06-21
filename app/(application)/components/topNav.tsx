@@ -10,6 +10,7 @@ import { LuLogOut } from "react-icons/lu";
 import { cookieStorage } from "@ibnlanre/portal";
 import { useRouter } from "next/navigation";
 import Sidebar from "./sidebar";
+import { IoMdSettings } from "react-icons/io";
 
 
 export default function TopNav() {
@@ -22,7 +23,7 @@ export default function TopNav() {
 
   const logout = ()=>{
     cookieStorage.clear()
-    router.push('/admin_login')
+    router.push('/login')
   }
   return (
     <nav className="w-full bg-white shadow-md "> {/* Added left-64 */}
@@ -47,6 +48,7 @@ export default function TopNav() {
             />
           </div>
       </Drawer>
+      
       <div className=" mx-auto px-6 py-5 flex items-center justify-between">
        
         {/* Search Bar */}
@@ -82,8 +84,11 @@ export default function TopNav() {
                 {user?.firstName && user?.firstName[0]} {/* First letter of user’s name */}
               </div>
             </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item onClick={logout} leftSection={<LuLogOut color="red" size={20} />}>
+            <Menu.Dropdown className="px-5 py-4">
+              <Menu.Item className="mb-4 space-x-3" onClick={()=>router.push('/settings')} leftSection={<IoMdSettings size={20} />}>
+                Settings
+              </Menu.Item>
+              <Menu.Item className="space-x-3" onClick={logout} leftSection={<LuLogOut color="red" size={20} />}>
                 Logout
               </Menu.Item>
             </Menu.Dropdown>

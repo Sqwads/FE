@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { cookieStorage } from '@ibnlanre/portal';
 import { LoadingOverlay } from '@mantine/core';
-
+import '@mantine/core/styles.css';
 import { userWrapper } from '../../src/store';
 import TopNav from './components/topNav';
 

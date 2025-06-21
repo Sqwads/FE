@@ -48,8 +48,8 @@ const MentorNav = () => {
 
       {/* Get Started Button (Desktop) */}
       <div className="hidden lg:flex items-center">
-        <Link href={"/signup"}>
-          <Button type="button" title="Get Started For Free" icon="/arrow.svg" variant="#0234B8" />
+        <Link href={"/mentor_signup"}>
+          <Button type="button" title="Get Started" icon="/arrow.svg" variant="#0234B8" />
         </Link>
       </div>
 
@@ -60,9 +60,9 @@ const MentorNav = () => {
           className="text-white focus:outline-none flex items-center justify-center"
         >
           {isMenuOpen ? (
-            <AiOutlineClose className="w-6 h-6" /> // Close Icon
+            <AiOutlineClose color="#0234B8" className="w-6 h-6" /> // Close Icon
           ) : (
-            <AiOutlineMenu className="w-6 h-6" /> // Hamburger Menu Icon
+            <AiOutlineMenu color="#0234B8" className="w-6 h-6" /> // Hamburger Menu Icon
           )}
         </button>
       </div>
@@ -97,7 +97,7 @@ const MentorNav = () => {
 
           {/* Get Started Button (Mobile) */}
           <div className="flex items-center justify-center mt-4">
-            <Link href={"/signup"}>
+            <Link href={"/mentor_signup"}>
               <Button type="button" title="Get Started" icon="/arrow.svg" variant="#0234B8" />
             </Link>
           </div>
