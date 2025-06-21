@@ -83,7 +83,7 @@ const Portfolio = ({
             <div className="lg:px-10 px-4">
                 <div className="lg:flex  py-5 ">
                     <img src="/images/profile.jpg" className='lg:h-32 lg:w-32 h-24 w-24 object-cover rounded-full border mt-[-70px]' alt="" />
-                    <div className='flex-1 ml-5 lg:mt-0 mt-3 lg:mb-0 lg:mb-4 mb-6'>
+                    <div className='flex-1 ml-5 lg:mt-0 mt-3 lg:mb-0 mb-6'>
                         <div className="text-xl font-medium mb-">{userId ? fetchedUser?.firstName: user?.firstName } {userId ? fetchedUser?.lastName: user?.lastName }</div>
                         <div className=" text-[#16181BB2] ">
                             {userId ? 

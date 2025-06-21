@@ -7,12 +7,12 @@ import { HiOutlineArrowRight } from 'react-icons/hi';
 import Image from 'next/image';
 
 // Components
-import ProjectHeader from '../../../componenets/ProjectHeader';
-import NavigationTabs from '../../../componenets/NavigationTabs';
+import ProjectHeader from '../../components/ProjectHeader';
+import NavigationTabs from '../../components/NavigationTabs';
 // import ProjectTimeline from '../../components/ProjectTimeline';
-import ProjectSidebar from '../../../componenets/ProjectSidebar';
-import DiscussionTabContent from '../../../componenets/DiscussionTabContent';
-import ErrorBoundary from '../../../componenets/ErrorBoundary';
+import ProjectSidebar from '../../components/ProjectSidebar';
+import DiscussionTabContent from '../../../mentorship_home/componenets/DiscussionTabContent';
+import ErrorBoundary from '../../components/ErrorBoundary';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { instance } from '@/api/instance';

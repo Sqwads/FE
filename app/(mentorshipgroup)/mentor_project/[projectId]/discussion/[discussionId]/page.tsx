@@ -6,12 +6,12 @@ import { FiArrowLeft, FiX } from 'react-icons/fi';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
 // Import components with absolute paths (recommended)
-import ProjectHeader from '../../../../../componenets/ProjectHeader';
-import NavigationTabs from '../../../../../componenets/NavigationTabs';
-import ProjectSidebar from '../../../../../componenets/ProjectSidebar';
-import DiscussionPost from '../../../../../componenets/DiscussionPost';
-import ReactionButtons from '../../../../../componenets/ReactionButtons';
-import CommentInput from '../../../../../componenets/CommentInput';
+import ProjectHeader from '../../../../components/ProjectHeader';
+import NavigationTabs from '../../../../components/NavigationTabs';
+import ProjectSidebar from '../../../../components/ProjectSidebar';
+import DiscussionPost from '../../../../components/DiscussionPost';
+import ReactionButtons from '../../../../components/ReactionButtons';
+import CommentInput from '../../../../components/CommentInput';
 
 export default function DiscussionThreadPage({ params }: any) {
   // Destructure with defaults to ensure type safety

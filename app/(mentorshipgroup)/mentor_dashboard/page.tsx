@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from 'react';
-import WelcomeHeader from '../componenets/Welcome';
-import StatCard from '../componenets/StatCards';
-import PerformanceChart from '../componenets/PerformanceChart';
-import SessionsFeed from '../componenets/SessionFeed';
-import CalendarSidebar from '../componenets/CalendarSideBar';
-import ProfileCompletionCard from '../componenets/ProfileCompletionCard';
+import WelcomeHeader from '../components/Welcome';
+import StatCard from '../components/StatCards';
+import PerformanceChart from '../components/PerformanceChart';
+import SessionsFeed from '../components/SessionFeed';
+import CalendarSidebar from '../../mentorship_home/componenets/CalendarSideBar';
+import ProfileCompletionCard from '../components/ProfileCompletionCard';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -31,7 +31,7 @@ const MentorDashboardPage = () => {
           
           {/* Stat Cards Row */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <Link href='/mentorship_home/mentor_dashboard/mentor_project'>
+            <Link href='/mentor_project'>
             
               <StatCard 
               imageSrc="/images/completed_1.png"
