@@ -2,6 +2,7 @@
 import React from 'react';
 import Image from 'next/image'; // Assuming Next.js Image component
 import { FiCalendar, FiClock, FiChevronDown } from 'react-icons/fi';
+import Link from 'next/link';
 
 // Sample data structure - replace with actual data and types
 interface Session {
@@ -70,9 +71,12 @@ const SessionsFeed = () => {
               </div>
             </div>
             <div className="flex gap-2 mt-3 sm:mt-0 flex-shrink-0">
-              <button className="px-4 py-1.5 bg-[#001D69] text-white rounded-md text-xs font-medium hover:bg-blue-800 transition-colors">
-                Join Session
-              </button>
+              <Link href='/sessionfeed'>
+                  <button className="px-4 py-1.5 bg-[#001D69] text-white rounded-md text-xs font-medium hover:bg-blue-800 transition-colors">
+                    Join Session
+                  </button>
+              </Link>
+             
               <button className="px-4 py-1.5 border border-gray-300 rounded-md text-gray-700 text-xs font-medium hover:bg-gray-50 transition-colors">
                 Message
               </button>

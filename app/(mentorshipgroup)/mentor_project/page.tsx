@@ -1,11 +1,11 @@
 "use client"
 import React from 'react';
-import ProjectsSection from '../../componenets/ProjectsSection';
-import SectionHeader from '../../componenets/SectionHeader';
+import ProjectsSection from '../components/ProjectsSection';
+import SectionHeader from '../components/SectionHeader';
 import Link from 'next/link';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import { FiClock, FiCompass } from 'react-icons/fi';
-import ProjectCard from '../../componenets/ProjectCard';
+import ProjectCard from '../components/ProjectCard';
 // import EmptyState from '../../componenets/EmptyState';
 import { userWrapper } from '@/store';
 import { instance } from '@/api/instance';
@@ -38,9 +38,6 @@ const MonitoringProject = () => {
     }), 
     queryKey: ['projects-explore'],
   });
-
-
- 
 
   const { data: response, isLoading } = useQuery({
     queryFn: () => instance.get('/analytics/user'), // Replace with your API endpoint
