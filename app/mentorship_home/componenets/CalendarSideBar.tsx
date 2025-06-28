@@ -1,4 +1,5 @@
 "use client";
+import { DatePicker } from '@mantine/dates';
 import React, { useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiCalendar, FiClock } from 'react-icons/fi';
 
@@ -35,107 +36,16 @@ const eventsData: CalendarEvent[] = [
   },
 ];
 
-const CalendarSidebar = () => {
-  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 2)); // March 2025
-  const [selectedDate, setSelectedDate] = useState(new Date(2025, 2, 15)); // March 15, 2025
-
-  // Generate calendar days for the current month view
-  const generateCalendarDays = () => {
-    const year = currentMonth.getFullYear();
-    const month = currentMonth.getMonth();
-    
-    // Get the first day of the month
-    const firstDay = new Date(year, month, 1);
-    const startingDayOfWeek = firstDay.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    
-    // Get the last day of the month
-    const lastDay = new Date(year, month + 1, 0);
-    const totalDays = lastDay.getDate();
-    
-    // Get the last day of the previous month
-    const prevMonthLastDay = new Date(year, month, 0).getDate();
-    
-    // Days from previous month to display
-    const prevMonthDays = [];
-    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
-      prevMonthDays.push({
-        day: prevMonthLastDay - i,
-        month: month - 1,
-        year,
-        isCurrentMonth: false
-      });
-    }
-    
-    // Days from current month
-    const currentMonthDays = [];
-    for (let i = 1; i <= totalDays; i++) {
-      currentMonthDays.push({
-        day: i,
-        month,
-        year,
-        isCurrentMonth: true
-      });
-    }
-    
-    // Days from next month to display
-    const nextMonthDays = [];
-    const totalCells = 42; // 6 rows x 7 days
-    const remainingCells = totalCells - (prevMonthDays.length + currentMonthDays.length);
-    for (let i = 1; i <= remainingCells; i++) {
-      nextMonthDays.push({
-        day: i,
-        month: month + 1,
-        year,
-        isCurrentMonth: false
-      });
-    }
-    
-    return [...prevMonthDays, ...currentMonthDays, ...nextMonthDays];
-  };
-
-  // Format date as YYYY-MM-DD for event lookup
-  const formatDateKey = (date: Date): string => {
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-  };
-
-  // Get events for the selected date
-  const getEventsForDate = (date: Date): CalendarEvent[] => {
-    const dateKey = formatDateKey(date);
-    return eventsData.filter(event => event.date === dateKey);
-  };
-
-  // Get today's events
-  const todaysEvents = getEventsForDate(selectedDate);
-
-  // Handle month navigation
-  const prevMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
-  };
-
-  const nextMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
-  };
-
-  // Handle date selection
-  const handleDateClick = (day: number, month: number, year: number) => {
-    setSelectedDate(new Date(year, month, day));
-  };
-
-  // Check if a date is the selected date
-  const isSelectedDate = (day: number, month: number, year: number) => {
-    return selectedDate.getDate() === day && 
-           selectedDate.getMonth() === month && 
-           selectedDate.getFullYear() === year;
-  };
-
-  // Check if a date has events
-  const hasEvents = (day: number, month: number, year: number) => {
-    const date = new Date(year, month, day);
-    const dateKey = formatDateKey(date);
-    return eventsData.some(event => event.date === dateKey);
-  };
-
-  // Generate time slots for the day view
+const CalendarSidebar = ({
+  selectedDate,
+  onDateSelect,
+  events=[]
+}:{
+  selectedDate: any;
+  onDateSelect: (date: any) => void;
+  events?: any[]
+}) => {
+ 
   const timeSlots = Array.from({ length: 9 }, (_, i) => {
     const hour = i + 8; // Start from 8 AM
     return hour <= 12 ? `${hour} AM` : `${hour - 12} PM`;
@@ -148,75 +58,66 @@ const CalendarSidebar = () => {
     year: 'numeric'
   });
 
-  // Get the days of the week
-  const daysOfWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+  function getNextHour(timeStr: string): string {
+    if(!timeStr) return timeStr;
+   
+    const normalized = timeStr.replace(/\s+/g, '').toLowerCase();
 
-  // Get all calendar days
-  const calendarDays = generateCalendarDays();
+    const match = normalized.match(/^(\d{1,2})(?::(\d{2}))?(am|pm)$/);
+    if (!match) return timeStr;
+
+    let hour = parseInt(match[1], 10);
+    let minute = match[2] ? parseInt(match[2], 10) : 0;
+    let period = match[3];
+
+    // Convert to 24-hour time
+    if (period === 'pm' && hour !== 12) hour += 12;
+    if (period === 'am' && hour === 12) hour = 0;
+
+    hour += 1;
+
+    if (hour === 24) hour = 0;
+
+    // Convert back to 12-hour time
+    period = hour >= 12 ? 'PM' : 'AM';
+    let displayHour = hour % 12;
+    if (displayHour === 0) displayHour = 12;
+
+    // Keep minutes if present
+    const displayMinute = match[2] ? `:${match[2]}` : '';
+
+    return `${displayHour}${displayMinute} ${period}`;
+  }
+
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
-      {/* Month navigation */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">
-          {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-        </h2>
-        <div className="flex space-x-2">
-          <button 
-            onClick={prevMonth}
-            className="p-1 rounded-full hover:bg-gray-100"
-            aria-label="Previous month"
-          >
-            <FiChevronLeft className="h-5 w-5 text-gray-600" />
-          </button>
-          <button 
-            onClick={nextMonth}
-            className="p-1 rounded-full hover:bg-gray-100"
-            aria-label="Next month"
-          >
-            <FiChevronRight className="h-5 w-5 text-gray-600" />
-          </button>
-        </div>
-      </div>
+    
 
       {/* Calendar grid */}
-      <div className="mb-6">
-        {/* Days of week header */}
-        <div className="grid grid-cols-7 mb-2">
-          {daysOfWeek.map((day) => (
-            <div key={day} className="text-center text-sm text-gray-500 py-1">
-              {day}
-            </div>
-          ))}
-        </div>
+      <DatePicker
+        className='mx-auto  w-fit'
+        value={selectedDate}
+        onChange={onDateSelect}
+        renderDay={(date) => {
+          // const isHighlighted = highlightedDates.some(
+          //   (d) => d.toDateString() === date.toDateString()
+          // );
 
-        {/* Calendar days */}
-        <div className="grid grid-cols-7 gap-1">
-          {calendarDays.map((day, index) => {
-            const isSelected = isSelectedDate(day.day, day.month, day.year);
-            const hasEvent = hasEvents(day.day, day.month, day.year);
-            
-            return (
-              <button
-                key={index}
-                onClick={() => handleDateClick(day.day, day.month, day.year)}
-                className={`
-                  h-10 w-10 flex items-center justify-center rounded-full text-sm
-                  ${!day.isCurrentMonth ? 'text-gray-300' : 'text-gray-700'}
-                  ${isSelected ? 'bg-blue-600 text-white font-medium' : 'hover:bg-gray-100'}
-                `}
-              >
-                <div className="relative">
-                  {day.day}
-                  {hasEvent && !isSelected && (
-                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-600 rounded-full"></div>
-                  )}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+          const newLyHiglighted = selectedDate?.toDateString() == date.toDateString()
+
+          return (
+            <div
+              className={`w-7 h-7 flex items-center justify-center rounded-full 
+                
+                  ${newLyHiglighted ? "bg-[#0532a3] text-white " : ""}
+              `}
+            >
+              {date.getDate()}
+            </div>
+          );
+        }}
+      />
 
       {/* Today's schedule */}
       <div className="border-t pt-4">
@@ -227,54 +128,33 @@ const CalendarSidebar = () => {
 
         {/* Time slots */}
         <div className="relative">
-          {timeSlots.map((time, index) => (
+          {/* {timeSlots.map((time, index) => (
             <div key={time} className="flex items-start h-10">
               <span className="text-xs text-gray-400 w-12 pt-1">{time}</span>
               <div className="flex-1 border-t border-gray-100"></div>
             </div>
-          ))}
+          ))} */}
 
           {/* Events */}
-          {todaysEvents.map((event) => {
-            // Calculate position based on time
-            const startHour = parseInt(event.startTime.split(' ')[0]);
-            const startPeriod = event.startTime.split(' ')[1];
-            const startHour24 = startPeriod === 'PM' && startHour !== 12 ? startHour + 12 : startHour;
-            
-            // Calculate top position (each hour = 40px, starting from 8 AM)
-            const topPosition = (startHour24 - 8) * 40;
-            
-            // Calculate height based on duration
-            const endHour = parseInt(event.endTime.split(' ')[0]);
-            const endPeriod = event.endTime.split(' ')[1];
-            const endHour24 = endPeriod === 'PM' && endHour !== 12 ? endHour + 12 : endHour;
-            
-            // Calculate duration in hours
-            let duration = endHour24 - startHour24;
-            if (event.endTime.includes(':')) {
-              // Add partial hour if minutes are specified
-              const endMinutes = parseInt(event.endTime.split(':')[1]);
-              duration += endMinutes / 60;
-            }
-            
-            // Height based on duration (each hour = 40px)
-            const height = duration * 40;
-
-            return (
+          {events?.map((event:any, idx:number) => 
               <div
-                key={event.id}
-                className={`absolute left-12 right-0 rounded-md p-2 ${event.color} text-white`}
-                style={{
-                  top: `${topPosition}px`,
-                  height: `${height - 4}px`, // Subtract for gap
-                }}
+                key={idx}
+                className={`rounded-md p-2 mb-4  ${idx % 2 ?'bg-blue-600':'bg-pink-500'} text-white`}
+               
               >
-                <p className="text-xs font-medium">{event.title}</p>
-                {event.subtitle && <p className="text-xs opacity-90">{event.subtitle}</p>}
-                <p className="text-xs mt-1 opacity-80">{event.startTime} - {event.endTime}</p>
+                
+                <p className="text-xs font-medium">{'Mentorship Session'}</p>
+                {event?.subtitle && <p className="text-xs opacity-90">{event?.note}</p>}
+                <p className="text-xs mt-1 opacity-80">{event?.time} - {getNextHour(event?.time)}</p>
               </div>
-            );
-          })}
+            
+          )}
+
+          {(!events || events.length === 0) && (
+            <div className="text-center text-gray-400 text-sm mt-8 min-h-[100px] flex items-center justify-center">
+              No events scheduled for this day.
+            </div>
+          )}
         </div>
       </div>
     </div>

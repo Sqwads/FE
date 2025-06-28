@@ -8,36 +8,61 @@ import CalendarSidebar from '../../mentorship_home/componenets/CalendarSideBar';
 import ProfileCompletionCard from '../components/ProfileCompletionCard';
 import Image from 'next/image';
 import Link from 'next/link';
+import { IoStatsChartSharp } from 'react-icons/io5';
+import { userWrapper } from '@/store';
+import { instance } from '@/api/instance';
+import { useQuery } from '@tanstack/react-query';
 
 const MentorDashboardPage = () => {
-  // Sample data - replace with actual data fetching and props
-  const mentorName = "Yusuf";
-  const upcomingSessionsCount = 2;
+   const {user} = userWrapper((state)=>({
+      user: state.user
+    }))
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const {data:response, isPending: userInfoIsLoading} = useQuery({
+      queryFn: ()=>instance.get('/mentors/stats'),
+      queryKey: ['mentor-sats'],
+    });
+    const upcomingSessionsCount = response?.data?.data?.upcomingSessions || 0;
   
-  // State to control visibility of the profile completion card
-  const [showProfileCard, setShowProfileCard] = useState(true);
+    const {data:bookinsResponse, isPending: bookingIsLoading} = useQuery({
+      queryFn: () => instance.get('/mentors/mentor-bookings', {
+      params: {
+        status: 'UPCOMING',
+        date: selectedDate.toDateString(),
+        limit: 4
+      }
+      }),
+      queryKey: ['mentor-bookings', selectedDate.toISOString().slice(0, 10)],
+    });
+  
+    const [showProfileCard, setShowProfileCard] = useState(true);
+    // console.log(selectedDate.toDateString())
 
-  const handleDismissProfileCard = () => {
-    setShowProfileCard(false);
-  };
+    const handleDismissProfileCard = () => {
+      // setShowProfileCard(false);
+    };
 
+
+  
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Content Area (Left/Center) */}
         <div className="lg:col-span-2 space-y-6">
           {/* Welcome Header */}
-          <WelcomeHeader mentorName={mentorName} upcomingSessionsCount={upcomingSessionsCount} />
+          <WelcomeHeader mentorName={user?.firstName} upcomingSessionsCount={upcomingSessionsCount} />
           
           {/* Stat Cards Row */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <Link href='/mentor_project'>
+            <Link href='#'>
             
-              <StatCard 
+            <StatCard 
               imageSrc="/images/completed_1.png"
               imageAlt="Completed Sessions"
               title="COMPLETED SESSIONS" 
-              value={48} 
+              value={response?.data?.data?.completedSessions || 0} 
               bgColorClass="bg-white"
               textColorClass="text-gray-800"
               iconBgClass="bg-green-100"
@@ -45,21 +70,22 @@ const MentorDashboardPage = () => {
             </Link>
             
             <StatCard 
-              imageSrc="/images/aggregate.png"
+              // imageSrc="/images/aggregate.png"
               imageAlt="Aggregate Reviews"
               title="AGGREGATE REVIEWS" 
-              value={"4.65"} 
+              value={"3"} 
               unit="/5.0"
               bgColorClass="bg-blue-600" // Dark blue from UI
               textColorClass="text-white"
-              iconBgClass="bg-blue-700"
+              iconBgClass="bg-[#DADEFF]"
+              icon={<IoStatsChartSharp color='#38428D' />} 
             />
             <StatCard 
               imageSrc="/images/clock.png"
               imageAlt="Mentorship Hours"
-              title="MENTORSHIP HOURS" 
-              value={14.5} 
-              unit="hr"
+              title="UPCOMING SESSIONS" 
+              value={response?.data?.data?.upcomingSessions || 0} 
+              // unit="hr"
               bgColorClass="bg-white"
               textColorClass="text-gray-800"
               iconBgClass="bg-cyan-100"
@@ -70,7 +96,7 @@ const MentorDashboardPage = () => {
           <PerformanceChart />
 
           {/* Sessions Feed */}
-          <SessionsFeed />
+          <SessionsFeed sessionsData={response?.data?.data?.latestUpcomingSessions || []} />
         </div>
 
         {/* Sidebar Area (Right) */}
@@ -81,7 +107,11 @@ const MentorDashboardPage = () => {
           )}
           
           {/* Calendar Sidebar */}
-          <CalendarSidebar />
+          <CalendarSidebar
+            selectedDate={selectedDate}
+            onDateSelect={setSelectedDate}
+            events={bookinsResponse?.data?.data || []}
+           />
         </div>
       </div>
     </div>

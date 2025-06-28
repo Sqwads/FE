@@ -59,14 +59,14 @@ const Sidebar = ({
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-2 py-4">
-        <ul className="space-y-1">
+      <nav className="flex-1 px-2 py-4 mt-14">
+        <ul className="space-y-4">
           {/* Home */}
           <li>
             <Link 
-              href="/dashboard" 
+              href="/mentor_dashboard" 
               onClick={onSelectTab}
-              className={`${navItemClasses} ${pathname === '/dashboard' ? activeClasses : inactiveClasses}`}
+              className={`${navItemClasses} ${pathname === '/mentor_dashboard' ? activeClasses : inactiveClasses}`}
             >
               <div className="flex items-center">
                 <FiHome className="mr-3" size={20} />
@@ -120,7 +120,7 @@ const Sidebar = ({
           </li>
 
           {/* Projects */}
-          <li>
+          {/* <li>
             <Link 
               href="/projects" 
               onClick={onSelectTab}
@@ -131,10 +131,10 @@ const Sidebar = ({
                 <span>Projects</span>
               </div>
             </Link>
-          </li>
+          </li> */}
 
           {/* Chats with dropdown */}
-          <li>
+          {/* <li>
             <button 
               onClick={() => setChatsOpen(!chatsOpen)}
               className={`${navItemClasses} ${pathname.includes('/chats') ? activeClasses : inactiveClasses}`}
@@ -167,12 +167,12 @@ const Sidebar = ({
                 </li>
               </ul>
             )}
-          </li>
+          </li> */}
 
           {/* Settings */}
           <li>
             <Link 
-              href="/settings" 
+              href="#" 
               onClick={onSelectTab}
               className={`${navItemClasses} ${pathname.includes('/settings') ? activeClasses : inactiveClasses}`}
             >
@@ -189,14 +189,14 @@ const Sidebar = ({
       <div className="p-4 border-t border-blue-100">
         <div className="flex items-center">
           <div className="w-8 h-8 rounded-full bg-blue-900 text-white flex items-center justify-center font-medium">
-            {user?.firstName?.[0] || 'Y'}
+            {user?.firstName?.[0] || 'N/A'}
           </div>
           <div className="ml-3">
             <p className="text-sm font-medium text-blue-900">
-              {user?.firstName ? `${user.firstName} ${user.lastName}` : 'Yusuf Olowode'}
+              {`${user?.firstName} ${user?.lastName}` }
             </p>
             <p className="text-xs text-blue-700">
-              {user?.email ? trimText(user.email) : 'yusufolo@gmail.com'}
+              {trimText(user?.email) }
             </p>
           </div>
         </div>

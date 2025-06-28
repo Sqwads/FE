@@ -2,136 +2,21 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { FiArrowRight, FiCalendar, FiClock, FiArrowLeft } from 'react-icons/fi';
+import { relativeDateString } from './upcoming';
+import moment from 'moment';
 
-// Define the upcoming session type
-interface CompletedSession {
-  id: string;
-  mentee: {
-    name: string;
-    image: string;
-    discipline?: string;
-  };
-  sessionType: string;
-  sessionTitle?: string;
-  daysUntil: number;
-  sessionDate: string;
-  sessionTime: string;
-  notes?: string;
-  dateCreated?: string;
-  requestTime?: string;
-}
 
-// Sample data for upcoming sessions
-const upcomingSessions: CompletedSession[] = [
-  {
-    id: '1',
-    mentee: {
-      name: 'Saad Bashar',
-      image: '/images/saad.png',
-      discipline: 'Product Design',
-    },
-    sessionType: 'CV/Portfolio Revamp Session',
-    sessionTitle: 'CV/Portfolio Revamp',
-    daysUntil: 2,
-    sessionDate: 'Thurs, 2nd Oct, 2024',
-    sessionTime: '11:00 - 11:30 AM',
-    notes: 'I would like you to have an extensive review on my UI/UX Portfolio and have you assist me on cues to land my next role. Please find attached the link to my portfolio and an online copy of my CV.',
-    dateCreated: 'Jun 10, 2025 WAT',
-    requestTime: '38 minutes ago',
-  },
-  {
-    id: '2',
-    mentee: {
-      name: 'Comfort Tayo',
-      image: '/images/saad.png',
-      discipline: 'Frontend Development',
-    },
-    sessionType: 'CV/Portfolio Revamp Session',
-    sessionTitle: 'CV/Portfolio Revamp',
-    daysUntil: 5,
-    sessionDate: 'Mon, 15th Jun, 2025',
-    sessionTime: '11:00 - 11:30 AM',
-    notes: 'I need help reviewing my frontend portfolio and improving my resume to highlight my React and TypeScript skills better.',
-    dateCreated: 'Jun 8, 2025 WAT',
-    requestTime: '2 days ago',
-  },
-  {
-    id: '3',
-    mentee: {
-      name: 'Saad Bashar',
-      image: '/images/saad.png',
-      discipline: 'Product Design',
-    },
-    sessionType: 'CV/Portfolio Revamp Session',
-    sessionTitle: 'CV/Portfolio Revamp',
-    daysUntil: 2,
-    sessionDate: 'Thurs, 12th Jun, 2025',
-    sessionTime: '11:00 - 11:30 AM',
-    notes: 'I would like you to have an extensive review on my UI/UX Portfolio and have you assist me on cues to land my next role.',
-    dateCreated: 'Jun 10, 2025 WAT',
-    requestTime: '1 day ago',
-  },
-  {
-    id: '4',
-    mentee: {
-      name: 'Comfort Tayo',
-      image: '/images/saad.png',
-      discipline: 'Frontend Development',
-    },
-    sessionType: 'CV/Portfolio Revamp Session',
-    sessionTitle: 'CV/Portfolio Revamp',
-    daysUntil: 5,
-    sessionDate: 'Mon, 15th Jun, 2025',
-    sessionTime: '11:00 - 11:30 AM',
-    notes: 'I need help reviewing my frontend portfolio and improving my resume to highlight my React and TypeScript skills better.',
-    dateCreated: 'Jun 8, 2025 WAT',
-    requestTime: '3 days ago',
-  },
-  {
-    id: '5',
-    mentee: {
-      name: 'Saad Bashar',
-      image: '/images/saad.png',
-      discipline: 'Product Design',
-    },
-    sessionType: 'CV/Portfolio Revamp Session',
-    sessionTitle: 'CV/Portfolio Revamp',
-    daysUntil: 2,
-    sessionDate: 'Thurs, 12th Jun, 2025',
-    sessionTime: '11:00 - 11:30 AM',
-    notes: 'I would like you to have an extensive review on my UI/UX Portfolio and have you assist me on cues to land my next role.',
-    dateCreated: 'Jun 10, 2025 WAT',
-    requestTime: '2 days ago',
-  },
-  {
-    id: '6',
-    mentee: {
-      name: 'Comfort Tayo',
-      image: '/images/saad.png',
-      discipline: 'Frontend Development',
-    },
-    sessionType: 'CV/Portfolio Revamp Session',
-    sessionTitle: 'CV/Portfolio Revamp',
-    daysUntil: 5,
-    sessionDate: 'Mon, 15th Jun, 2025',
-    sessionTime: '11:00 - 11:30 AM',
-    notes: 'I need help reviewing my frontend portfolio and improving my resume to highlight my React and TypeScript skills better.',
-    dateCreated: 'Jun 8, 2025 WAT',
-    requestTime: '4 days ago',
-  },
-];
+
+
 
 // Upcoming session card component
-const CompletedSessionCard: React.FC<{ 
-  session: CompletedSession;
-  onClick: () => void;
-}> = ({ session, onClick }) => {
+const CompletedSessionCard = ({ session, onClick }:any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
       {/* Top section with image */}
       <div className="h-28 overflow-hidden">
-        <Image 
-          src={session.mentee.image} 
+        <img 
+          src={session?.mentee?.image || '/images/profile.jpg'} 
           alt={session.mentee.name}
           width={400}
           height={200}
@@ -142,12 +27,12 @@ const CompletedSessionCard: React.FC<{
       {/* Content section */}
       <div className="p-4">
         {/* Mentee name and session type */}
-        <h3 className="text-blue-900 font-semibold text-lg">{session.mentee.name}</h3>
-        <p className="text-gray-600 text-sm mb-2">{session.sessionType}</p>
+        <h3 className="text-blue-900 font-semibold text-lg">{session?.mentee?.firstName}</h3>
+        <p className="text-gray-600 text-sm mb-2">{"General Mentorship Session"}</p>
         
         {/* Session date info */}
         <p className="text-gray-500 text-xs mb-4">
-          Session Date: <span className="font-medium">In {session.daysUntil} days</span>
+          Session Date: <span className="font-medium">In {relativeDateString(session?.date)} </span>
         </p>
         
         {/* Session date with calendar icon */}
@@ -155,7 +40,7 @@ const CompletedSessionCard: React.FC<{
           <div className="w-5 h-5 mr-2 flex items-center justify-center text-gray-400">
             <FiCalendar size={16} />
           </div>
-          <span>{session.sessionDate}</span>
+          <span>{moment(session?.date).format('MMMM Do YYYY')}</span>
         </div>
         
         {/* Session time with clock icon */}
@@ -163,7 +48,7 @@ const CompletedSessionCard: React.FC<{
           <div className="w-5 h-5 mr-2 flex items-center justify-center text-gray-400">
             <FiClock size={16} />
           </div>
-          <span>{session.sessionTime}</span>
+          <span>{session?.time}</span>
         </div>
         
         {/* Action buttons */}
@@ -172,12 +57,12 @@ const CompletedSessionCard: React.FC<{
             className="text-blue-900 font-medium text-sm flex items-center"
             onClick={onClick}
           >
-            Join Session <FiArrowRight className="ml-1" />
+            Details<FiArrowRight className="ml-1" />
           </button>
           
-          <button className="px-3 py-1 text-sm border border-gray-300 rounded text-gray-600 hover:bg-gray-50">
+          {/* <button className="px-3 py-1 text-sm border border-gray-300 rounded text-gray-600 hover:bg-gray-50">
             Send Message
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
@@ -185,10 +70,7 @@ const CompletedSessionCard: React.FC<{
 };
 
 // Session Details View Component
-const SessionDetailsView: React.FC<{
-  session: CompletedSession;
-  onBack: () => void;
-}> = ({ session, onBack }) => {
+const SessionDetailsView = ({ session, onBack }:any) => {
   return (
     <div className="bg-white rounded-lg border border-blue-200 p-6">
       {/* Header with back button */}
@@ -200,7 +82,7 @@ const SessionDetailsView: React.FC<{
           <FiArrowLeft className="mr-1" /> Back
         </button>
         <h2 className="text-xl font-semibold">
-          Complete Mentorship Session with <span className="text-[#0234B8] font-bold">{session.mentee.name}</span>
+          Complete Mentorship Session with <span className="text-[#0234B8] font-bold">{session?.mentee?.firstName} {session?.mentee?.lastName}</span>
         </h2>
       </div>
 
@@ -210,16 +92,16 @@ const SessionDetailsView: React.FC<{
           <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
             <FiCalendar className="text-gray-500" />
           </div>
-          <span className="text-gray-700">{session.sessionDate}</span>
+          <span className="text-gray-700">{moment(session?.date).format('MMMM Do YYYY')}</span>
         </div>
         <div className="flex items-center mr-8 mb-3 md:mb-0">
           <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
             <FiClock className="text-gray-500" />
           </div>
-          <span className="text-gray-700">{session.sessionTime}</span>
+          <span className="text-gray-700">{session?.time}</span>
         </div>
         <div className="text-gray-700">
-          Date of Request: <span className="font-medium">{session.requestTime}</span>
+          Date of Request: <span className="font-medium">{moment(session?.created_at).format('MMMM Do YYYY')}</span>
         </div>
       </div>
 
@@ -228,17 +110,17 @@ const SessionDetailsView: React.FC<{
         <h3 className="text-gray-600 mb-3">Mentee:</h3>
         <div className="flex items-center">
           <div className="w-12 h-12 rounded-full overflow-hidden mr-3">
-            <Image 
-              src={session.mentee.image} 
-              alt={session.mentee.name}
+            <img 
+              src={session.mentee.image || '/images/profile.jpg'} 
+              alt={'b'}
               width={48}
               height={48}
               className="w-full h-full object-cover"
             />
           </div>
           <div>
-            <h4 className="font-semibold">{session.mentee.name}</h4>
-            <p className="text-gray-600 text-sm">Discipline: {session.mentee.discipline}</p>
+            <h4 className="font-semibold">{session?.mentee?.firstName} {session?.mentee?.lastName}</h4>
+            <p className="text-gray-600 text-sm">Discipline: {session?.mentee?.skills_of_interest?.join(', ')}</p>
           </div>
         </div>
       </div>
@@ -246,31 +128,31 @@ const SessionDetailsView: React.FC<{
       {/* Session title */}
       <div className="mb-6">
         <h3 className="text-gray-600 mb-1">Session Title</h3>
-        <p className="font-medium">{session.sessionTitle}</p>
+        <p className="font-medium">{'Mentoship Session'}</p>
       </div>
 
       {/* Optional notes */}
       <div className="mb-8">
         <h3 className="text-gray-600 mb-1">Optional Notes</h3>
-        <p className="text-gray-800">{session.notes}</p>
+        <p className="text-gray-800">{session?.note}</p>
       </div>
 
       {/* Date created */}
       <div className="mb-8">
-        <p className="text-gray-600">Date Created: <span className="font-medium">{session.dateCreated}</span></p>
+        <p className="text-gray-600">Date Created: <span className="font-medium">{moment(session?.created_at).format('MMMM Do YYYY')}</span></p>
       </div>
 
       {/* Action buttons */}
       <div className="flex flex-wrap gap-3">
-        <button className="px-5 py-2 border border-blue-600 text-[#001D69] font-bold rounded-md hover:bg-blue-50">
+        {/* <button className="px-5 py-2 border border-blue-600 text-[#001D69] font-bold rounded-md hover:bg-blue-50">
           Send Message
-        </button>
-        <button className="px-5 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50">
+        </button> */}
+        {/* <button className="px-5 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50">
           Accept
         </button>
         <button className="px-5 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50">
           Cancel
-        </button>
+        </button> */}
         {/* <button className="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center">
           Cancwl
         </button> */}
@@ -280,7 +162,7 @@ const SessionDetailsView: React.FC<{
 };
 
 // Empty state component for when there are no upcoming sessions
-const EmptyUpcomingState: React.FC = () => {
+const EmptyUpcomingState= () => {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4">
       {/* Empty illustration */}
@@ -297,29 +179,27 @@ const EmptyUpcomingState: React.FC = () => {
       </div>
       
       {/* Empty state text */}
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">No upcoming sessions</h3>
+      <h3 className="text-xl font-semibold text-gray-900 mb-2">No Past sessions</h3>
       <p className="text-gray-600 text-center mb-6 max-w-md">
-        You don't have any upcoming mentorship sessions scheduled.
+        You don't have any Past mentorship sessions.
         Check your pending requests or update your availability to get more sessions.
       </p>
       
       {/* Action button */}
-      <button className="bg-blue-900 text-white px-4 py-2 rounded flex items-center space-x-2 hover:bg-blue-800 transition-colors">
+      {/* <button className="bg-blue-900 text-white px-4 py-2 rounded flex items-center space-x-2 hover:bg-blue-800 transition-colors">
         <span>Update Availability</span>
         <FiArrowRight />
-      </button>
+      </button> */}
     </div>
   );
 };
 
 // Main Upcoming component
-const HistoryPage: React.FC = () => {
-  // For demo purposes, you can toggle between empty and non-empty states
-  // In a real app, this would be determined by actual data
-  const [hasUpcomingSessions, setHasUpcomingSessions] = useState(true);
-  const [selectedSession, setSelectedSession] = useState<CompletedSession | null>(null);
+const HistoryPage = ({data}:{data: any[]}) => {
   
-  if (!hasUpcomingSessions) {
+  const [selectedSession, setSelectedSession] = useState<any>(null);
+  
+  if (!data || data.length === 0) {
     return <EmptyUpcomingState />;
   }
 
@@ -334,11 +214,11 @@ const HistoryPage: React.FC = () => {
   }
   
   return (
-    <div className="p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
-        {upcomingSessions.map((session) => (
+    <div className="px-6 py-6 lg:px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        {data.map((session:any, idx:number) => (
           <CompletedSessionCard 
-            key={session.id} 
+            key={idx} 
             session={session} 
             onClick={() => setSelectedSession(session)}
           />

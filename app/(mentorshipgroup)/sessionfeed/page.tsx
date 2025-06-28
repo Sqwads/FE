@@ -1,8 +1,11 @@
 "use client";
-import React, { useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import Pending from './tabs/pending';
 import Upcoming from './tabs/upcoming';
 import History from './tabs/complete';
+import { useSearchParams } from 'next/navigation';
+import { instance } from '@/api/instance';
+import { useQuery } from '@tanstack/react-query';
 
 interface TabProps {
   label: string;
@@ -26,8 +29,35 @@ const Tab: React.FC<TabProps> = ({ label, isActive, onClick }) => {
   );
 };
 
+
+
 const SessionsFeed: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'pending' | 'history'>('pending');
+  const [activeTab, setActiveTab] = useState<string>('upcoming');
+
+  const statuses: any = {
+    upcoming: 'UPCOMING',
+    pending: 'PENDING',
+    history: 'COMPLETED',
+    complete: 'COMPLETED'
+  }
+
+  const searchParams = useSearchParams();
+  const tabFromParams = searchParams.get('tabs') 
+
+  useEffect(() => {
+    if (tabFromParams) {
+      setActiveTab(tabFromParams =='complete' ? 'history' : tabFromParams);
+    }
+  }, [tabFromParams]);
+
+  const {data:bookinsResponse, isPending: bookingIsLoading} = useQuery({
+    queryFn: () => instance.get('/mentors/mentor-bookings', {
+    params: {
+      status: statuses[activeTab],
+    }
+    }),
+    queryKey: ['mentor-bookingss',activeTab],
+  });
   
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
@@ -62,12 +92,26 @@ const SessionsFeed: React.FC = () => {
       
       {/* Content based on active tab */}
       <div className="bg-gray-50 rounded-lg border border-gray-100">
-        {activeTab === 'pending' && <Pending />}
-        {activeTab === 'upcoming' && <Upcoming />}
-        {activeTab === 'history' && <History />}
+        {activeTab === 'pending' && <Pending data={bookinsResponse?.data?.data || []} />}
+        {activeTab === 'upcoming' && <Upcoming data={bookinsResponse?.data?.data || []} />}
+        {activeTab === 'history' && <History data={bookinsResponse?.data?.data || []} />}
       </div>
     </div>
   );
 };
 
-export default SessionsFeed;
+const SessionFeedWrapper = () => {
+  return (
+   
+      <Suspense fallback={
+        <div className="flex items-center justify-center h-full">
+          <p className="text-gray-500">Loading sessions...</p>
+        </div>
+      }>
+        <SessionsFeed />  
+      </Suspense>
+   
+  );
+}
+
+export default SessionFeedWrapper;

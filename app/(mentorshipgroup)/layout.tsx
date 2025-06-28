@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { cookieStorage } from '@ibnlanre/portal';
 import { LoadingOverlay } from '@mantine/core';
+import '@mantine/core/styles.css';
 
 import { userWrapper } from '../../src/store';
 import TopNav from './components/topNav';
@@ -19,24 +20,26 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
 
     const router = useRouter()
     const {data:response, isPending: userInfoIsLoading} = useQuery({
-      queryFn: ()=>instance.get('/user'),
-      queryKey: ['user'],
+      queryFn: ()=>instance.get('/mentors/me'),
+      queryKey: ['mentor-profile'],
     });
 
+   
+
     useEffect(()=>{
-          setUser(response?.data)
+          setUser(response?.data?.data)
     }, [response?.data])
     
 
     if(!response && !userInfoIsLoading ){
-      cookieStorage.clear()
-      router.push('/')
-      return
+    //   cookieStorage.clear()
+    //   router.push('/')
+    //   return
     }
 
     return(
        <div className="flex h-screen ">
-             <LoadingOverlay visible={userInfoIsLoading} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} />
+             <LoadingOverlay visible={false} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} />
              {/* Main Content Area */}
              <div className="w-64 hidden md:block">
                   <Sidebar />

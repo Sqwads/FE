@@ -4,6 +4,11 @@ import Image from 'next/image';
 import { FiArrowRight, FiCalendar, FiClock, FiCheck, FiX, FiArrowLeft, FiInfo } from 'react-icons/fi';
 
 import EmptyState from '../../components/EmptyState';
+import moment from 'moment';
+import { Modal, TextInput, Button } from '@mantine/core';
+import toast from 'react-hot-toast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { instance } from '@/api/instance';
 
 // Define the session request type
 interface SessionRequest {
@@ -23,54 +28,57 @@ interface SessionRequest {
   expiresIn?: string;
 }
 
-// Sample data for pending session requests
-const pendingRequests: SessionRequest[] = [
-  {
-    id: '1',
-    mentee: {
-      name: 'Saad Bashar',
-      image: '/images/saad.png', 
-      discipline: 'Product Design',
-    },
-    sessionType: 'CV/Portfolio Review Session',
-    sessionTitle: 'CV/Portfolio Revamp',
-    requestTime: '38 minutes ago',
-    sessionDate: 'Thurs, 2nd Oct, 2024',
-    sessionTime: '11:00 - 11:30 AM',
-    notes: 'I would like you to have an extensive review on my UI/UX Portfolio and have you assist me on cues to land my next role. Please find attached the link to my portfolio and an online copy of my CV.',
-    dateCreated: 'Jun 10, 2025 WAT',
-    expiresIn: '3 days',
-  },
-  {
-    id: '2',
-    mentee: {
-      name: 'Comfort Tayo',
-      image: '/images/tayo.png',
-      discipline: 'Frontend Development',
-    },
-    sessionType: 'CV/Portfolio Review Session',
-    sessionTitle: 'CV/Portfolio Revamp',
-    requestTime: '2 Days ago',
-    sessionDate: 'Mon, 20th Jun, 2025',
-    sessionTime: '11:00 - 11:30 AM',
-    notes: 'I need help reviewing my frontend portfolio and improving my resume to highlight my React and TypeScript skills better.',
-    dateCreated: 'Jun 8, 2025 WAT',
-    expiresIn: '1 day',
-  },
-];
+const MeetingLinkModal = ({ 
+  open, onClose, submit , selectedRequest, isSubmitting
+}: 
+{ 
+    open: boolean; 
+    onClose: () => void; 
+    // onSubmit: (link: string) => void ,
+    selectedRequest?: any,
+    submit: (link:string) => void,
+    isSubmitting?: boolean
+}) => {
+  const [link, setLink] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+   
+    if(link.trim() === '')  return toast.error('Please enter a meeting link');
+    submit(link)
+    setLink('');
+  };
+
+  return (
+    <Modal opened={open} onClose={onClose} title="Add Meeting Link" centered>
+      
+       <div className="lg:px-7 px-4 py-7">
+         <TextInput
+          label="Meeting Link"
+          placeholder="Enter meeting link"
+          value={link}
+          onChange={(e) => setLink(e.currentTarget.value)}
+          required
+          mb="md"
+        />
+        <Button disabled={isSubmitting} className='disabled:opacity-50' onClick={handleSubmit} type="submit" fullWidth>
+           {isSubmitting ? 'Submitting...' : 'Submit Meeting Link'}
+        </Button>
+       </div>
+     
+    </Modal>
+  );
+};
+
 
 // Session request card component
-const SessionRequestCard: React.FC<{ 
-  request: SessionRequest;
-  onClick: () => void;
-}> = ({ request, onClick }) => {
+const SessionRequestCard = ({ request, onClick, onAccept, onCancel }:any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
       {/* Top section with image */}
       <div className="h-28 overflow-hidden">
         <Image 
-          src={request.mentee.image} 
-          alt={request.mentee.name}
+          src={request?.mentee?.image || '/images/profile.jpg'} 
+          alt={'n'}
           width={400}
           height={200}
           className="w-full h-full object-cover"
@@ -80,12 +88,12 @@ const SessionRequestCard: React.FC<{
       {/* Content section */}
       <div className="p-4">
         {/* Mentee name and session type */}
-        <h3 className="text-blue-900 font-semibold text-lg">{request.mentee.name}</h3>
-        <p className="text-gray-600 text-sm mb-2">{request.sessionType}</p>
+        <h3 className="text-blue-900 font-semibold text-lg">{request?.mentee?.firstName} {request?.mentee?.lastName}</h3>
+        <p className="text-gray-600 text-sm mb-2">General Mentorship Sessions</p>
         
         {/* Request timing */}
         <p className="text-gray-500 text-xs mb-4">
-          Date of Request: <span className="font-medium">{request.requestTime}</span>
+          Date of Request: <span className="font-medium">{moment(request?.created_at).format('MMMM Do YYYY')}</span>
         </p>
         
         {/* Session date with calendar icon */}
@@ -93,7 +101,7 @@ const SessionRequestCard: React.FC<{
           <div className="w-5 h-5 mr-2 flex items-center justify-center text-gray-400">
             <FiCalendar size={16} />
           </div>
-          <span>{request.sessionDate}</span>
+          <span>{moment(request?.date).format('MMMM Do YYYY')}</span>
         </div>
         
         {/* Session time with clock icon */}
@@ -101,7 +109,7 @@ const SessionRequestCard: React.FC<{
           <div className="w-5 h-5 mr-2 flex items-center justify-center text-gray-400">
             <FiClock size={16} />
           </div>
-          <span>{request.sessionTime}</span>
+          <span>{request?.time}</span>
         </div>
         
         {/* Action buttons */}
@@ -114,10 +122,10 @@ const SessionRequestCard: React.FC<{
           </button>
           
           <div className="flex space-x-2">
-            <button className="w-8 h-8 rounded-full border border-red-500 text-red-500 hover:bg-red-50 flex items-center justify-center">
+            <button onClick={()=>onCancel(request?._id)} className="w-8 h-8 rounded-full border border-red-500 text-red-500 hover:bg-red-50 flex items-center justify-center">
               <FiX size={16} />
             </button>
-            <button className="w-8 h-8 rounded-full border border-green-500 text-green-500 hover:bg-green-50 flex items-center justify-center">
+            <button onClick={()=>onAccept(request)}  className="w-8 h-8 rounded-full border border-green-500 text-green-500 hover:bg-green-50 flex items-center justify-center">
               <FiCheck size={16} />
             </button>
           </div>
@@ -128,10 +136,7 @@ const SessionRequestCard: React.FC<{
 };
 
 // Session Details View Component
-const SessionDetailsView: React.FC<{
-  request: SessionRequest;
-  onBack: () => void;
-}> = ({ request, onBack }) => {
+const SessionDetailsView  = ({ request, onBack, onAccept, onCancel }:any) => {
   return (
     <div className="bg-white rounded-lg border border-blue-200 p-6">
       {/* Header with back button */}
@@ -143,7 +148,7 @@ const SessionDetailsView: React.FC<{
           <FiArrowLeft className="mr-1" /> Back
         </button>
         <h2 className="text-xl font-semibold">
-          Mentorship Session with <span className="text-blue-600">{request.mentee.name}</span>
+          Mentorship Session with <span className="text-blue-600">{request?.mentee?.firstName} {request?.mentee?.lastName}</span>
         </h2>
       </div>
 
@@ -153,16 +158,16 @@ const SessionDetailsView: React.FC<{
           <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
             <FiCalendar className="text-gray-500" />
           </div>
-          <span className="text-gray-700">{request.sessionDate}</span>
+          <span className="text-gray-700">{moment(request?.date).format('MMMM Do YYYY')}</span>
         </div>
         <div className="flex items-center mr-8 mb-3 md:mb-0">
           <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
             <FiClock className="text-gray-500" />
           </div>
-          <span className="text-gray-700">{request.sessionTime}</span>
+          <span className="text-gray-700">{request?.time}</span>
         </div>
         <div className="text-gray-700">
-          Date of Request: <span className="font-medium">{request.requestTime}</span>
+          Date of Request: <span className="font-medium">{moment(request?.created_at).format('MMMM Do YYYY')}</span>
         </div>
       </div>
 
@@ -171,17 +176,17 @@ const SessionDetailsView: React.FC<{
         <h3 className="text-gray-600 mb-3">Mentee:</h3>
         <div className="flex items-center">
           <div className="w-12 h-12 rounded-full overflow-hidden mr-3">
-            <Image 
-              src={request.mentee.image} 
-              alt={request.mentee.name}
+            <img 
+              src={'/images/profile.jpg'} 
+              alt={'n'}
               width={48}
               height={48}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover border"
             />
           </div>
           <div>
-            <h4 className="font-semibold">{request.mentee.name}</h4>
-            <p className="text-gray-600 text-sm">Discipline: {request.mentee.discipline}</p>
+            <h4 className="font-semibold">{request?.mentee?.firstName} {request?.mentee?.lastName}</h4>
+            <p className="text-gray-600 text-sm">Discipline: {request?.mentee?.skills_of_interest?.join(', ')}</p>
           </div>
         </div>
       </div>
@@ -189,29 +194,29 @@ const SessionDetailsView: React.FC<{
       {/* Session title */}
       <div className="mb-6">
         <h3 className="text-gray-600 mb-1">Session Title</h3>
-        <p className="font-medium">{request.sessionTitle}</p>
+        <p className="font-medium">{'Mentoship Session'}</p>
       </div>
 
       {/* Optional notes */}
       <div className="mb-8">
         <h3 className="text-gray-600 mb-1">Optional Notes</h3>
-        <p className="text-gray-800">{request.notes}</p>
+        <p className="text-gray-800">{request?.note}</p>
       </div>
 
       {/* Date created */}
       <div className="mb-8">
-        <p className="text-gray-600">Date Created: <span className="font-medium">{request.dateCreated}</span></p>
+        <p className="text-gray-600">Date Created: <span className="font-medium">{moment(request?.created_at).format('MMMM Do YYYY')}</span></p>
       </div>
 
       {/* Action buttons */}
       <div className="flex flex-wrap gap-3 mb-6">
-        <button className="px-5 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50">
+        {/* <button className="px-5 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50">
           Send Message
-        </button>
-        <button className="px-5 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+        </button> */}
+        <button onClick={()=>onAccept(request)} className="px-5 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
           Accept
         </button>
-        <button className="px-5 py-2 bg-red-100 text-red-500 rounded-md hover:bg-red-200">
+        <button onClick={()=>onCancel(request?._id)} className="px-5 py-2 bg-red-100 text-red-500 rounded-md hover:bg-red-200">
           Cancel
         </button>
       </div>
@@ -228,19 +233,55 @@ const SessionDetailsView: React.FC<{
 };
 
 // Main Pending component
-const Pending: React.FC = () => {
-  // For demo purposes, you can toggle between empty and non-empty states
-  // In a real app, this would be determined by actual data
-  const [hasPendingRequests, setHasPendingRequests] = useState(true);
-  const [selectedRequest, setSelectedRequest] = useState<SessionRequest | null>(null);
+const Pending= ({data}:{data: any[]}) => {
   
-  if (!hasPendingRequests) {
+  const [processingRequest, setProcessingRequest] = useState<any>(null);
+  const [selectedRequest, setSelectedRequest] = useState<SessionRequest | null>(null);
+  const [openMeetingLinkModal, setOpenMeetingLinkModal] = useState(false);
+  const queryClient = useQueryClient()
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data:any)=>instance.patch(`/mentors/update-booking/${data?.id}`, data), 
+    mutationKey: ['mentor-bookings-edit'],
+    onSuccess(data, variables, context) {
+       if(variables.status === 'CANCELLED') {
+        toast.success('Booking cancelled successfully');
+       }else{
+         toast.success('Session Approved!');
+       }
+        setOpenMeetingLinkModal(false);
+        setProcessingRequest(null);
+        queryClient.invalidateQueries({
+          queryKey: ['mentor-bookingss']})
+    },
+    onError(error, variables, context) {
+        toast.error('Failed to submit meeting link. Please try again.');
+    },
+  })
+
+  const handleSubmitMeetingLink = (link: string) => {
+    if (!processingRequest) return;
+    mutate({
+      id: processingRequest._id,
+      meetingLink: link,
+      status:'UPCOMING'
+    });
+  }
+
+   const handleCancelBooking = (booking:string) => {
+    mutate({
+      id: booking,
+      status:'CANCELLED'
+    });
+  }
+
+  if (!data || data.length === 0) {
     // Use the reusable EmptyState component
     return (
       <EmptyState
         title="No pending sessions yet!"
         description="You haven't been approached for any mentorship requests yet. Share your expertise and start guiding eager mentees today."
-        actionText="Update Profile"
+        // actionText="Update Profile"
         actionLink="/profile"
         illustration={
           <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -260,27 +301,59 @@ const Pending: React.FC = () => {
   // If a session is selected, show the details view
   if (selectedRequest) {
     return (
+      <>
       <SessionDetailsView 
         request={selectedRequest} 
         onBack={() => setSelectedRequest(null)} 
+        onAccept ={(request:any) => {
+          setOpenMeetingLinkModal(true);
+          setProcessingRequest(request);
+        }}
+        onCancel={handleCancelBooking}
       />
+      <MeetingLinkModal 
+        open={openMeetingLinkModal}
+        onClose={() => setOpenMeetingLinkModal(false)}
+        selectedRequest={selectedRequest}
+        submit={(val:any)=>handleSubmitMeetingLink( val)}
+        isSubmitting={isPending}
+        
+      />
+      </>
+      
+
+      
+        
     );
   }
   
   // Otherwise show the list of session cards
   return (
     <div className="p-6">
+      <MeetingLinkModal 
+        open={openMeetingLinkModal}
+        onClose={() => setOpenMeetingLinkModal(false)}
+        selectedRequest={selectedRequest}
+        submit={(link:string)=>handleSubmitMeetingLink( link)}
+        isSubmitting={isPending}
+       
+      />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4"> 
-            {pendingRequests.map((request) => (
+            {data?.map((request:any, idx:number) => (
                 <SessionRequestCard 
-                    key={request.id} 
+                    key={idx} 
                     request={request} 
                     onClick={() => setSelectedRequest(request)}
+                    onAccept ={(request:any) => {
+                      setOpenMeetingLinkModal(true);
+                      setProcessingRequest(request);
+                    }}
+                    onCancel={handleCancelBooking}
                 />
                 ))}
             </div>
             </div>
     );
-    };
+};
 
 export default Pending;

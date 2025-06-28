@@ -27,15 +27,14 @@ const StatCard: React.FC<StatCardProps> = ({
 }) => {
   return (
     // Removed the outer div from the original component, assuming it's applied where StatCard is used (like in the grid cell)
-    <div className={`flex items-center space-x-4 ${bgColorClass} ${textColorClass}`}> 
+    <div className={`flex items-center py-7 rounded-lg border  px-4 space-x-4 ${bgColorClass} ${textColorClass}`}> 
       <div className={`p-3 rounded-full flex items-center justify-center ${iconBgClass}`}>
         {imageSrc ? (
-          <Image 
+          <img 
             src={imageSrc} 
             alt={imageAlt} 
-            width={24} // Specify width (adjust as needed, e.g., based on h-6 w-6 -> 24px)
-            height={24} // Specify height
-            className="object-contain" // Optional: control how image fits
+           
+            className="object-cover h-7 w-7" // Optional: control how image fits
           />
         ) : (
           icon // Render the icon component if no imageSrc is provided

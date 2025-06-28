@@ -25,27 +25,26 @@ const MentorLoginPage = () => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: any) => instance.post('/auth/login', data),
-    mutationKey: ['auth', 'login'],
+    mutationFn: (data: any) => instance.post('/mentors/login', data),
+    mutationKey: ['mentor', 'login'],
     onSuccess(response) {
       console.log(response.data)
-      if (response.data?.data?.role !== 'USER') {
+      if (response.data?.data?.role !== 'MENTOR') {
         return toast.error('Access Denied !!!')
       }
+      cookieStorage.clear()
+      localStorage.clear()
       cookieStorage.setItem('access_token', response.data?.data?.access_token)
-      if (response.data?.data?.isProfileComplete) {
-        toast.success('Authentication succesfull')
-        router.push('/dashboard')
-      } else {
-
-        router.push('/onboarding')
-      }
+     
+      toast.success('Authentication succesfull')
+      router.push('/mentor_dashboard')
+     
     },
     onError(error: any, vars) {
-      console.log(error?.response.data)
+      // console.log(error?.response.data)
       if (error?.response?.data?.statusCode == 403) {
         toast.error('Account not verified!')
-        router.push(`/emailauth?email=${base64encode(vars?.email)}`)
+        router.push(`/mentor_email_auth?email=${base64encode(vars?.email)}`)
 
         return
       }
