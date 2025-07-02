@@ -40,7 +40,7 @@ const MyMentorCard = ({
           className="cursor-pointer underline text-[#001D69] font-semibold"
         >
           {schedule?.status == 'UPCOMING'?
-          <span>Join Meeting</span>:
+            <a href={schedule?.meetingLink} target="_blank" rel="noopener noreferrer"><span>Join Meeting</span></a>:
           <Link href={`/mentors/${mentor._id}`}><span>View Profile</span></Link>}
         </div>
         <span 

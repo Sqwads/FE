@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Modal, Textarea, Button as MantineButton } from "@mantine/core";
+import { Modal, Textarea, Button as MantineButton, TextInput } from "@mantine/core";
 import { useForm, yupResolver } from '@mantine/form';
 import * as yup from "yup";
+
 
 interface ScheduleModalProps {
   opened: boolean;
@@ -10,12 +11,13 @@ interface ScheduleModalProps {
   mentor: any;
   handleSubmit: ()=>void,
   note?: string,
-  handleChange: (e:any)=>void,
+  title?: string,
+  handleChange: (e:any, b: string)=>void,
   isSubmitting: boolean
 }
 
 
-const ScheduleModal = ({ opened, onClose, slot, mentor, note, isSubmitting, handleChange, handleSubmit }: ScheduleModalProps) => {
+const ScheduleModal = ({ opened, onClose, slot, mentor, note, isSubmitting, handleChange, handleSubmit, title }: ScheduleModalProps) => {
   
 
   return (
@@ -31,13 +33,20 @@ const ScheduleModal = ({ opened, onClose, slot, mentor, note, isSubmitting, hand
         <div className="border px-3 py-2 rounded bg-muted text-sm font-medium">{slot?.date}</div>
         <div className="border px-3 py-2 rounded bg-blue-50 text-blue-700 text-sm font-medium">{slot?.time}</div>
       </div>
-      
+        <TextInput
+          className="mb-4"
+          placeholder="Enter Session Title"
+          label="Session Subject"
+          onChange={(e)=>handleChange(e.target.value, 'title')}
+          value={title}
+        />
+
         <Textarea
           label="Anything else to say? (optional)"
           placeholder="Type here..."
           minRows={3}
           value={note}
-          onChange={(e)=>handleChange(e.target.value)}
+          onChange={(e)=>handleChange(e.target.value, 'note')}
         />
         <MantineButton disabled={isSubmitting}  onClick={handleSubmit} type="submit" className="w-full mt-5" loading={false} style={{background: "#0532a3"}}>
           {isSubmitting? 'Submitting...':'Confirm Booking'}

@@ -172,9 +172,9 @@ const Sidebar = ({
           {/* Settings */}
           <li>
             <Link 
-              href="#" 
+              href="/mentor_settings" 
               onClick={onSelectTab}
-              className={`${navItemClasses} ${pathname.includes('/settings') ? activeClasses : inactiveClasses}`}
+              className={`${navItemClasses} ${pathname.includes('/mentor_settings') ? activeClasses : inactiveClasses}`}
             >
               <div className="flex items-center">
                 <FiSettings className="mr-3" size={20} />
@@ -188,9 +188,12 @@ const Sidebar = ({
       {/* User Profile */}
       <div className="p-4 border-t border-blue-100">
         <div className="flex items-center">
+          {user?.profileImage ?
+          <img src={user?.profileImage} className='w-12 h-12 object-cover rounded-full border' />:
           <div className="w-8 h-8 rounded-full bg-blue-900 text-white flex items-center justify-center font-medium">
             {user?.firstName?.[0] || 'N/A'}
           </div>
+          }
           <div className="ml-3">
             <p className="text-sm font-medium text-blue-900">
               {`${user?.firstName} ${user?.lastName}` }

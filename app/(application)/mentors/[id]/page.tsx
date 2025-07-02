@@ -38,6 +38,7 @@ const MentorProfile = () => {
     const [selectedSlot, setSelectedSlot] = useState<string>("11:00 AM");
     const [modalOpen, setModalOpen] = useState(false);
     const [note, setNote] = useState('')
+    const [title, setTitle] = useState('')
     const [highlightedDates, setHighlightedDates] = useState<Date[]>([]);
 
   // Simulate loading preselected calendar dates in effect
@@ -96,7 +97,8 @@ const MentorProfile = () => {
             date: selectedDate,
             time: selectedSlot,
             mentor: mentor._id,
-            note
+            note,
+            title
         }
         bookSession(payload)
     }
@@ -107,7 +109,14 @@ const MentorProfile = () => {
         opened={modalOpen}
         onClose={() => setModalOpen(false)}
         note={note}
-        handleChange={(val:any)=>setNote(val)}
+        title={title}
+        handleChange={(val:any, label: string)=>{
+          if(label === 'note') {
+            setNote(val)
+          } else if(label === 'title') {
+            setTitle(val)
+          }
+        }}
         mentor={mentor}
         handleSubmit = {handleSubmit}
         isSubmitting = {isBooking}

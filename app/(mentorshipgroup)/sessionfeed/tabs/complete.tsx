@@ -28,7 +28,7 @@ const CompletedSessionCard = ({ session, onClick }:any) => {
       <div className="p-4">
         {/* Mentee name and session type */}
         <h3 className="text-blue-900 font-semibold text-lg">{session?.mentee?.firstName}</h3>
-        <p className="text-gray-600 text-sm mb-2">{"General Mentorship Session"}</p>
+        <p className="text-gray-600 text-sm mb-2">{session?.title || 'General Mentorship Sessions'}</p>
         
         {/* Session date info */}
         <p className="text-gray-500 text-xs mb-4">
