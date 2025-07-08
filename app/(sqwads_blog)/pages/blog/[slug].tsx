@@ -7,7 +7,7 @@ import { getAllBlogSlugs, getBlogPostBySlug, BlogPostDetail as BlogPostDetailTyp
 import Link from 'next/link';
 
 interface BlogPostPageProps {
-  blogPost: BlogPostDetailType; // This is the key change here
+  blogPost: BlogPostDetailType;
 }
 
 const BlogPostPage: React.FC<BlogPostPageProps> = ({ blogPost }) => {
@@ -24,7 +24,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ blogPost }) => {
     );
   }
 
-  if (!blogPost) { // This check is a safeguard, though notFound: true should prevent this
+  if (!blogPost) { 
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -41,7 +41,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ blogPost }) => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <main>
-        <BlogPostDetail blogPost={blogPost} /> {/* Pass the full blogPost object here */}
+        <BlogPostDetail blogPost={blogPost} /> 
       </main>
       <Footer />
     </div>

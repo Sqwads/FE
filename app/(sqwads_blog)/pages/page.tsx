@@ -7,7 +7,6 @@ import BlogGrid from '../componnets/BlogGrid';
 const page = () => {
   return (
     <>
-      {/* Hero Section with background extending behind navbar */}
       <div 
         className="relative min-h-screen"
         style={{
@@ -21,7 +20,7 @@ const page = () => {
           backgroundBlendMode: 'normal, screen'
         }}
       >
-        {/* Secondary gradient overlay for the blue gradient effect */}
+
         <div 
           className="absolute inset-0"
           style={{
@@ -37,14 +36,12 @@ const page = () => {
           }}
         ></div>
         
-        {/* Content with relative positioning to stay above background */}
         <div className="relative z-10 pt-4 lg:pt-7 px-2 md:px-5 lg:px-14">
-          {/* Navbar with transparent background to show hero background */}
+
           <div className="relative z-20">
             <BlogNav />
           </div>
           
-          {/* Hero section without its own background since it's now inherited */}
           <div className="relative z-10">
             <BlogHero />
           </div>

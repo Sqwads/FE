@@ -5,7 +5,7 @@ import "../../../app/globals.css";
 const BlogHero = () => {
   return (
     <section className="flex flex-col items-start justify-center lg:px-6 px-3 w-full text-white rounded-xl relative min-h-[75vh] lg:min-h-[85vh] overflow-hidden">
-      {/* Left-aligned Content - No background here since it's handled by the page */}
+
       <div className="flex flex-col items-start text-left tracking-tighter px-3 max-w-4xl relative z-20">
         {/* Stay Up to Date Button */}
         <div className="mb-8">

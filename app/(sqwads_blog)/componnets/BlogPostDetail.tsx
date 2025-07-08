@@ -26,7 +26,7 @@ const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Des
   const handleShare = (platform: string) => {
     setIsSharing(true);
     const url = window.location.href;
-    const title = blogPost.title; // Use blogPost directly
+    const title = blogPost.title; 
     // ... rest of your handleShare logic
     let shareUrl = '';
     switch (platform) {
@@ -53,8 +53,8 @@ const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Des
       {/* Hero Section */}
       <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden">
         <Image
-          src={blogPost.image} // Use blogPost directly
-          alt={blogPost.title} // Use blogPost directly
+          src={blogPost.image} 
+          alt={blogPost.title} 
           fill
           className="object-cover"
           priority
@@ -67,23 +67,23 @@ const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Des
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-            {blogPost.title} {/* Use blogPost directly */}
+            {blogPost.title} 
           </h1>
 
           <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
-            <time className="font-medium">{blogPost.date}</time> {/* Use blogPost directly */}
+            <time className="font-medium">{blogPost.date}</time> 
             <span>•</span>
-            <span className="font-medium">{blogPost.author}</span> {/* Use blogPost directly */}
+            <span className="font-medium">{blogPost.author}</span> 
           </div>
 
           <p className="text-lg text-gray-700 leading-relaxed">
-            {blogPost.description} {/* Use blogPost directly */}
+            {blogPost.description} 
           </p>
         </div>
 
         {/* Article Content */}
         <article className="prose prose-lg max-w-none">
-          {blogPost.content.sections.map((section, index) => ( // Use blogPost directly
+          {blogPost.content.sections.map((section, index) => ( 
             <div key={index} className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 {section.title}
