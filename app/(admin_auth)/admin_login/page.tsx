@@ -15,7 +15,6 @@ import toast from 'react-hot-toast';
 const LoginPage = () => {
 
   const router = useRouter()
-  // Mantine useForm hook
   const form = useForm({
     initialValues: {
       email: '',

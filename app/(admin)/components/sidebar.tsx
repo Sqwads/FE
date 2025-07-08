@@ -17,7 +17,7 @@ const AdminSidebar = ({
 }) => {
 
  
-  const pathname = usePathname(); // Get current route
+  const pathname = usePathname();
   const router = useRouter()
   const { user } = userWrapper((state) => ({
     user: state.user,

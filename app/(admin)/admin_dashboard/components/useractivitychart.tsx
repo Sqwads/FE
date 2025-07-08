@@ -5,7 +5,7 @@ import UserActivityData from "./useractivity";
 
 const UserActivityChart = () => {
   const [range, setRange] = useState<"7" | "14" | "30">("7");
-  const data = UserActivityData[range] || []; // Prevents disappearing chart
+  const data = UserActivityData[range] || [];
 
   
 

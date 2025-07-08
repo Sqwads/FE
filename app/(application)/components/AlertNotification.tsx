@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { FiAlertTriangle, FiX } from 'react-icons/fi';
 
-// Define TypeScript interfaces for component props
 interface AlertNotificationProps {
   message: string;
   daysLeft: number;

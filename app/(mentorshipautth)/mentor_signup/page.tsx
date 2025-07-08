@@ -248,7 +248,7 @@ const MentorSignupPage = () => {
           </div>
 
           <div className="text-center text-sm mt-4">
-            Already have an account? <Link href="/login" className="text-[#001D69] font-medium">Login</Link>
+            Already have an account? <Link href="/mentor_login" className="text-[#001D69] font-medium">Login</Link>
           </div>
         </form>
       </div>
