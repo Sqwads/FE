@@ -62,7 +62,7 @@ const Sidebar = ({
               className={`flex items-center gap-3 px-4 py-3 text-gray-700  rounded-md
               ${pathname?.startsWith('/user-projects') ?activeClasses:inactiveClasses}`}
             >
-            <FaProjectDiagram size={20} /> Projects
+            <FaProjectDiagram size={20} /> My Projects
           </Link>
             <div className="flex flex-col">
             <button
