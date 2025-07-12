@@ -85,7 +85,7 @@ const CreateProject = () => {
         ))
 
         setSelectedMembers(removeDuplicates(availableUserOptions))
-        // setSelectedProjectLead(data?.projectLead?._id || '' )
+        setSelectedProjectLead(data?.projectLead?._id || '' )
         additionalInfoForm.setValues({
             additionalInfo: data?.additionalInfo
         })
@@ -180,7 +180,7 @@ const CreateProject = () => {
         // console.log(selectedTools)
     }
 
-    //THESE FUNCTIONS ARE MEANT FOR THE MEMBERS TABS
+
     const {data: usersData, isLoading: userInfoIsLoading} = useQuery({
         queryFn: ()=>instance.get( `/user/all?searchQuery=${searchQuery}` ),
         queryKey: [searchQuery],

@@ -14,39 +14,29 @@ import ProjectSidebar from '../../components/ProjectSidebar';
 import DiscussionTabContent from '../../components/DiscussionTabContent';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import { useParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '@/api/instance';
 import { getDayDifference, getTimeDifference } from '@/common';
 import ProjectDescription from '@/app/(admin)/projects/[id]/tabs/ProjectDescription';
 import Members from '@/app/(admin)/projects/[id]/tabs/members';
 import Discussions from '@/app/(admin)/projects/[id]/tabs/discussion';
 import DiscussionDetails from '@/app/(admin)/projects/[id]/tabs/discussionDetails';
+import { Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Select, Button } from '@mantine/core';
+import toast from 'react-hot-toast';
+import { userWrapper } from '@/store';
+
 
 function ProjectDetailsContent() {
   const [activeTab, setActiveTab] = useState('Description');
-  const [isMember, setIsMember] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null); // Changed to any
+  const [modalOpened, { open:openModal, close:closeModal }] = useDisclosure(false);
   const params = useParams()
   const projectId = params.projectId
-   const [selectedDiscussion, setSelectedDiscussion] = useState<any>(null);
+  const [selectedDiscussion, setSelectedDiscussion] = useState<any>(null);
+ 
 
 
-  const [projectData, setProjectData] = useState<any>({
-    id: '',
-    title: '',
-    type: '',
-    duration: '',
-    description: '',
-    startDay: 0,
-    endDay: 0,
-    daysLeft: 0,
-    overview: '',
-    keyFeatures: [],
-    skills: [],
-    participants: [],
-    additionalParticipants: 0
-  });
 
   const {data: fetchedProject} = useQuery({
       queryFn: ()=>instance.get(`/project/${projectId}`),
@@ -54,20 +44,44 @@ function ProjectDetailsContent() {
       enabled: !!projectId
   })
 
-
-  const handleButtonClick = () => {
-    setIsMember(!isMember);
-    console.log(isMember ? 'Leaving project...' : 'Joining project...');
-  };
+  const [role, setRole] = useState('');
 
   const handleDiscussionClick = (id: string) => {
-    console.log('Discussion clicked:', id);
     setSelectedDiscussion(id);
   }
+
+  const available_roles = fetchedProject?.data?.skills?.map((role: any) =>role?.name) || [];
+
+  const {mutate, isPending} = useMutation({
+    mutationFn: (data: any) => instance.post(`/project/application/`, data),
+    mutationKey: ['join-project', projectId],
+    onSuccess(response) {
+      closeModal();
+      toast.success('Application submitted successfully!');
+    },
+    onError(error: any) {
+      toast.error(error?.response?.data?.message || 'Failed to apply for project');
+    },
+  })
+
+  const handleApplyForProject = () => {
+    if (!role) {
+      toast.error('Please select a role');
+      return;
+    }
+    mutate({
+      project: projectId,
+      role: role,
+      user: fetchedProject?.data?.projectLead?._id // Assuming you want to apply as the project lead
+    })
+    
+  };
   
 
   return (
     <div className="px-4 lg:px-8 py-14">
+
+
       {/* Back Navigation */}
       <div className="mb-4">
         <Link href="/user-projects" className="text-blue-600 text-sm font-medium inline-flex items-center">
@@ -90,10 +104,10 @@ function ProjectDetailsContent() {
               />
               <div className="mt-4 md:mt-0 flex-shrink-0">
                 <button
-                  onClick={handleButtonClick}
-                  className={`${isMember ? 'bg-red-600 cursor-not-allowed hover:bg-red-700' : 'bg-blue-900 cursor-not-allowed hover:bg-blue-800'} text-white px-4 py-2 rounded-md flex items-center transition-colors duration-200 text-sm sm:text-base`}
+                  onClick={openModal}
+                  className={`text-sm  bg-blue-900  text-white px-4 py-2 rounded-md flex items-center  sm:text-base`}
                 >
-                  Leave Project
+                  Apply For Project
                   {/* {isMember ? 'Leave Project' : 'Join Project'}
                   L
                   {isMember ? <FiX className="ml-2" /> : <HiOutlineArrowRight className="ml-2" />} */}
@@ -149,6 +163,37 @@ function ProjectDetailsContent() {
           projectLead={fetchedProject?.data?.projectLead}
         />
       </div>
+
+        <Modal 
+          centered
+          opened={modalOpened} 
+          onClose={closeModal} 
+          size={'md'}
+          styles={{
+              content:{
+              borderRadius:"1rem",  
+              }
+          }}
+        >
+          <div>
+            
+            <Select
+              label="Select Role"
+              placeholder="Pick one"
+              data={available_roles}
+              value={role}
+              onChange={(value) => setRole(value || '')}
+            />
+
+            <button
+              disabled={!role || isPending}
+              className="bg-blue-900 text-sm mt-5 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={handleApplyForProject}
+            >
+             {isPending ? 'Applying...' : 'Submit Application'}
+            </button>
+          </div>
+        </Modal>
     </div>
   );
 }

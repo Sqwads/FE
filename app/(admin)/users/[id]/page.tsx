@@ -50,7 +50,7 @@ const UserProfile = () => {
             </div>
             <div className="lg:flex block  lg:mb-0  gap-y-5 rounded-2xl bg-white shadow-sm py-5 lg:px-14 px-5 w-full items-center">
                 <div className="flex lg:mr-20  mb-7  items-center justify-center">
-                    <img src="/images/alex.png" className='h-20 w-20 mr-3 rounded-full object-cover' alt="" />
+                    <img src={user?.profile?.profileImage || "/images/profile.jpg" } className='h-20 w-20 mr-3 rounded-full object-cover' alt="" />
                     <div className='flex-1'>
                         <div className="xl:text-2xl xl:text-xl text-lg mb-1 font-medium">{user?.profile?.firstName} {user?.profile?.lastName}</div>
                         <div className="text-sm font-medium">JOINED {moment(user?.profile?.createdAt ).format('MMMM Do')} </div>
@@ -139,7 +139,7 @@ const UserProfile = () => {
 
                     <div className='flex items-center'>
                         <div className="text-[#16181B80] mr-5">Profile Photo: </div>
-                        <img src="/images/alex.png" className='h-14 border w-14 mr-3 rounded-full object-cover' alt="" />
+                        <img src={user?.profile?.profileImage || "/images/profile,jpg"} className='h-14 border w-14 mr-3 rounded-full object-cover' alt="" />
                     </div>
 
                 </div>

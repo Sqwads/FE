@@ -28,7 +28,7 @@ const LoginPage = () => {
     mutationFn: (data: any) => instance.post('/auth/login', data),
     mutationKey: ['auth', 'login'],
     onSuccess(response) {
-      console.log(response.data)
+      // console.log(response.data)
       if (response.data?.data?.role !== 'USER') {
         return toast.error('Access Denied !!!')
       }
@@ -42,7 +42,7 @@ const LoginPage = () => {
       }
     },
     onError(error: any, vars) {
-      console.log(error?.response.data)
+      // console.log(error?.response.data)
       if (error?.response?.data?.statusCode == 403) {
         toast.error('Account not verified!')
         router.push(`/emailauth?email=${base64encode(vars?.email)}`)

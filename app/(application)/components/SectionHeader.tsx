@@ -21,7 +21,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
     <div className="flex items-center justify-between mb-4">
       <div className="flex items-center">
         <span className="mr-2 text-gray-500">{icon}</span>
-        <h2 className="font-medium text-lg">{title}</h2>
+        <h2 className="font-semibold lg:text-3xl text-xl">{title}</h2>
       </div>
       {showSeeAll && (
         <Link href={seeAllLink} className="text-blue-600 text-sm font-medium inline-flex items-center">

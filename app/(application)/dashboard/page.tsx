@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { userWrapper } from '@/store';
 import { FiClock, FiCompass, FiStar } from 'react-icons/fi';
@@ -24,7 +24,8 @@ export default function DashboardPage() {
     user: state.user,
   }));
 
-  console.log(user)
+  const [currentPage, setCurrentPage] = useState(1);
+
 
   const { data: projectResponse, isLoading: projectIsLoading } = useQuery({ 
     queryFn: () => instance.get('/project/all', {
@@ -40,21 +41,31 @@ export default function DashboardPage() {
   const { data: exploreProjectResponse, isLoading: exploreProjectIsLoading } = useQuery({ 
     queryFn: () => instance.get('/project/all', {
       params: { 
-        // userId: user?.id ,
+        pageNumber: currentPage,
         pageSize: 8
       },
     }), 
-    queryKey: ['projects-explore'],
+    queryKey: ['projects-explore', currentPage],
   });
 
-
- 
 
   const { data: response, isLoading } = useQuery({
     queryFn: () => instance.get('/analytics/user'), // Replace with your API endpoint
     queryKey: ['project-analytics'],
   });
 
+  const totalPages = Math.ceil(exploreProjectResponse?.data?.totalNoOfRecords/8)
+  const handleNextPage = ()=>{   
+    if(currentPage+1 <= totalPages){
+      setCurrentPage(currentPage+1)
+    }
+  }
+
+  const handlePrevPage = ()=>{
+    if(currentPage-1 > 0){
+      setCurrentPage(currentPage-1)
+    }
+  }
   
 
   return (
@@ -130,7 +141,7 @@ export default function DashboardPage() {
       </div>
 
       {/* My Projects Section */}
-      <div className="mb-8">
+      <div className="mb-20 lg:mb-28">
         <div className="flex items-center justify-between mb-4">
           <SectionHeader title="My Projects" icon={<FiClock size={20} />} />
           <Link href="/user-projects" className="text-blue-600 text-sm font-medium inline-flex items-center">
@@ -165,9 +176,9 @@ export default function DashboardPage() {
       </div>
 
       {/* Explore Projects Section */}
-      <div className="mb-8">
-        <SectionHeader title="Explore Projects" icon={<FiCompass size={20} />} seeAllLink='/user-projects' showSeeAll={true} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="lg:mb-28 mb-20">
+        <SectionHeader title="Explore Projects" icon={<FiCompass size={20} />} seeAllLink='/user-projects' showSeeAll={false} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:mt-10">
           {exploreProjectResponse?.data?.projects?.map((item:any, idx:number)=>
               <ProjectCard 
                 key={idx} 
@@ -179,6 +190,26 @@ export default function DashboardPage() {
                 collaborators = {item?.teamMembers?.map((member:any)=> member?.user) }
               />
           )}
+        </div>
+
+        <div className="flex justify-center mt-6 space-x-4">
+          <button
+            className={`px-4 py-2 rounded bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed`}
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="px-3 py-2 text-gray-600 font-semibold">
+            Page {currentPage}
+          </span>
+          <button
+            className={`px-4 py-2 rounded bg-blue-600 text-white font-medium hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed`}
+            onClick={handleNextPage}
+            disabled={currentPage >= totalPages}
+          >
+            Next
+          </button>
         </div>
       </div>
 

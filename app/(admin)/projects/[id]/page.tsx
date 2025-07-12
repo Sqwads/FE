@@ -20,6 +20,7 @@ import DiscussionDetails from './tabs/discussionDetails';
 import { Modal, TextInput, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import toast from 'react-hot-toast';
+import Applications from './tabs/applications';
 
 const ProjectView: React.FC = () => {
 
@@ -36,6 +37,26 @@ const ProjectView: React.FC = () => {
       queryFn: ()=>instance.get(`/project/${projectId}`),
       queryKey: ['projects', projectId],
       enabled: !!projectId
+  })
+
+  const {data: fetchedApplications} = useQuery({
+      queryFn: ()=>instance.get(`/project/applications/${projectId}`),
+      queryKey: ['project-applications', projectId],
+      enabled: !!projectId
+  })
+
+  const {mutate: updateApplicationStatus, isPending: updateApplicationStatusPending} = useMutation({
+      mutationFn: (data: any) => instance.patch(`/project/application/`, data),
+      mutationKey: ['update-project-application', projectId],
+      onSuccess(response) {
+        toast.success('Application Status Updated successfully!')
+        queryclient.invalidateQueries({
+          queryKey: ['project-applications-', projectId]
+        })
+      },
+      onError(error: any, vars) {
+        toast.error(error?.response?.data?.message || 'Failed toupdate application status');
+      }
   })
 
   const {mutate:editProject, isPending: projectEditIsPending} = useMutation({
@@ -82,6 +103,14 @@ const ProjectView: React.FC = () => {
     })
   }
 
+  const handleManageApplication = (applicationId: string, action: string) => {
+    console.log('Manage Application:', applicationId, action);
+    updateApplicationStatus({
+      applicationId,
+      status: action
+    })
+  }
+
   return (
     <div className={`lg:flex gap-0 py-6 w-full min-h-screen `}>
 
@@ -95,10 +124,13 @@ const ProjectView: React.FC = () => {
             duration={`${getTimeDifference(fetchedProject?.data?.startDate, fetchedProject?.data?.endDate)}`}
           />
           
-          <NavigationTabs 
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-          />
+          <div className="mb-14">
+            <NavigationTabs 
+              totalApplications={fetchedApplications?.data?.data?.length || 0}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+            />
+          </div>
     
           {activeTab === 'Description' && (
             <ProjectDescription 
@@ -131,6 +163,14 @@ const ProjectView: React.FC = () => {
               />
             )
           }
+
+          {activeTab === 'Applications' && (
+            <Applications
+              applications={fetchedApplications?.data?.data || []}
+              projectId={projectId as string}
+              handleManageApplication={handleManageApplication}
+            />
+          )}
         </div>
       </div>
 
