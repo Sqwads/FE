@@ -3,11 +3,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { BlogPostDetail as BlogPostDetailType } from '../data/blogData';
 
-interface BlogPostDetailProps {
-  blogPost: BlogPostDetailType;
-}
 
-const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Destructure blogPost here
+
+const BlogPostDetail = ({ blogPost }: any) => { // Destructure blogPost here
   const [isSharing, setIsSharing] = useState(false);
 
   if (!blogPost) {
@@ -26,7 +24,7 @@ const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Des
   const handleShare = (platform: string) => {
     setIsSharing(true);
     const url = window.location.href;
-    const title = blogPost.title; 
+    const title = blogPost?.title; 
     // ... rest of your handleShare logic
     let shareUrl = '';
     switch (platform) {
@@ -53,8 +51,8 @@ const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Des
       {/* Hero Section */}
       <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden">
         <Image
-          src={blogPost.image} 
-          alt={blogPost.title} 
+          src={blogPost?.image} 
+          alt={blogPost?.title} 
           fill
           className="object-cover"
           priority
@@ -67,30 +65,30 @@ const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Des
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-            {blogPost.title} 
+            {blogPost?.title} 
           </h1>
 
           <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
-            <time className="font-medium">{blogPost.date}</time> 
+            <time className="font-medium">{blogPost?.date}</time> 
             <span>•</span>
-            <span className="font-medium">{blogPost.author}</span> 
+            <span className="font-medium">{blogPost?.author}</span> 
           </div>
 
           <p className="text-lg text-gray-700 leading-relaxed">
-            {blogPost.description} 
+            {blogPost?.description} 
           </p>
         </div>
 
         {/* Article Content */}
         <article className="prose prose-lg max-w-none">
-          {blogPost.content.sections.map((section, index) => ( 
+          {blogPost?.content?.sections?.map((section: any, index: number) => ( 
             <div key={index} className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 {section.title}
               </h2>
 
               <div className="text-gray-700 leading-relaxed mb-4">
-                {section.content.split('\n').map((paragraph, pIndex) => (
+                {section?.content?.split('\n')?.map((paragraph: any, pIndex: number) => (
                   paragraph.trim() && (
                     <p key={pIndex} className="mb-4">
                       {paragraph}
@@ -99,9 +97,9 @@ const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Des
                 ))}
               </div>
 
-              {section.points && (
+              {section?.points && (
                 <ul className="list-none space-y-2 ml-4 mb-6">
-                  {section.points.map((point, pointIndex) => (
+                  {section?.points?.map((point: any, pointIndex: number) => (
                     <li key={pointIndex} className="flex items-start">
                       <span className="text-[#001D69] mr-2 mt-1">✓</span>
                       <span className="text-gray-700">{point}</span>
@@ -175,7 +173,7 @@ const BlogPostDetail: React.FC<BlogPostDetailProps> = ({ blogPost }) => { // Des
         <div className="border-t border-gray-200 pt-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-8">Related Topics</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {blogPost.relatedPosts.map((post) => (
+            {blogPost?.relatedPosts?.map((post: any) => (
               <Link key={post.id} href={`/blog/${post.slug}`} className="group">
                 <article className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
                   <div className="relative w-full h-40 overflow-hidden">

@@ -1,10 +1,10 @@
 import React from 'react';
-import BlogNav from '../componnets/Navbar';
-import Footer from '../componnets/Footer';
-import BlogHero from '../componnets/Hero';
-import BlogGrid from '../componnets/BlogGrid';
+import BlogNav from './componnets/Navbar';
+import Footer from './componnets/Footer';
+import BlogHero from './componnets/Hero';
+import BlogGrid from './componnets/BlogGrid';
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <div 
@@ -56,5 +56,5 @@ const page = () => {
   );
 }
 
-export default page;
+export default Page;
 
