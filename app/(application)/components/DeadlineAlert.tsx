@@ -4,7 +4,7 @@ import { FiAlertTriangle, FiX } from 'react-icons/fi';
 interface DeadlineAlertProps {
   daysLeft: number;
   onClose: () => void;
-  projectName?: string; // Optional: to make the message more specific
+  projectName?: string;
 }
 
 const DeadlineAlert: React.FC<DeadlineAlertProps> = ({ daysLeft, onClose, projectName }) => {

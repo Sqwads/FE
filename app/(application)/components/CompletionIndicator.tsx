@@ -13,7 +13,6 @@ const CompletionIndicator: React.FC<CompletionIndicatorProps> = ({
   percentage, 
   label 
 }) => {
-  // Ensure percentage is between 0 and 100
   const validPercentage = Math.min(100, Math.max(0, percentage));
   
   // Determine color based on percentage

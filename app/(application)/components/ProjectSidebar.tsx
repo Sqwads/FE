@@ -3,22 +3,18 @@
 import React from 'react';
 import Image from 'next/image';
 
-// Import necessary sub-components (assuming they are in the same directory or adjust path)
 import AlertNotification from './AlertNotification';
 import SkillBadge from './SkillBadge';
 import ParticipantCard from './ParticipantCard';
 
-// Import shared types from the central types file
-// Adjust the path '../types' if your types.ts file is located elsewhere relative to this component
 import { Skill, Participant } from '../type'; 
 
-// Define interfaces for props based on user's ProjectData structure
 interface ProjectSidebarProps {
   image?: string | null;
-  title?: string; // Needed for alt text
+  title?: string; 
   daysLeft?: number;
-  skills?: any[]; // Use imported Skill type
-  participants?: any[]; // Use imported Participant type
+  skills?: any[]; 
+  participants?: any[]; 
   projectLead?: any;
   additionalParticipants?: number;
   // Add alertMessage prop if it's dynamic, otherwise define inside
@@ -69,7 +65,6 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
           image={projectLead?.image}
         />
         {participants?.slice(0,2)?.map((participant, index) => (
-          // Use ParticipantCard component
           <ParticipantCard 
             key={index}
             name={`${participant?.user?.firstName} ${participant?.user?.lastName}`}
@@ -80,7 +75,6 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
         {participants?.length > 0 && (
            <div className="flex items-center mt-2">
              <div className="flex -space-x-2 mr-2">
-                {/* Placeholder avatars for additional participants */}
                 {participants?.slice(3).map((item:any, i) => (
                   <div key={`add-${i}`} className="w-8 h-8 rounded-full bg-gray-400 border-2 border-white"></div>
                 ))}
