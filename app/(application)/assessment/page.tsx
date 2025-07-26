@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import Link from 'next/link';
 import AssessmentHeader from '../components/AssessmentHeader';
-// Removed react-icons import
 
 const AssessmentStartPage = () => {
   const router = useRouter();

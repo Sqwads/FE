@@ -8,8 +8,9 @@ const Page = () => {
   return (
     <>
       <div 
-        className="relative min-h-screen"
+        className="relative"
         style={{
+          height:'70vh',
           backgroundImage: `
             linear-gradient(135deg, rgba(0, 20, 34, 0.8) 0%, rgba(45, 92, 126, 0.6) 70%, rgba(0, 0, 0, 0.4) 100%),
             url("/images/blog_bg.png")

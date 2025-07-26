@@ -4,7 +4,6 @@ import { TextInput, Button } from "@mantine/core";
 import { FiSearch } from "react-icons/fi";
 import {  BsListUl } from "react-icons/bs";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-// import Image from "next/image";
 
 const SearchFilters = ({
   onChange,

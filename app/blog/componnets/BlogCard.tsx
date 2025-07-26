@@ -36,7 +36,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         {/* Content Container */}
         <div className="p-6 flex-1 flex flex-col">
           {/* Title */}
-          <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#001D69] transition-colors duration-300">
+          <h3 className="text-[24px] font-semibold text-[#001D69] mb-3 line-clamp-2 group-hover:text-[#001D69] transition-colors duration-300">
             {title}
           </h3>
           

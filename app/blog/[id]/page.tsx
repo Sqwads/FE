@@ -1,11 +1,8 @@
 "use client"
 import BlogPostDetail from '../componnets/BlogPostDetail';
-import Navbar from '../componnets/Navbar';
 import Footer from '../componnets/Footer';
 import { getAllBlogSlugs, getBlogPostBySlug, BlogPostDetail as BlogPostDetailType } from '../data/blogData';
 import Link from 'next/link';
-
-
 
 const BlogPostPage = () => {
 
@@ -26,9 +23,9 @@ const BlogPostPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
+      {/* Removed Navbar component to avoid duplicate navigation */}
       <main>
-        <BlogPostDetail blogPost={{}} /> 
+        <BlogPostDetail /> {/* This component now includes its own navigation */}
       </main>
       <Footer />
     </div>
@@ -36,3 +33,4 @@ const BlogPostPage = () => {
 };
 
 export default BlogPostPage;
+
