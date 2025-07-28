@@ -6,6 +6,7 @@ import { useForm, yupResolver } from '@mantine/form';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import toast from 'react-hot-toast';
 import { CiLock } from 'react-icons/ci';
 import * as yup from 'yup';
@@ -148,4 +149,10 @@ const CreateNewPassword = () => {
   );
 }
 
-export default CreateNewPassword;
+const CreateNewPage = ()=>{
+  <Suspense>
+    <CreateNewPassword />
+  </Suspense>
+}
+
+export default CreateNewPage;

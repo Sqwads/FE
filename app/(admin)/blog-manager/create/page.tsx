@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { FiArrowLeft, FiImage } from 'react-icons/fi';
 import { RichTextEditor, Link as RichTextLink } from '@mantine/tiptap';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,7 @@ import toast from 'react-hot-toast';
 import { useSearchParams } from 'next/navigation';
 
 
-const CreatePostPage = () => {
+const CreatePostModule = () => {
   const router = useRouter();
   
  
@@ -287,5 +287,13 @@ const CreatePostPage = () => {
     </div>
   );
 };
+
+const CreatePostPage = ()=>{
+  return(
+    <Suspense>
+      <CreatePostModule />
+    </Suspense>
+  )
+}
 
 export default CreatePostPage;

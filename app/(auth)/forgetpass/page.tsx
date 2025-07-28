@@ -10,8 +10,9 @@ import { instance } from '@/api/instance';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { base64encode } from 'nodejs-base64';
 import * as yup from 'yup';
+import { Suspense } from 'react';
 
-const ForgetPasswordPage = () => {
+const ForgetPassworModule = () => {
   // Mantine useForm hook
 
   const searchParams = useSearchParams();
@@ -104,5 +105,13 @@ const ForgetPasswordPage = () => {
     </>
   );
 };
+
+const ForgetPasswordPage = ()=>{
+  return(
+    <Suspense>
+      <ForgetPassworModule/>
+    </Suspense>
+  )
+}
 
 export default ForgetPasswordPage;
