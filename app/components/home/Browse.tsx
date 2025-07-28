@@ -7,7 +7,7 @@ const Browse = () => {
       {/* Left Image */}
       <div className="relative w-full max-w-md lg:max-w-2xl">
         <Image
-          src="/images/browse.png" // Replace with your image path
+          src="/images/browse.png"
           alt="Handshake"
           width={800}
           height={600}
