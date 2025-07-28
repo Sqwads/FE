@@ -26,15 +26,15 @@ const BlogManagementHeader: React.FC = () => {
       
       {/* Action Buttons */}
       <div className="flex items-center space-x-3">
-        <button 
+        {/* <button 
           onClick={handleArchivePost}
           className="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-[#0234B8] hover:bg-[#a6b7e7] transition-colors duration-300"
         >
           <FiArchive className="w-4 h-4 mr-2" />
           Archive Post
-        </button>
+        </button> */}
         
-        <Link href="/blog_manager/create">
+        <Link href="/blog-manager/create">
             <button 
               onClick={handleCreatePost}
               className="flex items-center px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-[#0234B8] transition-colors duration-300"

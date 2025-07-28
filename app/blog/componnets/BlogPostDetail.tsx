@@ -1,231 +1,113 @@
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import DOMPurify from 'dompurify';
+import BlogNav from "./Navbar";
+import Head from "next/head";
+import { extractPlainTextFromHTML, generateSlug, trimSentence } from "@/common";
 
-const BlogPostDetail = () => {
+const BlogPostDetail = ({post}:any) => {
   const [isSharing, setIsSharing] = useState(false);
+  const baseUrl = "https://sqwads.com";
 
   const handleShare = (platform: string) => {
-    setIsSharing(true);
-    const url = window.location.href;
-    const title = "Building a Portfolio that gets you hired";
     
-    let shareUrl = '';
+    const url = encodeURIComponent(`${baseUrl}/blog/${generateSlug(post?.title)}-${post._id}`);
+    const text = encodeURIComponent(post?.title || "");
+    const image = encodeURIComponent(post?.cover_image || "");
+
+    let shareUrl = "";
+    
+
     switch (platform) {
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+      case "twitter":
+        shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
         break;
-      case 'linkedin':
-        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+      case "facebook":
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
         break;
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      case "linkedin":
+        shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=${text}`;
         break;
+      default:
+        return;
     }
 
-    if (shareUrl) {
-      window.open(shareUrl, '_blank', 'width=600,height=400');
-    }
-
-    setTimeout(() => setIsSharing(false), 1000);
+    window.open(shareUrl, "_blank");
   };
 
+  
+
   return (
+    <>
+    <Head>
+      <title>{post?.title}</title>
+      <meta name="description" content={trimSentence(extractPlainTextFromHTML(post?.content), 100) || "Blog post"} />
+
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content={`${baseUrl}/${generateSlug(post?.title)}-${post?._id}`} />
+      <meta property="og:title" content={post?.title} />
+      <meta property="og:description" content={trimSentence(extractPlainTextFromHTML(post.content), 100) || ""} />
+      <meta property="og:image" content={post?.cover_image || "/images/blog-placeholder.png"} />
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={`${baseUrl}/${generateSlug(post?.title)}-${post?._id}`} />
+      <meta name="twitter:title" content={post?.title} />
+      <meta name="twitter:description" content={trimSentence(extractPlainTextFromHTML(post?.content), 100) || ""} />
+      <meta name="twitter:image" content={post?.cover_image || "/images/blog-placeholder.png"} />
+    </Head>
+
     <div className="min-h-screen bg-white">
+      
       {/* Navigation Bar - Manually typed nav links (not variables) */}
       <nav className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo - Using Next.js Image component */}
-            <div className="flex-shrink-0">
-              <Link href="/">
-                <Image
-                  src="/images/sqwads-logo.png"
-                  alt="SOWADS"
-                  width={160}
-                  height={40}
-                  className="h-8 w-auto"
-                  priority
-                />
-              </Link>
-            </div>
-
-            {/* Navigation Links - Manually typed as requested */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                <Link href="/about" className="text-gray-700 hover:text-[#001D69] px-3 py-2 text-sm font-medium">
-                  About Us
-                </Link>
-                <Link href="/how-it-works" className="text-[#16181B] hover:text-[#001D69] px-3 py-2 text-sm font-medium">
-                  How It Works
-                </Link>
-                <Link href="/mentor" className="text-[#16181B] hover:text-[#001D69] px-3 py-2 text-sm font-medium">
-                  Mentor
-                </Link>
-                <Link href="/blog" className="text-[#16181B] hover:text-[#001D69] px-3 py-2 text-sm font-medium">
-                  Blog
-                </Link>
-                <Link href="/business" className="text-[#16181B] hover:text-[#001D69] px-3 py-2 text-sm font-medium">
-                  Business
-                </Link>
-              </div>
-            </div>
-
-            {/* Get Started Button */}
-            <div className="hidden md:block">
-              <Link href="/get-started">
-                <button className="bg-[#5483FF] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#002080] transition-colors">
-                  Get Started for free
-                </button>
-              </Link>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button className="text-gray-700 hover:text-[#001D69] p-2">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
+        <div className="relative z-20">
+            <BlogNav />
           </div>
-        </div>
       </nav>
 
       {/* Hero Section with Dummy Image - Using placeholder instead of external URL */}
       <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden bg-gray-300">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-24 h-24 bg-gray-400 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <svg className="w-12 h-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <p className="text-gray-600 text-sm">Dummy Blog Image Placeholder</p>
-            <p className="text-gray-500 text-xs mt-1">Replace with actual image when integrating API</p>
-          </div>
-        </div>
-        <div className="absolute inset-0 bg-black/20"></div>
+        <img className="h-full w-full object-cover" src={post?.cover_image || '/images/blog-placeholder.png'} alt="alt" />
       </div>
 
       {/* Main Content - All text hardcoded as requested (no props) */}
       <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#001D69] mb-4 leading-tight">
-            Building a Portfolio that gets you hired
+        <div className="mb-14">
+          <h1 className="text-2xl lg:text-3xl font-bold text-[#001D69] mb-4 leading-tight">
+            {post?.title}
           </h1>
 
           <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
-            <time className="font-medium">May 24, 2026</time>
+            <time className="font-medium">{ moment(post?.created_at).format('MMMM Do YYYY')}</time>
             <span>•</span>
-            <span className="font-medium text-[#0234B8] text-[24px]">Admin Sqwads</span>
+            <span className="font-medium text-[#0234B8] text-lg">{post?.author?.firstName} {post?.author?.lastName}</span>
           </div>
 
-          <p className="text-lg text-gray-700 leading-relaxed">
-            Your portfolio isn't just a digital resume; it's proof. Proof that you've learned, built, collaborated, 
-            and delivered. And in the tech world, it often speaks louder than your degree, your certifications 
-            —or even your job history. But here's the catch: not all portfolios are created equal. At Sqwads, we've 
-            seen first-hand how real-world experience can transform a portfolio from a list of personal side 
-            projects into a powerful, job-winning tool. Here's how to build one that gets noticed—and gets 
-            you hired.
-          </p>
+          
         </div>
 
-        {/* Article Content - All hardcoded */}
-        <article className="prose prose-lg max-w-none">
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              1. Show, Don't Just Tell
-            </h2>
+        <div>
+          <div
+            className="prose"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post?.content) }}
+          />
+        </div>
 
-            <div className="text-gray-700 leading-relaxed mb-4">
-              <p className="mb-4">
-                Anyone can say they "built a website" or "collaborated on a team." But recruiters and hiring 
-                managers want receipts.
-              </p>
-            </div>
-
-            <ul className="list-none space-y-2 ml-4 mb-6">
-              <li className="flex items-start">
-                <span className="text-[#001D69] mr-2 mt-1">✓</span>
-                <span className="text-gray-700">Add live project links</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#001D69] mr-2 mt-1">✓</span>
-                <span className="text-gray-700">Include screenshots or screen recordings</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#001D69] mr-2 mt-1">✓</span>
-                <span className="text-gray-700">Highlight your specific contributions (e.g. "I handled mobile responsiveness and animation logic using TailwindCSS and Framer Motion.")</span>
-              </li>
-            </ul>
-
-            <div className="text-gray-700 leading-relaxed mb-4">
-              <p className="mb-4">
-                If you worked on a Sqwads team, show off the real project you contributed to—and explain what 
-                you brought to the table.
-              </p>
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              2. Context Is King
-            </h2>
-
-            <div className="text-gray-700 leading-relaxed mb-4">
-              <p className="mb-4">
-                Don't just show what you built—tell us why and how.
-              </p>
-              <p className="mb-4">
-                What problem was the project solving? Who were the users? How did your team approach the 
-                solution? What tools or frameworks did you choose and why?
-              </p>
-              <p className="mb-4">
-                This turns a project into a case study, which is exactly what employers love to see.
-              </p>
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              3. Embrace the Power of Collaboration
-            </h2>
-
-            <div className="text-gray-700 leading-relaxed mb-4">
-              <p className="mb-4">
-                Solo projects are great. But in the real world, tech is a team sport.
-              </p>
-              <p className="mb-4">
-                If you've completed projects on Sqwads with others, highlight that! Talk about how you worked 
-                with cross-functional teammates. Mention the tools you used for collaboration. Discuss how 
-                you handled feedback, resolved conflicts, or adapted to changing requirements.
-              </p>
-              <p className="mb-4">
-                Employers want to know you can work well with others—and that's a skill you can't fake.
-              </p>
-            </div>
-          </div>
-        </article>
-
+       
         {/* Final Thoughts */}
         <div className="bg-gray-50 rounded-lg p-6 my-8">
           <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center">
             <span className="mr-2">💭</span>
             Final Thoughts
           </h3>
-          <p className="text-gray-700 leading-relaxed">
-            Getting hired isn't just about showing that you can do the work—it's about showing that you've
-            done the work. That's the magic of a strong portfolio.
-          </p>
-          <p className="text-gray-700 leading-relaxed mt-3">
-            With every Sqwads project you complete, you're building more than just experience—you're
-            building stories, proof, and momentum.
-          </p>
-          <p className="text-gray-700 leading-relaxed mt-3">
-            So go ahead. Open that doc. Polish those pages. Your future employer might be just one click away.
-          </p>
+         <p>
+          {post?.final_thought}
+         </p>
         </div>
 
         {/* Share Section */}
@@ -267,61 +149,9 @@ const BlogPostDetail = () => {
           </div>
         </div>
 
-        {/* Related Topics - Hardcoded dummy content */}
-        <div className="border-t border-gray-200 pt-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8">Related Topics</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link href="/blog/portfolio-tips" className="group">
-              <article className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="relative w-full h-40 overflow-hidden bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Portfolio Tips Image</span>
-                </div>
-                <div className="p-4">
-                  <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#001D69] transition-colors duration-200">
-                    10 Essential Portfolio Tips for Developers
-                  </h4>
-                  <p className="text-sm text-gray-600 line-clamp-2">
-                    Learn the key strategies to make your portfolio stand out from the competition.
-                  </p>
-                </div>
-              </article>
-            </Link>
-
-            <Link href="/blog/job-search" className="group">
-              <article className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="relative w-full h-40 overflow-hidden bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Job Search Image</span>
-                </div>
-                <div className="p-4">
-                  <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#001D69] transition-colors duration-200">
-                    How to Land Your First Tech Job
-                  </h4>
-                  <p className="text-sm text-gray-600 line-clamp-2">
-                    A comprehensive guide to breaking into the tech industry successfully.
-                  </p>
-                </div>
-              </article>
-            </Link>
-
-            <Link href="/blog/collaboration" className="group">
-              <article className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="relative w-full h-40 overflow-hidden bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Collaboration Image</span>
-                </div>
-                <div className="p-4">
-                  <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#001D69] transition-colors duration-200">
-                    The Power of Team Collaboration
-                  </h4>
-                  <p className="text-sm text-gray-600 line-clamp-2">
-                    Why working with others makes you a better developer and how to showcase it.
-                  </p>
-                </div>
-              </article>
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
+    </>
   );
 };
 

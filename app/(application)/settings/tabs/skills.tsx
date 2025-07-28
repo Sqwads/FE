@@ -135,7 +135,7 @@ const SkillsExperience = ({user}:any) => {
               data={skillsTools}
               placeholder="Search for skills"
               clearable
-              value={newSkill}
+              value={newSkill || null}
               onChange={(value) => setNewSkill(value || '')}
               className="flex-1"
               

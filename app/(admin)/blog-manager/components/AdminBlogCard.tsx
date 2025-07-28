@@ -3,47 +3,34 @@
 import React from 'react';
 import { FiEdit, FiEye } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
+import { extractPlainTextFromHTML, generateSlug, trimSentence } from '@/common';
 
-// Define the blog post data type
-interface BlogPost {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  image: string;
-  author?: string;
-  status: 'published' | 'draft' | 'archived';
-}
 
-interface AdminBlogCardProps {
-  post: BlogPost;
-}
 
-const AdminBlogCard: React.FC<AdminBlogCardProps> = ({ post }) => {
+
+
+const AdminBlogCard= ({ post }:{
+  post: any;
+}) => {
   const router = useRouter(); 
 
   const handleEditPost = () => {
-    console.log('Edit post:', post.id);
+    router.push(`/blog-manager/create?edit=${post._id}`);
   };
 
   const handleViewPost = () => {
-    console.log('View post:', post.slug);
-    router.push(`/blog_manager/view/${post.id}`); 
+    router.push(`/blog-manager/view/${generateSlug(post?.title)}-${post._id}`); 
   };
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col border border-gray-100">
+    <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col border border-gray-200">
       {/* Image Container */}
       <div className="relative w-full h-48 overflow-hidden bg-gray-100">
         <img
-          src={post.image}
+          src={post?.cover_image || '/images/blog-placeholder.png'}
           alt={post.title}
           className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = `https://via.placeholder.com/400x300/f3f4f6/6b7280?text=${encodeURIComponent(post.title.slice(0, 20))}`;
-          }}
+          
           loading="lazy"
         />
       </div>
@@ -57,7 +44,7 @@ const AdminBlogCard: React.FC<AdminBlogCardProps> = ({ post }) => {
         
         {/* Description */}
         <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-1">
-          {post.description}
+          {trimSentence(extractPlainTextFromHTML(post.content), 100)}
         </p>
         
         {/* Action Buttons - Fixed alignment and equal width */}

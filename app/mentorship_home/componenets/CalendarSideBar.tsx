@@ -52,7 +52,7 @@ const CalendarSidebar = ({
   });
 
   // Format the selected date for display
-  const formattedSelectedDate = selectedDate.toLocaleDateString('en-US', {
+  const formattedSelectedDate = new Date(selectedDate).toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
@@ -97,14 +97,15 @@ const CalendarSidebar = ({
       {/* Calendar grid */}
       <DatePicker
         className='mx-auto  w-fit'
-        value={selectedDate}
+        value={new Date(selectedDate)}
         onChange={onDateSelect}
-        renderDay={(date) => {
+        renderDay={(date:any) => {
           // const isHighlighted = highlightedDates.some(
           //   (d) => d.toDateString() === date.toDateString()
           // );
+          const jsDate = new Date(date);
 
-          const newLyHiglighted = selectedDate?.toDateString() == date.toDateString()
+          const newLyHiglighted = new Date(selectedDate)?.toDateString() == jsDate?.toDateString()
 
           return (
             <div
@@ -113,7 +114,7 @@ const CalendarSidebar = ({
                   ${newLyHiglighted ? "bg-[#0532a3] text-white " : ""}
               `}
             >
-              {date.getDate()}
+              {jsDate?.getDate()}
             </div>
           );
         }}

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { FiUser } from 'react-icons/fi'; // Example icon, replace if needed
 
@@ -17,9 +18,11 @@ const WelcomeHeader: React.FC<WelcomeHeaderProps> = ({ mentorName, upcomingSessi
           You have {upcomingSessionsCount} upcoming sessions.
         </p>
       </div>
+      <Link href={"/mentor_settings"}>
       <button className="mt-3 sm:mt-0 px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
         View Profile
       </button>
+      </Link>
     </div>
   );
 };
