@@ -9,6 +9,7 @@ import { userWrapper } from "@/src/store";
 import { LuLogOut } from "react-icons/lu";
 import { cookieStorage } from "@ibnlanre/portal";
 import { useRouter } from "next/navigation";
+import { CiSearch } from "react-icons/ci";
 
 
 export default function TopNav() {
@@ -56,7 +57,7 @@ export default function TopNav() {
           <TextInput          
             className=" border border-[white] text-gray-700   focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Search anything here..."
-            leftSection={ <FiBookmark/>}
+            leftSection={ <CiSearch />}
             size="md"
             styles={{
               input:{

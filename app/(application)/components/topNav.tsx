@@ -11,6 +11,7 @@ import { cookieStorage } from "@ibnlanre/portal";
 import { useRouter } from "next/navigation";
 import Sidebar from "./sidebar";
 import { IoMdSettings } from "react-icons/io";
+import { CiSearch } from "react-icons/ci";
 
 
 export default function TopNav() {
@@ -59,7 +60,7 @@ export default function TopNav() {
           <TextInput          
             className=" border border-[white] text-gray-700   focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Search anything here..."
-            leftSection={ <FiBookmark/>}
+            leftSection={ <CiSearch/>}
             size="md"
             styles={{
               input:{
@@ -73,8 +74,8 @@ export default function TopNav() {
 
         {/* Right Side - Icons and Profile */}
         <div className="flex items-center gap-4">
-          <FiBookmark className="text-gray-700 text-xl cursor-pointer" />
-          <FiBell className="text-gray-700 text-xl cursor-pointer" />
+          {/* <FiBookmark className="text-gray-700 text-xl cursor-pointer" />
+          <FiBell className="text-gray-700 text-xl cursor-pointer" /> */}
 
           {/* User Profile */}
           <div className="">

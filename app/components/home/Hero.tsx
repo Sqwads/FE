@@ -26,7 +26,7 @@ const Hero = () => {
         <div className="lg:text-xl text-base text-[#D5D7DA] lg:leading-[2rem] mb-10">
           Transform your skills into practical experience by working on open-source projects <br /> with guidance from industry experts.
         </div>
-      <Link href='#how'>
+      <Link href='#how-it-works'>
           <button className="flex w-fit items-center text-white rounded-md bg-[#0234B8] border border-[#5483FF] lg:py-3 py-2 lg:text-base text-sm px-6 hover:bg-blue-700 transition duration-300">
               Learn More <FaLongArrowAltRight size={23} className="ml-2 animate-bounce w-6 h-6" />
             </button>

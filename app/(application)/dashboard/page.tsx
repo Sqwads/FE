@@ -24,6 +24,18 @@ export default function DashboardPage() {
     user: state.user,
   }));
 
+  const profile = {
+    skill: user?.skills_of_interest?.length > 0,
+    experience: user?.experiences?.length > 0,
+    socialProfile : (!!user?.socialProfile?.twitter && !!user?.socialProfile?.linkedin ),
+    location: !!user?.location
+
+  }
+
+  const profileFields = Object.values(profile);
+  const completedFields = profileFields.filter(Boolean).length;
+  const profileCompletion = Math.round((completedFields / profileFields.length) * 100);
+
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -125,12 +137,14 @@ export default function DashboardPage() {
 
       {/* Action Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <ActionCard 
+        <Link href="/settings" className="block">
+         <ActionCard 
           title="Finish Setting Up Your Profile" 
           description="You're almost there! Just a few more details to set up a profile you love."
           icon={<HiCheckBadge color='#001D69' className="text-blue-600" size={20} />}
-          progress={30}
+          progress={profileCompletion}
         />
+        </Link>
         <ActionCard 
           title="Connect with Mentors" 
           description="You're almost there! Just a few more details to set up a profile you love."

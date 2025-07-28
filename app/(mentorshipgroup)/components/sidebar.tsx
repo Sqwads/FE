@@ -26,7 +26,7 @@ const Sidebar = ({
   }));
 
   // State for dropdown menus
-  const [sessionsOpen, setSessionsOpen] = useState(false);
+  const [sessionsOpen, setSessionsOpen] = useState(true);
   const [chatsOpen, setChatsOpen] = useState(false);
 
   const trimText = (email: string) => {

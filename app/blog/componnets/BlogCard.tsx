@@ -24,10 +24,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
       <article className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group-hover:scale-[1.02] h-full flex flex-col">
         {/* Image Container */}
         <div className="relative w-full h-48 overflow-hidden">
-          <Image
-            src={image}
+          <img
+            src={image || '/images/blog-placeholder.png'}
             alt={imageAlt}
-            fill
+           
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />

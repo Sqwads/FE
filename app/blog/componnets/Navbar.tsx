@@ -15,19 +15,20 @@ const BlogNav = () => {
   };
 
   return (
-    <nav className="flexBetween px-6 py-4 rounded-lg relative z-30 mb-16">
+    <nav className="flexBetween px-6 py-4 rounded-lg relative z-30 ">
       {/* Logo */}
       <Link href="/">
         <img src="/images/sqwads-logo.png" alt="logo" className="h-10 lg:h-12 lg:w-42 w-40 object-cover " />
       </Link>
 
       {/* Desktop Navigation */}
-      <ul className="hidden h-full gap-12 lg:flex items-center">
+      <ul className=" h-full gap-12 hidden lg:flex items-center">
+        
         {NAV_LINKS.map((link) => (
           <li key={link.key} className="flex items-center">
             <Link
-              href={link.href}
-              className="regular-16 text-[#FFFFFF] flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
+              href={link?.href}
+              className="regular-16  flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
             >
               {link.label}
             </Link>
@@ -37,7 +38,7 @@ const BlogNav = () => {
 
       {/* Get Started Button (Desktop) */}
       <div className="hidden lg:flex items-center">
-        <Link href={"/mentor_signup"}>
+        <Link href={"/signup"}>
           <Button type="button" title="Get Started for free" icon="/arrow.svg" variant="#0234B8" />
         </Link>
       </div>
@@ -75,7 +76,7 @@ const BlogNav = () => {
 
           {/* Get Started Button (Mobile) */}
           <div className="flex items-center justify-center mt-4">
-            <Link href={"/mentor_signup"}>
+            <Link href={"/signup"}>
               <Button type="button" title="Get Started" icon="/arrow.svg" variant="#0234B8" />
             </Link>
           </div>

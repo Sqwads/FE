@@ -126,9 +126,11 @@ const MentorLoginPage = () => {
           </Link>
         </div>
 
+        <Link href={`/forgetpass?user_type=mentor`} >
         <p className="text-center mt-2 text-sm text-blue-700 underline cursor-pointer">
           Forgot Password?
         </p>
+        </Link>
       </div>
     </>
   );

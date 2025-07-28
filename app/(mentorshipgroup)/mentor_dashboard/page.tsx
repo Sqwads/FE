@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import WelcomeHeader from '../components/Welcome';
 import StatCard from '../components/StatCards';
 import PerformanceChart from '../components/PerformanceChart';
@@ -20,6 +20,14 @@ const MentorDashboardPage = () => {
 
     const [selectedDate, setSelectedDate] = useState(new Date());
 
+    const formattedDate = useMemo(() => {
+      return selectedDate instanceof Date && !isNaN(selectedDate.getTime())
+        ? selectedDate.toISOString().slice(0, 10)
+        : '';
+    }, [selectedDate]);
+
+    console.log(new Date(selectedDate).toDateString())
+
     const {data:response, isPending: userInfoIsLoading} = useQuery({
       queryFn: ()=>instance.get('/mentors/stats'),
       queryKey: ['mentor-sats'],
@@ -30,11 +38,11 @@ const MentorDashboardPage = () => {
       queryFn: () => instance.get('/mentors/mentor-bookings', {
       params: {
         status: 'UPCOMING',
-        date: selectedDate.toDateString(),
+        date: new Date(selectedDate).toDateString(),
         limit: 4
       }
       }),
-      queryKey: ['mentor-bookings', selectedDate.toISOString().slice(0, 10)],
+      queryKey: ['mentor-bookings' ,formattedDate],
     });
   
     const [showProfileCard, setShowProfileCard] = useState(true);

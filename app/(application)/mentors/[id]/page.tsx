@@ -70,7 +70,7 @@ const MentorProfile = () => {
 
     const rating = 3
 
-    const handleDateChange = (date: Date | null) => {
+    const handleDateChange = (date: any) => {
         if (date && presetDates.some((d) => d.toDateString() === date.toDateString())) {
             return;
         }
@@ -198,7 +198,7 @@ const MentorProfile = () => {
                 //   (d) => d.toDateString() === date.toDateString()
                 // );
 
-                const newLyHiglighted = selectedDate?.toDateString() == date.toDateString()
+                const newLyHiglighted = selectedDate?.toDateString() == new Date(date).toDateString()
 
                 return (
                   <div
@@ -207,7 +207,7 @@ const MentorProfile = () => {
                          ${newLyHiglighted ? "bg-[#0532a3] text-white " : ""}
                     `}
                   >
-                    {date.getDate()}
+                    {new Date(date).getDate()}
                   </div>
                 );
               }}

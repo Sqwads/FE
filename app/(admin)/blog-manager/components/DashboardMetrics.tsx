@@ -2,40 +2,37 @@ import React from 'react';
 import DashboardMetricCard from './DashboardMetricCard';
 import { FiFileText, FiCheckCircle, FiArchive, FiEye } from 'react-icons/fi';
 
-const DashboardMetrics: React.FC = () => {
+const DashboardMetrics = ({
+  totalBlogs,
+  archivedBlogs,
+  publishedBlogs,
+}:any) => {
   const metrics = [
     {
       icon: <FiFileText className="w-full h-full" />,
-      value: 2507,
+      value: totalBlogs || 0,
       label: "Total Blog Posted",
       iconBgColor: "bg-blue-100",
       iconColor: "text-blue-600"
     },
     {
       icon: <FiCheckCircle className="w-full h-full" />,
-      value: 324,
+      value: publishedBlogs || 0,
       label: "Published Posts",
       iconBgColor: "bg-green-100",
       iconColor: "text-green-600"
     },
     {
       icon: <FiArchive className="w-full h-full" />,
-      value: 12,
+      value: archivedBlogs || 0,
       label: "Archive Blogs",
       iconBgColor: "bg-cyan-100",
       iconColor: "text-cyan-600"
-    },
-    {
-      icon: <FiEye className="w-full h-full" />,
-      value: 34520,
-      label: "Total Blog Views",
-      iconBgColor: "bg-purple-100",
-      iconColor: "text-purple-600"
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
       {metrics.map((metric, index) => (
         <DashboardMetricCard
           key={index}

@@ -22,7 +22,7 @@ export default function TopNav() {
 
   const logout = ()=>{
     cookieStorage.clear()
-    router.push('/admin_login')
+    router.push('/mentor_login')
   }
   return (
     <nav className="w-full bg-white shadow-md "> {/* Added left-64 */}

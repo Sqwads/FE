@@ -4,23 +4,52 @@ import { MdOutlineEmail } from 'react-icons/md';
 import { useForm, yupResolver } from '@mantine/form';
 import Image from 'next/image';
 import { Registervalidator } from '@/src/validators/validators';
+import { useMutation } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { instance } from '@/api/instance';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { base64encode } from 'nodejs-base64';
+import * as yup from 'yup';
+import { Suspense } from 'react';
 
-const ForgetPasswordPage = () => {
+const ForgetPassworModule = () => {
   // Mantine useForm hook
+
+  const searchParams = useSearchParams();
+  const user_type = searchParams.get('user_type');
+  const router = useRouter()
+
+  const validator = yup.object().shape({
+    email: yup.string().email('Invalid email address').required('Email is required'),
+  });
+
   const form = useForm({
     initialValues: {
       email: '',
     },
-    validate: yupResolver(Registervalidator)
+    validate: yupResolver(validator)
+  });
+
+  const { mutate: sendOTP, isPending } = useMutation({
+      mutationFn: (data: any) => instance.post(user_type=='user'?"/auth/resend-otp":"/mentors/resend-otp", data),
+      mutationKey: ["auth", "sendOtp"],
+      onSuccess(response, vars) {
+        toast.success("An OTP has been sent to your email. Check your inbox or spam folder.");
+        router.push(`/createnew?type=${user_type}&email=${base64encode(vars.email)}`);
+      },
+      onError(error: any) {
+        // console.error(error?.response?.data);
+        toast.error(error?.response?.data?.message || "Failed to send Token");
+      },
   });
 
   const handleSubmit = (values: any) => {
-    console.log('Password reset link requested for:', values.email);
+    sendOTP({ email: values.email });
   };
 
   return (
     <>
-      <div className="bg-white mt-28 p-8 rounded-xl shadow-lg w-full max-w-md mx-auto">
+      <div className="bg-white lg:mt-28 p-8 rounded-xl shadow-lg w-full max-w-md mx-auto">
         {/* Icon */}
         <div className="flex justify-center mb-4">
           <div className=" rounded-full">
@@ -61,9 +90,10 @@ const ForgetPasswordPage = () => {
           {/* Request Reset Link Button */}
           <button
             type="submit"
-            className="w-full py-3 bg-[#001D69] text-white rounded transition hover:bg-[#003399]"
+            disabled={isPending}
+            className="w-full disabled:opacity-50 disabled:cursor-not-allowed py-3 bg-[#001D69] text-white rounded transition hover:bg-[#003399]"
           >
-            Request Reset Link
+            {isPending ? 'Submitting...' : 'Submit'}
           </button>
         </form>
 
@@ -75,5 +105,13 @@ const ForgetPasswordPage = () => {
     </>
   );
 };
+
+const ForgetPasswordPage = ()=>{
+  return(
+    <Suspense>
+      <ForgetPassworModule/>
+    </Suspense>
+  )
+}
 
 export default ForgetPasswordPage;

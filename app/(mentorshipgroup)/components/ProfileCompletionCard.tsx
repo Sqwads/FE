@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FiCheckCircle, FiX } from 'react-icons/fi'; // Using react-icons
 
@@ -9,9 +10,10 @@ interface ProfileCompletionCardProps {
 const ProfileCompletionCard: React.FC<ProfileCompletionCardProps> = ({ onDismiss }) => {
   // Example progress - replace with actual logic
   const completionProgress = 70; // Example: 70%
+  const router = useRouter()
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 relative mb-6">
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 relative mb-6 cursor-pointer" onClick={()=>router.push('/mentor_settings')}>
       <div className="flex items-start gap-3">
         <div className="p-1 bg-blue-100 rounded-full mt-1">
            <FiCheckCircle className="h-4 w-4 text-blue-600" />

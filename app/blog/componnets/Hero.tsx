@@ -6,7 +6,7 @@ const BlogHero = () => {
     <section className="flex flex-col items-start justify-center lg:px-6 px-3 w-full text-white rounded-xl relative h-[60vh]"> 
       {/* Reduced height to 60vh to fit within parent's 70vh */}
 
-      <div className="flex flex-col items-start text-left tracking-tighter px-3 max-w-4xl relative z-20">
+      <div className="flex flex-col  items-start text-left tracking-tighter px-3 max-w-4xl relative z-20">
         {/* Stay Up to Date Button */}
         <div className="mb-4 lg:mb-6"> {/* Reduced margin */}
           <button className="border border-[#9900C7] bg-black/15 backdrop-blur-sm text-purple-300 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#9900C7]/15 hover:scale-105">

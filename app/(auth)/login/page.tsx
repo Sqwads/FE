@@ -127,9 +127,12 @@ const LoginPage = () => {
           </Link>
         </div>
 
+        <Link href={`/forgetpass?user_type=user`} className="text-center">
         <p className="text-center mt-2 text-sm text-blue-700 underline cursor-pointer">
           Forgot Password?
         </p>
+        </Link>
+
       </div>
     </>
   );

@@ -83,3 +83,18 @@ export function trimSentence(sentence: string, maxLength=90) {
 
     return (words[0][0] + words[1][0]).toUpperCase();
   }
+
+  export function extractPlainTextFromHTML(html: string): string {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || "";
+  }
+
+export function generateSlug(text: string) {
+  return text
+    .toLowerCase()                             // Convert to lowercase
+    .trim()                                    // Remove leading/trailing spaces
+    .replace(/[^a-z0-9\s-]/g, '')              // Remove non-alphanumeric characters
+    .replace(/\s+/g, '-')                      // Replace spaces with hyphens
+    .replace(/-+/g, '-');                      // Collapse multiple hyphens
+}

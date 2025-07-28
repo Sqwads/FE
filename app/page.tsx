@@ -26,7 +26,9 @@ export default function Home() {
       {/* Content Sections */}
       <Value />
       <Core />
-      <How />
+      <div id="how-it-works">
+        <How />
+      </div>
       <Learn />
       <div>
         <Mentor />

@@ -29,7 +29,7 @@ export default function middleware(req: NextRequest) {
 
   const user = req.cookies.get("access_token")?.value
   // console.log(unauthenticatedRoutes.includes(req.nextUrl.pathname))
-  if (!unauthenticatedRoutes.includes(req.nextUrl.pathname)) {
+  if (!unauthenticatedRoutes.includes(req.nextUrl.pathname) && !(req.nextUrl.pathname?.startsWith('/blog'))) {
 
     const url = req.nextUrl.clone();
     url.pathname = "/";
