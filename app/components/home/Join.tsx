@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
 const Join = () => {
   return (
@@ -21,9 +22,12 @@ const Join = () => {
             Start Building Your Portfolio Today!
           </span>
         </h2>
-        <button className="bg-blue-600 text-white my-6 py-3 px-6 md:py-4 md:px-8 rounded-lg font-medium hover:bg-blue-700 transition">
-          Join Sqwads &rarr;
-        </button>
+        <Link href='/signup'>
+          <button className="bg-blue-600 text-white my-6 py-3 px-6 md:py-4 md:px-8 rounded-lg font-medium hover:bg-blue-700 transition">
+            Join Sqwads &rarr;
+          </button>
+        </Link>
+       
       </div>
 
       {/* Image Section */}

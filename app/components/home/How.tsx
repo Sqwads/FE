@@ -30,7 +30,7 @@ const How = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section className="bg-white  lg:py-7 py-3 px-6 md:px-12 lg:px-20">
+    <section id='how-it-works' className="bg-white  lg:py-7 py-3 px-6 md:px-12 lg:px-20">
       <div className="mb-8">
         <button className="border border-[#9900C7] text-purple-700 py-2 px-4 rounded-md text-sm font-medium  transition duration-300">
           ⚡ <span className="bg-gradient-to-r from-[#001D69] via-[#7C96DB] via-[#9900C7] to-[#FF00FB] bg-clip-text text-transparent">TO GET STARTED</span> 
