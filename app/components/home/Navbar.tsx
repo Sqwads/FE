@@ -18,7 +18,7 @@ const Navbar = () => {
     <nav className="flexBetween px-6 py-4 rounded-lg relative z-30 mb-16 shadow-md">
       {/* Logo */}
       <Link href="/">
-        <img src="/images/sqwads-logo.png" alt="logo" className="h-10 lg:h-12 lg:w-42 w-40 object-cover " />
+        <img src="/images/sqwads-logo.png" alt="logo" className="h-10 lg:h-12 lg:w-42 w-45 object-cover " />
       </Link>
 
       {/* Desktop Navigation */}

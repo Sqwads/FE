@@ -11,7 +11,7 @@ const BlogPostDetail = ({post}:any) => {
   const [isSharing, setIsSharing] = useState(false);
   const baseUrl = "https://sqwads.com";
 
-  const handleShare = (platform: string) => {
+  const handleShare = (platform: string ) => {
     
     const url = encodeURIComponent(`${baseUrl}/blog/${generateSlug(post?.title)}-${post._id}`);
     const text = encodeURIComponent(post?.title || "");
@@ -34,7 +34,7 @@ const BlogPostDetail = ({post}:any) => {
         return;
     }
 
-    window.open(shareUrl, "_blank");
+    window.open(shareUrl, "_blank" );
   };
 
   
@@ -70,8 +70,10 @@ const BlogPostDetail = ({post}:any) => {
       </nav>
 
       {/* Hero Section with Dummy Image - Using placeholder instead of external URL */}
-      <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden bg-gray-300">
-        <img className="h-full w-full object-cover" src={post?.cover_image || '/images/blog-placeholder.png'} alt="alt" />
+      <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 mt-8">
+        <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden bg-gray-300 rounded-lg">
+          <img className="h-full w-full object-cover" src={post?.cover_image || '/images/blog-placeholder.png'} alt="alt" />
+        </div>
       </div>
 
       {/* Main Content - All text hardcoded as requested (no props) */}
@@ -156,4 +158,3 @@ const BlogPostDetail = ({post}:any) => {
 };
 
 export default BlogPostDetail;
-
