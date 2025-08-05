@@ -75,12 +75,12 @@ const SessionRequestCard = ({ request, onClick, onAccept, onCancel }:any) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
       {/* Top section with image */}
-      <div className="h-28 overflow-hidden">
-        <Image 
-          src={request?.mentee?.image || '/images/profile.jpg'} 
+      <div className="h-36 overflow-hidden">
+        <img 
+          src={request?.mentee?.profileImage || '/images/profile.jpg'} 
           alt={'n'}
-          width={400}
-          height={200}
+          // width={400}
+          // height={200}
           className="w-full h-full object-cover"
         />
       </div>

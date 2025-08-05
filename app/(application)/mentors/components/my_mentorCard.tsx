@@ -23,7 +23,7 @@ const MyMentorCard = ({
 
   return (
     <div className="border rounded-lg bg-white shadow-sm flex flex-col items-start  gap-3 h-full min-w-[265px]">
-      <img src={mentor?.profileImage || '/images/profile.jpg'} alt={mentor.name} className="w-full h-28 rounded-lg object-cover" />
+      <img src={mentor?.profileImage || '/images/profile.jpg'} alt={mentor.name} className="w-full lg:h-48 h-42 rounded-lg object-cover" />
       <div className="px-4">
         <h4 className="font-semibold mt-3 text-lg">{mentor.firstName} {mentor?.lastName}</h4>
         <p className="text-sm text-[#16181B80]">{mentor.title}</p>

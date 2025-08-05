@@ -36,7 +36,7 @@ const MentorCard: React.FC<MentorCardProps> = ({
       <img
         src={image  || '/images/profile.jpg'}
         alt={name}
-        className="w-full h-36 mb-5 object-cover rounded-lg border mb-4"
+        className="w-full lg:h-48 h-64 mb-5 object-cover rounded-lg border mb-4"
       />
       <div className="mb-2 px-4">
         <div className="font-bold text-lg">{name}</div>

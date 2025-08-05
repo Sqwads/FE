@@ -149,7 +149,7 @@ export default function DashboardPage() {
           title="Connect with Mentors" 
           description="You're almost there! Just a few more details to set up a profile you love."
           illustration="/images/connect.png"
-          actionLink="/mentors"
+          actionLink="/mentors_explore"
           actionText="Get Started here"
         />
       </div>

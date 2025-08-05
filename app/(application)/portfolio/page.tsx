@@ -64,27 +64,38 @@ const Portfolio = ({
     }
 
     return ( 
-        <div className='w-full pb-20'>
+        <div className='bg-[#F5F5F5] '>
+        <div className=' pb-20 bg-white shadow' >
 
             
            {!detailsMode && 
             <>
-             <div className="bg-[#F5F5F5] h-36 flex flex-col items-center justify-center">
-               {(!isPublic && !user?.profileImage)&&
+             <div 
+                className="bg-[#F5F5F5] h-48 flex flex-col items-center justify-center"
+                  style={{
+                        background:'linear-gradient(90deg, #f7cac9 0%, #ede574 100%)',
+                        minHeight: 140,
+                        alignItems: "center",
+                    }} 
+            >
+               {(!isPublic && !user?.coverImage)&&
                <>
-                <div className="h-14 cursor-not-allowed border w-14 bg-[#E9E9E9] rounded-full flex items-center justify-center">
-                    <MdOutlineFileUpload size={22} />
+                <div  
+                    className="h-14 cursor-not-allowed border w-14 rounded-full flex items-center justify-center">
+                    <MdOutlineFileUpload color='gray' size={22} />
                 </div>
-                <div className="font-semibold text-sm">Upload a cover image</div>
+                <div className="font-semibold text-sm text-[gray] mt-2">Upload a cover image</div>
                </>
                }
 
-               {user?.profileImage &&
-               <img src={user?.profileImage} className='h-full w-full object-cover' alt="" />
+               
+
+               {user?.coverImage &&
+               <img src={user?.coverImage} className='h-full w-full object-cover' alt="" />
                }
             </div>
 
-            <div className="lg:px-10 px-4">
+            <div className="lg:px-10 px-4 border">
                 <div className="lg:flex  py-5 ">
                     <img src={user?.profileImage || "/images/profile.jpg"} className='lg:h-32 lg:w-32 h-24 w-24 object-cover rounded-full border mt-[-70px]' alt="" />
                     <div className='flex-1 ml-5 lg:mt-0 mt-3 lg:mb-4 mb-6'>
@@ -154,6 +165,7 @@ const Portfolio = ({
            {
             detailsMode && <ProjectDetails project={selectedProject} onBackToProjects={()=>setDetailsMode(false)} />
            }
+        </div>
         </div>
     );
 }

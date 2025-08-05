@@ -70,25 +70,49 @@ const MentorProfile = () => {
 
     const rating = 3
 
-    const handleDateChange = (date: any) => {
-        if (date && presetDates.some((d) => d.toDateString() === date.toDateString())) {
+    // const handleDateChange = (date: any) => {
+    //     if (date && presetDates.some((d) => d.toDateString() === date.toDateString())) {
+    //         return;
+    //     }
+    //     // setHighlightedDates((prev) => {
+    //     //     if (!date) return presetDates;
+    //     //     const isPreset = presetDates.some((d) => d.toDateString() === date.toDateString());
+    //     //     return isPreset ? presetDates : [...presetDates, date];
+    //     // });
+    //     setSelectedDate(date);
+    //     if (date) {
+            
+    //         // setHighlightedDates((prev) => {
+    //         //     const exists = prev.some((d) => d.toDateString() === date.toDateString());
+    //         //     return exists ? prev : [...prev, date];
+    //         // });
+    //     }
+
+    //     // console.log(selectedDate)
+    // };
+
+    const handleDateChange = (date: Date | string | null) => {
+        // Handle null case
+        if (!date) {
+            setSelectedDate(null);
             return;
         }
-        // setHighlightedDates((prev) => {
-        //     if (!date) return presetDates;
-        //     const isPreset = presetDates.some((d) => d.toDateString() === date.toDateString());
-        //     return isPreset ? presetDates : [...presetDates, date];
-        // });
-        setSelectedDate(date);
-        if (date) {
-            
-            // setHighlightedDates((prev) => {
-            //     const exists = prev.some((d) => d.toDateString() === date.toDateString());
-            //     return exists ? prev : [...prev, date];
-            // });
+
+        // Convert string to Date if needed
+        const dateObj = typeof date === 'string' ? new Date(date) : date;
+        
+        // Validate it's a proper date
+        if (isNaN(dateObj.getTime())) {
+            setSelectedDate(null);
+            return;
         }
 
-        // console.log(selectedDate)
+        // Check against preset dates
+        if (presetDates.some(d => d.toDateString() === dateObj.toDateString())) {
+            return;
+        }
+
+        setSelectedDate(dateObj);
     };
 
     const handleSubmit = ()=>{
@@ -197,8 +221,8 @@ const MentorProfile = () => {
                 // const isHighlighted = highlightedDates.some(
                 //   (d) => d.toDateString() === date.toDateString()
                 // );
-
-                const newLyHiglighted = selectedDate?.toDateString() == new Date(date).toDateString()
+                 const dayDate = new Date(date)
+                const newLyHiglighted = selectedDate?.toDateString() == dayDate.toDateString()
 
                 return (
                   <div
@@ -207,7 +231,7 @@ const MentorProfile = () => {
                          ${newLyHiglighted ? "bg-[#0532a3] text-white " : ""}
                     `}
                   >
-                    {new Date(date).getDate()}
+                    {dayDate.getDate()}
                   </div>
                 );
               }}
