@@ -8,14 +8,14 @@ const BlogHero = () => {
 
       <div className="flex flex-col  items-start text-left tracking-tighter px-3 max-w-4xl relative z-20">
         {/* Stay Up to Date Button */}
-        <div className="mb-4 lg:mb-6"> {/* Reduced margin */}
+        <div className="mb-4 lg:mb-6"> 
           <button className="border border-[#9900C7] bg-black/15 backdrop-blur-sm text-purple-300 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-[#9900C7]/15 hover:scale-105">
             ⚡ <span className="bg-gradient-to-r from-[#7C96DB] via-[#9900C7] to-[#FF00FB] bg-clip-text text-transparent font-bold">STAY UP TO DATE</span> 
           </button> 
         </div>
         
         {/* Main Title */}
-        <div className="mb-4 lg:mb-6"> {/* Reduced margin */}
+        <div className="mb-4 lg:mb-6"> 
           <h1 className="lg:text-[3rem] leading-[2.5rem] lg:leading-[3.2rem] text-[2rem] text-white font-bold">
             The Sqwads Blog
           </h1>
