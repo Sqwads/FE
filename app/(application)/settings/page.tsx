@@ -17,9 +17,9 @@ const UserProfile = () => {
   const [profileImageSrc, setProfileImageSrc] = useState<any>(null);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
-const handleImageClick = () => {
-    imageInputRef.current?.click();
-};
+    const handleImageClick = () => {
+        imageInputRef.current?.click();
+    };
 
     const handleImageUpload = (file: File) => {
         setFile(file);

@@ -10,9 +10,11 @@ import  React, { useState } from 'react';
 import { BsSearch, BsThreeDotsVertical } from 'react-icons/bs';
 
 const Members = ({
-    members
+    members,
+    showOptions
 }:{
-    members: any[]
+    members: any[];
+    showOptions?: boolean;
 }) => {
 
     const router = useRouter()
@@ -58,11 +60,12 @@ const Members = ({
             </Badge> 
         },
        
+     
         {
           header:'Action',
           id:'action',
-          cell:({ row})=>  
-          <Menu position="bottom-end" shadow="md" width={200}>
+          cell:({ row})=>  showOptions?
+           <Menu position="bottom-end" shadow="md" width={200}>
             <Menu.Target>
               <Button variant="subtle" size="compact-icon">
                 <BsThreeDotsVertical />
@@ -70,12 +73,15 @@ const Members = ({
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item onClick={()=>router.push(`/users/${row.original.user?._id}`)}>View Profile</Menu.Item>
-              <Menu.Item className="!cursor-not-allowed">Edit User</Menu.Item>
+              {/* <Menu.Item className="!cursor-not-allowed">Edit User</Menu.Item> */}
               {/* {row.original?.status == 'ACTIVE' && <Menu.Item onClick={()=>handleSuspendUser(row.original)} color="red">Suspend User</Menu.Item>}
               {row.original?.status == 'SUSPENDED' && <Menu.Item onClick={()=>handleActivateUser(row.original?.userId)}  color="#028d4c">Activate User</Menu.Item>} */}
             </Menu.Dropdown>
-          </Menu>
-         }
+          </Menu>: <BsThreeDotsVertical />
+         
+        }
+
+        
     ]
 
     const handleFilter = (query: string)=>{

@@ -58,7 +58,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 
       {/* Participants */}
       <div>
-        <h3 className="text-lg text-[#001D69] font-bold mb-4">Participants</h3>
+        <h3 className="text-lg text-[#001D69] font-bold mb-4 mt-7">Participants</h3>
         <ParticipantCard
           name={`${projectLead?.firstName} ${projectLead?.lastName}`}
           role={'Project Lead'}
@@ -72,13 +72,9 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
             image={participant.image}
           />
         ))}
-        {participants?.length > 0 && (
+        {(participants?.length - 3) > 0 && (
            <div className="flex items-center mt-2">
-             <div className="flex -space-x-2 mr-2">
-                {participants?.slice(3).map((item:any, i) => (
-                  <div key={`add-${i}`} className="w-8 h-8 rounded-full bg-gray-400 border-2 border-white"></div>
-                ))}
-             </div>
+            
              {participants?.length > 2 && <span className="text-sm text-gray-600">+{participants?.length - 3} more</span>}
           </div>
         )}

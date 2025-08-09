@@ -1,14 +1,14 @@
 "use client"
-import  React, { Suspense, useState } from 'react';
+import  React, { Suspense, useRef, useState } from 'react';
 import { IoShareSocial } from 'react-icons/io5';
 import { MdEdit, MdOutlineFileUpload } from 'react-icons/md';
 import PortfolioProject from './tabs/projects';
 import PortfolioAbout from './tabs/about';
 import ProjectDetails from './tabs/project-details';
 import { userWrapper } from '@/store';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '@/api/instance';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { formatTextToSentenceCase } from '@/common';
 import toast from 'react-hot-toast';
 
@@ -24,12 +24,19 @@ const Portfolio = ({
     const [currentTab, setCurrentTab] = useState('About');
     const [detailsMode, setDetailsMode] = useState(false);
     const [selectedProject, setSelectedProject] = useState<any>(null);
-
+     const [file, setFile] = useState<any>(null);
+      const [profileImageSrc, setProfileImageSrc] = useState<any>(null);
+    const imageInputRef = useRef<HTMLInputElement | null>(null);
+    const router = useRouter()
     const userId = searchParams.get('userId');
 
     const { user } = userWrapper((state: any) => ({
         user: state.user,
     }));
+
+    const handleImageClick = () => {
+        imageInputRef.current?.click();
+    };
 
     const { data: projectResponse, isLoading: projectIsLoading } = useQuery({ 
           queryFn: () => instance.get('/project/all', {
@@ -55,6 +62,16 @@ const Portfolio = ({
         setDetailsMode(true);
     };
 
+     const handleImageUpload = (file: File) => {
+        // console.log(file)
+        setFile(file);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            setProfileImageSrc(e.target?.result as string);
+        };
+        reader.readAsDataURL(file);
+        handleSubmit(file)
+    };
 
     const copyText = ()=>{
         const text = `https://sqwads-dev.vercel.app/project-public?userId=${user?._id}`
@@ -63,6 +80,28 @@ const Portfolio = ({
         toast.success('Link to project copied')
     }
 
+    const { mutate, isPending } = useMutation({
+        mutationFn: (data: any) => instance.patch('/user', data),
+        mutationKey: ['user', 'update'],
+        onSuccess() {
+            toast.success("Image Saved !!!");
+        },
+        onError(error: any) {
+            toast.error(error?.response?.data?.message || 'Failed to Save Image');
+        },
+    });
+
+    const handleSubmit = (file: File) => {
+        const formData = new FormData()
+        // console.log(file)
+        formData.append('file', file)
+        formData.append('fileIsCoverImage', 'true' )
+        mutate(formData)
+    };
+
+    const currentUser = userId ? fetchedUser: user
+    
+
     return ( 
         <div className='bg-[#F5F5F5] '>
         <div className=' pb-20 bg-white shadow' >
@@ -70,15 +109,22 @@ const Portfolio = ({
             
            {!detailsMode && 
             <>
-             <div 
+            <div 
                 className="bg-[#F5F5F5] h-48 flex flex-col items-center justify-center"
-                  style={{
-                        background:'linear-gradient(90deg, #f7cac9 0%, #ede574 100%)',
-                        minHeight: 140,
-                        alignItems: "center",
-                    }} 
+                style={{
+                    background:'linear-gradient(90deg, #f7cac9 0%, #ede574 100%)',
+                    minHeight: 140,
+                    alignItems: "center",
+                    ...((profileImageSrc || currentUser?.coverImage) && {
+                        backgroundImage: `url(${profileImageSrc || currentUser?.coverImage})`,
+                        // backgroundPosition: 'center',
+                        // backgroundRepeat:'no-repeat',
+                        // backgroundSize:'cover'
+                    }),
+                    
+                }} 
             >
-               {(!isPublic && !user?.coverImage)&&
+               {/* {(!isPublic && !user?.coverImage)&&
                <>
                 <div  
                     className="h-14 cursor-not-allowed border w-14 rounded-full flex items-center justify-center">
@@ -86,38 +132,52 @@ const Portfolio = ({
                 </div>
                 <div className="font-semibold text-sm text-[gray] mt-2">Upload a cover image</div>
                </>
-               }
+               } */}
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="profile-image-input"
+                    onChange={e => {
+                        if (e.target.files && e.target.files[0]) {
+                            handleImageUpload(e.target.files[0]);
+                        }
+                    }}
+                    ref={imageInputRef}
+                />
 
                
-
-               {user?.coverImage &&
-               <img src={user?.coverImage} className='h-full w-full object-cover' alt="" />
-               }
             </div>
 
             <div className="lg:px-10 px-4 border">
                 <div className="lg:flex  py-5 ">
-                    <img src={user?.profileImage || "/images/profile.jpg"} className='lg:h-32 lg:w-32 h-24 w-24 object-cover rounded-full border mt-[-70px]' alt="" />
-                    <div className='flex-1 ml-5 lg:mt-0 mt-3 lg:mb-4 mb-6'>
-                        <div className="text-xl font-medium mb-">{userId ? fetchedUser?.firstName: user?.firstName } {userId ? fetchedUser?.lastName: user?.lastName }</div>
-                        <div className=" text-[#16181BB2] ">
-                            {userId ? 
-                            formatTextToSentenceCase(fetchedUser?.skills_of_interest[0] || ''):
-                            formatTextToSentenceCase( user?.skills_of_interest[0] || '') 
-                            }.
-                        </div>
+                    <img src={currentUser?.profileImage || "/images/profile.jpg"} className='lg:h-32 lg:w-32 h-24 w-24 object-cover rounded-full border mt-[-70px]' alt="" />
+                    <div className='flex-1 flex items-center ml-5 lg:mt-0 mt-3 lg:mb-4 mb-6'>
+                            <div>
+                                <div className="text-xl font-medium mb-">{currentUser?.firstName } {currentUser?.lastName }</div>
+                                <div className=" text-[#16181BB2] ">
+                                    
+                                    {formatTextToSentenceCase(currentUser?.skills_of_interest[0] || '')}
+                                    
+                               
+                                </div>
+                                {!isPublic && <div onClick={handleImageClick} className='hidden mt-2 lg:block text-blue-700 text-sm underline cursor-pointer'>Edit Cover Image</div>}
+                            </div>
+                         {!isPublic &&  <div onClick={handleImageClick} className='ml-5 block lg:hidden  text-blue-700 text-sm underline cursor-pointer'>Edit Cover Image</div>}
                     </div>
 
                     {!isPublic && 
                     <>
-                    <div className='flex items-end'>
-                        <button className='bg-[#EFF3FF] border lg:text-base cursor-not-allowed text-sm border-[#001D69] flex items-center  text-[#001D69] px-4 py-2 rounded-md mr-3'> <MdEdit className='mr-2' color='#001D69' /> Edit Profile</button>
-                        <button onClick={copyText} className='px-4 py-2 rounded-md lg:text-base text-sm bg-[#001D69] flex items-center text-white'><IoShareSocial className='mr-2' color='white' /> Share Portfolio</button>
+                    <div className='flex items-center '>
+                        <button onClick={()=>router.push('/settings')} className='bg-[#EFF3FF] border lg:text-sm text-sm border-[#001D69] flex items-center  text-[#001D69] px-4 py-2 rounded-md mr-3'> <MdEdit className='mr-2' color='#001D69' /> Edit Profile</button>
+                        <button onClick={copyText} className='px-4 py-2 rounded-md lg:text-sm text-sm bg-[#001D69] flex items-center text-white'><IoShareSocial className='mr-2' color='white' /> Share Portfolio</button>
                          {/* <a
                             href={`https://www.facebook.com/sharer/sharer.php?u=https://sqwads-dev.vercel.app/projects/68334f99a3584c928cc6637d`}
                             target="_blank"
                             rel="noopener noreferrer"
                         >share</a> */}
+                      
                     </div>
                     </>
                     }
@@ -144,17 +204,10 @@ const Portfolio = ({
                     {currentTab=='Project' && <PortfolioProject projects={projectResponse?.data?.projects} onProjectSelect={handleProjectSelect} /> }
                     {currentTab=='About' && 
                     <PortfolioAbout 
-                        user={
-                            userId ? 
-                            {
-                                ...fetchedUser,
-                                bio: `I am ${fetchedUser?.firstName} ${fetchedUser?.lastName}, a passionate and dedicated individual with a strong interest in ${formatTextToSentenceCase(fetchedUser?.skills_of_interest?.join(', ') || '')}. With a keen focus on ${formatTextToSentenceCase(fetchedUser?.topics_of_interest?.join(', ') || '')}, I am committed to continuous learning and growth in the tech industry. My objectives include finding exciting projects and building a robust portfolio that showcases my skills and achievements. I am always eager to collaborate, innovate, and contribute to impactful solutions.`
-                            } : 
-                            {
-                                ...user,
-                                bio: `I am ${user?.firstName} ${user?.lastName}, a passionate and dedicated individual with a strong interest in ${formatTextToSentenceCase(user?.skills_of_interest?.join(', ') || '')}. With a keen focus on ${formatTextToSentenceCase(user?.topics_of_interest?.join(', ') || '')}, I am committed to continuous learning and growth in the tech industry. My objectives include finding exciting projects and building a robust portfolio that showcases my skills and achievements. I am always eager to collaborate, innovate, and contribute to impactful solutions.`
-                            }
-                        }
+                        user={{
+                            ...currentUser,
+                            bio: currentUser?.bio || `I am ${currentUser?.firstName} ${currentUser?.lastName}, a passionate and dedicated individual with a strong interest in ${formatTextToSentenceCase(currentUser?.skills_of_interest?.join(', ') || '')}. With a keen focus on ${formatTextToSentenceCase(currentUser?.topics_of_interest?.join(', ') || '')}, I am committed to continuous learning and growth in the tech industry. My objectives include finding exciting projects and building a robust portfolio that showcases my skills and achievements. I am always eager to collaborate, innovate, and contribute to impactful solutions.`
+                        }}
                     /> 
                     }
                </div>

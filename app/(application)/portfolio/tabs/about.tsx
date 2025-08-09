@@ -9,7 +9,7 @@ const PortfolioAbout = ({
     return ( 
         <div className='lg:px-10 py-10'>
             <div className="font-semibold text-lg mb-3">Overview</div>
-            <div className='mb-8'>
+            <div className='mb-8 whitespace-pre-line'>
                {user?.bio}
             </div>
 

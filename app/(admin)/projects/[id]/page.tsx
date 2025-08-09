@@ -51,7 +51,7 @@ const ProjectView: React.FC = () => {
       onSuccess(response) {
         toast.success('Application Status Updated successfully!')
         queryclient.invalidateQueries({
-          queryKey: ['project-applications-', projectId]
+          queryKey: ['project-applications', projectId]
         })
       },
       onError(error: any, vars) {
@@ -144,6 +144,7 @@ const ProjectView: React.FC = () => {
           {activeTab === 'Members' && (
             <Members
               members={fetchedProject?.data?.teamMembers}
+              showOptions
             />
           )}
           

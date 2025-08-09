@@ -7,16 +7,18 @@ import moment from 'moment';
 import { Button, Menu } from '@mantine/core';
 import { useCustomTable } from '@/src/hooks/useCustomTable';
 import AppTable from '../components/appTable';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '@/src/api/instance';
 import { formatTextToSentenceCase } from '@/src/common';
 import SearchFilters from '../components/searchfilters';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 
 const Projects = () => {
 
+    const queryClient = useQueryClient()
     const colorCodes = {
         COMPLETED: ['#01C5691A','#01C569'],
         ARCHIVE: [ '#5339161a', '#FFA52F'],
@@ -26,7 +28,7 @@ const Projects = () => {
 
     const [searchQuery, setSearchQuery] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
-    const [pageSize] = useState(5)
+    const [pageSize] = useState(10)
     const router = useRouter()
    
     const projectDtHeader: ColumnDef<any>[] = [
@@ -112,13 +114,30 @@ const Projects = () => {
                         <Menu.Item onClick={() => router.push(`/projects/new?mode=edit&project=${row.original._id}`)}>
                             Edit Project
                         </Menu.Item>
-                        <Menu.Item className="!cursor-not-allowed">Archive Project</Menu.Item>
+                        <Menu.Item onClick={()=>handleDeleteProject(row.original?._id)} color='red' className="text-[red]">Archive Project</Menu.Item>
                     </Menu.Dropdown>
                 </Menu>
             )
         }
     
     ]
+
+    const {mutate:editProject, isPending: projectEditIsPending} = useMutation({
+        mutationFn: (data:any)=>instance.patch(`/project`, data),
+        mutationKey: ['projectEdit'],
+        onSuccess() {
+            toast.success('Project Deleted Successfully')
+            router.push('/projects')
+            queryClient.invalidateQueries({
+                queryKey: ['projects']
+            })
+        },
+        onError(error:any) {
+            toast.error('Project Deletion Failed')
+            // console.log(error?.response?.data)
+        },
+    })
+
 
     const {data: response, isPending} = useQuery({
         queryFn:()=>instance.get(`/project/all`,  {
@@ -136,6 +155,19 @@ const Projects = () => {
         columns:  projectDtHeader,
         tableData: response?.data?.projects,
     })
+
+    
+    const handleDeleteProject = (projectId: string)=>{
+        const selectedProject = response?.data?.projects?.find((item:any)=> item._id == projectId)
+        const userConfirmed = confirm(`Are you sure you want to delete the ${selectedProject?.name} Project ? Acion Cannot be Undone!!!`);
+
+        if (userConfirmed) {
+            editProject({
+                isDeleted: true,
+                projectId
+            })
+        } 
+    }
 
     const handleSearch = (e:any)=>{
         const keyword = e.target.value
