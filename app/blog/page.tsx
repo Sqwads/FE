@@ -85,7 +85,8 @@ const Page = () => {
         <div className="relative z-10 pt-4 lg:pt-7 px-2 md:px-5 lg:px-14">
 
           <div className="relative z-20">
-            <BlogNav />
+            <BlogNav textColor="text-white" /> 
+            
           </div>
           
           <div className="relative z-10">

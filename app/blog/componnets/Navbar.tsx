@@ -7,7 +7,8 @@ import Link from "next/link";
 import Button from "../../components/Button";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
-const BlogNav = () => {
+// Add a `textColor` prop here. Default to 'text-gray-900' if not provided.
+const BlogNav = ({ textColor = 'text-gray-900' }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -18,17 +19,18 @@ const BlogNav = () => {
     <nav className="flexBetween px-6 py-4 rounded-lg relative z-30 ">
       {/* Logo */}
       <Link href="/">
-        <img src="/images/sqwads-logo.png" alt="logo" className="h-10 lg:h-12 lg:w-42 w-40 object-cover " />
+        <img src="/images/sqwads-logo.png" alt="logo" className="h-10 lg:h-12 lg:w-42 w-45 object-cover " />
       </Link>
 
       {/* Desktop Navigation */}
-      <ul className=" h-full gap-12 hidden lg:flex items-center">
+      <ul className="h-full gap-12 hidden lg:flex items-center">
         
         {NAV_LINKS.map((link) => (
           <li key={link.key} className="flex items-center">
             <Link
               href={link?.href}
-              className="regular-16  flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
+              // Apply the textColor prop here
+              className={`regular-16 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold ${textColor}`}
             >
               {link.label}
             </Link>
@@ -47,17 +49,18 @@ const BlogNav = () => {
       <div className="lg:hidden flex items-center">
         <button
           onClick={toggleMenu}
-          className="text-white focus:outline-none flex items-center justify-center"
+          className="focus:outline-none flex items-center justify-center"
         >
           {isMenuOpen ? (
-            <AiOutlineClose color="#0234B8" className="w-6 h-6" /> // Close Icon
+            <AiOutlineClose color="#0234B8" className="w-6 h-6" /> 
           ) : (
-            <AiOutlineMenu color="#0234B8" className="w-6 h-6" /> // Hamburger Menu Icon
+            // Use the textColor for the hamburger icon when the menu is closed
+            <AiOutlineMenu className={`w-6 h-6 ${textColor}`} /> 
           )}
         </button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation (This part already has white text, which is fine) */}
       {isMenuOpen && (
         <div className="absolute top-16 py-5 left-0 w-full bg-blue-950 rounded-lg shadow-md">
           <ul className="flex flex-col items-center gap-4 py-4">
