@@ -12,7 +12,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Sqwads",
-  description: "Client side landing page",
+  description: "We bridge the gap between learning and doing by connecting students, interns, and career-transitioning individuals to open-source projects.",
+  icons: {
+    icon: [
+      { url: "/favicon.png?v=2", type: "image/png" },
+    ],
+  }
 };
 
 export default function RootLayout({
