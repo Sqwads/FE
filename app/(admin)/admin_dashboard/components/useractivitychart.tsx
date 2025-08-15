@@ -5,10 +5,9 @@ import UserActivityData from "./useractivity";
 
 const UserActivityChart = () => {
   const [range, setRange] = useState<"7" | "14" | "30">("7");
-  const data = UserActivityData[range] || []; // Prevents disappearing chart
+  const data = UserActivityData[range] || [];
 
-  console.log("Range:", range);
-  console.log("Data:", data); // Debugging log
+  
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-md w-full">

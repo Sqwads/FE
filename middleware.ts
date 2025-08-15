@@ -15,12 +15,21 @@ export default function middleware(req: NextRequest) {
     '/welcome',
     '/admin_emailauth',
     '/admin_signup',
-    '/admin_login'
+    '/admin_login',
+    '/mentor_signup',
+    '/mentor_email_auth',
+    '/mentor_info',
+    '/mentor_availability',
+    '/mentor_individual_intro',
+    '/mentor_login',
+    '/project-public',
+    '/mentorship_home',
+    '/mentor_dashboard'
   ]
 
   const user = req.cookies.get("access_token")?.value
-  console.log(unauthenticatedRoutes.includes(req.nextUrl.pathname))
-  if (!unauthenticatedRoutes.includes(req.nextUrl.pathname)) {
+  // console.log(unauthenticatedRoutes.includes(req.nextUrl.pathname))
+  if (!unauthenticatedRoutes.includes(req.nextUrl.pathname) && !(req.nextUrl.pathname?.startsWith('/blog'))) {
 
     const url = req.nextUrl.clone();
     url.pathname = "/";

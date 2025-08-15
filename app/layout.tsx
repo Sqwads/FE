@@ -2,10 +2,11 @@
 import type { Metadata } from "next";
 import { MantineProvider } from "@mantine/core";
 import CustomQueryClientProvider from "./providers/react-query-provider";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from "react-hot-toast";
-
+import { DatesProvider } from "@mantine/dates";
 import "@mantine/core/styles.layer.css";
-// import "@mantine/dates/styles.layer.css";
+import "@mantine/dates/styles.layer.css";
 import "./globals.css";
 
 
@@ -28,9 +29,9 @@ export default function RootLayout({
       </head>
       <body >
        
-        <CustomQueryClientProvider>
-          
+        <CustomQueryClientProvider> 
           <MantineProvider>
+          <DatesProvider settings={{locale: 'ru',}}>
           <main className=" overflow-hidden">
             {children}
             <Toaster
@@ -42,7 +43,9 @@ export default function RootLayout({
                 duration: 2500,
               }}
             />
+            <ReactQueryDevtools initialIsOpen={false} />  
           </main>
+          </DatesProvider>
           </MantineProvider>
         </CustomQueryClientProvider>
       </body>

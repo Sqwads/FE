@@ -3,7 +3,7 @@ import { cookieStorage } from "@ibnlanre/portal";
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "",
+  baseURL: `${process.env.NEXT_PUBLIC_API}/api/v1`,
  
 });
 

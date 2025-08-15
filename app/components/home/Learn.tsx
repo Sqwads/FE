@@ -2,21 +2,21 @@ import Image from "next/image";
 import React from "react";
 
 const Learn = () => {
-  const progressValue = 14; // Example progress level
-
   return (
-    <section className="bg-[#F9FDFF] py-16 px-8 lg:px-16">
+    <section className="bg-[#F9FDFF] py-16 px-8 lg:px-24">
       {/* Container */}
-      <div className="max-w-7xl mx-auto space-y-16">
+      <div className="mal mx-auto space-y-16">
         {/* First Section: Header + Intro */}
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
+          {/* Left Column: Header */}
           <div className="lg:w-1/2">
-            <h2 className="text-4xl font-medium text-gray-800">
+            <h2 className="text-2xl lg:text-3xl font-medium text-gray-800">
               Learn by Doing: <br />
               <span className="text-blue-600 underline">Real Projects, Real Impact</span>
             </h2>
           </div>
-          <div className="lg:w-1/2 mt-6 lg:mt-0">
+          {/* Right Column: Intro Text */}
+          <div className="lg:w-1/2">
             <p className="text-gray-600 lg:text-lg">
               At Sqwads, we believe the best way to grow is through hands-on
               experience. Dive into real-world projects across tech and non-tech
@@ -29,26 +29,14 @@ const Learn = () => {
         {/* Second Section: Image + Description */}
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Left Column: Image */}
-          <div className="relative lg:w-1/2">
+          <div className=" lg:w-1/2">
             <Image
               src="/images/learn.png"
               alt="People collaborating on a project for educational development"
               width={600}
               height={400}
-              className="rounded-lg shadow-lg"
+              className="rounded-lg"
             />
-            {/* Progress Bar Overlay */}
-            <div className="absolute bottom-4 left-4 bg-white p-3 rounded-md shadow-md flex items-center space-x-4">
-              <p className="text-sm font-medium text-gray-700">
-                Completion Level
-              </p>
-              <div className="w-32 h-2 bg-gray-300 rounded-full">
-                <div
-                  className="h-2 bg-red-500 rounded-full"
-                  style={{ width: `${progressValue}%` }}
-                ></div>
-              </div>
-            </div>
           </div>
 
           {/* Right Column: Article */}
@@ -73,7 +61,7 @@ const Learn = () => {
               alt="Person analyzing data on multiple monitors"
               width={600}
               height={400}
-              className="rounded-lg shadow-lg"
+              className="rounded-lg"
             />
           </div>
 
@@ -82,7 +70,7 @@ const Learn = () => {
             <h3 className="text-3xl font-semibold text-gray-800">
               Analyze Data for a Non-Profit to Drive Better Decisions
             </h3>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 lg:text-lg">
               Leverage data insights to support impactful decision-making,
               optimize resources, and enhance the effectiveness of programs,
               helping the non-profit achieve its mission.
@@ -94,7 +82,6 @@ const Learn = () => {
               className="text-blue-600 underline font-medium flex items-center hover:underline"
             >
               Explore more projects
-             
             </a>
           </div>
         </div>

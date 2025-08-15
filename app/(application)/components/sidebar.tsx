@@ -2,58 +2,116 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { IoMdPeople } from "react-icons/io";
 import { FaProjectDiagram } from 'react-icons/fa';
 import { HiOutlineHome, HiOutlineClipboardList } from 'react-icons/hi';
 import { BsDatabase } from 'react-icons/bs';
+import { usePathname } from 'next/navigation';
+import { userWrapper } from '@/store';
+import { IoBagRemove } from 'react-icons/io5';
+import { Collapse } from '@mantine/core';
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const Sidebar = ({
+  onSelectTab
+}: {
+  onSelectTab?: () => void;
+}) => {
+  
+
+  const pathname = usePathname();
+  const {user} = userWrapper((state: any) => ({
+    user: state.user,
+  }));
+  const [mentorsOpen , setMentorsOpen] = useState(false)
+
+  const trimText = (email: string) => {
+    if(!email) return null;
+    const [localPart, domain] = email?.split('@');
+    return localPart.length > 5 ? `${localPart.slice(0, 5)}...@${domain}` : email;
+  };
+
+  const activeClasses = 'bg-[#001D69] text-white font-medium';
+  const inactiveClasses = 'text-gray-700 hover:bg-blue-100 rounded-md';
 
   return (
-    <div className="relative h-screen" >
-      {/* Mobile Menu Toggle */}
-      <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 text-gray-700 bg-white shadow-lg rounded-md"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        {isOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
-      </button>
-
+    <>
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full bg-white shadow-lg w-64 p-5 flex flex-col transition-transform duration-300 ease-in-out 
-        ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
-        style={{ backgroundImage: 'url("/images/signup_bg.png")' }}
+        className={` bg-[#EBF1FF] h-full  p-5 flex flex-col`}
       >
         {/* Logo */}
-        <div className="flex items-center gap-3 mb-8">
+        <div className="flex items-center gap-3 mb-14">
           <Image src="/images/sqwads-logo-2.png" alt="Logo" width={100} height={50} />
         </div>
 
         {/* Navigation Links */}
         <nav className="flex flex-col gap-4">
-          <Link href="/dashboard" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
+          <Link 
+              onClick={onSelectTab} 
+              href="/dashboard" 
+              className={`flex items-center gap-x-3 px-4 py-3  rounded-md 
+                ${['/dashboard'].includes(pathname) ?activeClasses:inactiveClasses}`}
+          >
             <HiOutlineHome size={20} /> Home
           </Link>
-          <Link href="/projects" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
-            <FaProjectDiagram size={20} /> Projects
+          <Link 
+              onClick={onSelectTab} 
+              href="/user-projects" 
+              className={`flex items-center gap-3 px-4 py-3 text-gray-700  rounded-md
+              ${pathname?.startsWith('/user-projects') ?activeClasses:inactiveClasses}`}
+            >
+            <FaProjectDiagram size={20} /> My Projects
           </Link>
-          <Link href="/board" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
-            <HiOutlineClipboardList size={20} /> Board
-          </Link>
-          <Link href="/database" className="flex items-center gap-3 p-2 text-gray-700 hover:bg-blue-100 rounded-md">
-            <BsDatabase size={20} /> Database
+            <div className="flex flex-col">
+            <button
+              type="button"
+              onClick={() => setMentorsOpen((open) => !open)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-md w-full text-left ${
+              pathname?.startsWith('/mentors') ? activeClasses : inactiveClasses
+              }`}
+            >
+              <IoMdPeople /> Sqwad Mentors
+            </button>
+            <Collapse in={mentorsOpen}>
+              <div className="pl-7 pt-2 flex flex-col gap-2">
+              <Link href={'/mentors'} className={`py-2 cursor-pointer text-sm px-3 rounded-md ${pathname == '/mentors' && 'bg-blue-100'}`}>My Sessions </Link>
+              <Link href={'/mentors_explore'} className={`py-2 cursor-pointer px-3 text-sm rounded-md  ${pathname == '/mentors_explore' && 'bg-blue-100'}`}>Explore Mentor</Link>
+              </div>
+            </Collapse>
+            </div>
+          <Link 
+              onClick={onSelectTab} 
+              href="/portfolio" 
+             className={`flex items-center gap-3 px-4 py-3 text-gray-700  rounded-md
+              ${pathname?.startsWith('/portfolio') ?activeClasses:inactiveClasses}`}
+          >
+            <IoBagRemove /> Portfolio
           </Link>
         </nav>
 
         {/* Footer */}
         <div className="mt-auto text-xs text-gray-400 text-center">
+        <div className="flex items-center gap-3 p-4 rounded-lg">
+         {user?.profileImage ?
+         <img src={user?.profileImage} className="w-10 h-10 rounded-full border object-cover" alt="" />
+         :
+          <div className="w-10 h-10 flex items-center justify-center bg-blue-900 text-white font-bold rounded-full">
+            {user?.firstName?.[0]}
+          </div>}
+          <div>
+            <h2 className="font-bold text-sm text-[#001D69]">
+              {user?.firstName} {user?.lastName}
+            </h2>
+            <p className="text-xs text-[#16181BB2]">{trimText(user?.email)}</p>
+          </div>
+        </div>
           © 2024 Sqwads
         </div>
+
       </div>
-    </div>
+    </>
   );
 };
 

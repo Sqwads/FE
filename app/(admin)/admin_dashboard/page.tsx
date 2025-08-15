@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { FaChartBar, FaCheckCircle, FaUserFriends, FaExclamationTriangle } from 'react-icons/fa';
 import UserActivityChart from './components/useractivitychart';
@@ -5,6 +6,9 @@ import ProjectsList from './components/projectlist';
 import UsersAnalysis from './components/usersanalysis';
 import MentorsList from './components/mentorslist';
 import Assessments from './components/assessments';
+import { userWrapper } from '@/src/store';
+import { useQuery } from '@tanstack/react-query';
+import { instance } from '@/src/api/instance';
 
 // Define the type for the stats data
 interface Stat {
@@ -38,45 +42,55 @@ const StatsCard = ({ title, value, icon, trend, trendColor }: StatsCardProps) =>
   );
 };
 
-// Stats data array
-const statsData: Stat[] = [
-  {
-    title: "Total Projects",
-    value: 2500,
-    icon: <FaChartBar className="text-blue-500 text-2xl" />,
-    trend: "+13% Up from last week",
-    trendColor: "text-green-500",
-  },
-  {
-    title: "Completed Projects",
-    value: 170,
-    icon: <FaCheckCircle className="text-blue-400 text-2xl" />,
-    trend: "-0.8% Down from last week",
-    trendColor: "text-red-500",
-  },
-  {
-    title: "Total Mentors",
-    value: 32,
-    icon: <FaUserFriends className="text-pink-400 text-2xl" />,
-    trend: "+13% Up from last week",
-    trendColor: "text-green-500",
-  },
-  {
-    title: "Upcoming Due Projects",
-    value: 21,
-    icon: <FaExclamationTriangle className="text-red-500 text-2xl" />,
-    trend: "-3% Down from last week",
-    trendColor: "text-red-500",
-  }
-];
+
 
 // AdminDashboard component
 function AdminDashboard() {
+
+  const user = userWrapper((state) => state.user);
+
+  const  {data: response, isLoading} = useQuery({
+    queryKey: ['user-stats'],
+    queryFn: () => instance.get('/analytics'),
+  })
+
+  // Stats data array
+  const statsData: Stat[] = [
+    {
+      title: "Total Projects",
+      value: response?.data?.data?.totalProjects || 0,
+      icon: <FaChartBar className="text-blue-500 text-2xl" />,
+      trend: "+13% Up from last week",
+      trendColor: "text-green-500",
+    },
+    {
+      title: "Completed Projects",
+      value: response?.data?.data?.totalCompletedProjects || 0,
+      icon: <FaCheckCircle className="text-blue-400 text-2xl" />,
+      trend: "-0.8% Down from last week",
+      trendColor: "text-red-500",
+    },
+    {
+      title: "Total Mentors",
+      value: response?.data?.data?.totalMentors || 0,
+      icon: <FaUserFriends className="text-pink-400 text-2xl" />,
+      trend: "+13% Up from last week",
+      trendColor: "text-green-500",
+    },
+    {
+      title: "Upcoming Due Projects",
+      value: response?.data?.data?.upcomingDueProjects || 0,
+      icon: <FaExclamationTriangle className="text-red-500 text-2xl" />,
+      trend: "-3% Down from last week",
+      trendColor: "text-red-500",
+    }
+  ];
+
   return (
     <section className="md:px-6 px-3 py-6 mt-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl text-[#16181B]">Welcome Back, Admin Yusuf! 👋</h1>
+        <h1 className="text-2xl text-[#16181B]">Welcome Back, Admin {user?.firstName}! 👋</h1>
         <p className="text-[#16181B80]">&quot;Great leadership starts with passion for what you do.</p>
       </div>
 

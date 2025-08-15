@@ -8,15 +8,16 @@ import ShowCase from "@/app/components/home/ShowCase";
 import Stories from "@/app/components/home/Stories";
 import Join from "@/app/components/home/Join";
 import Browse from "@/app/components/home/Browse";
-import Footer from "@/app/components/Footer"; // Import Footer component
+import Footer from "@/app/components/Footer";
+import Core from "./components/home/Core";
 
 export default function Home() {
   return (
     <>
       {/* Hero Section */}
       <div
-        className="hero-bg min-h-screen py-4 lg:py-7 px-2 md:px-5 lg:px-14"
-        style={{ backgroundImage: 'url("/images/Sqwads-bg.svg")' }}
+        className="hero-bg  pt-4 lg:pt-7 px-2 md:px-5 lg:px-14"
+        style={{ backgroundImage: 'url("/images/hero.png")', backgroundSize:'cover', backgroundPosition:'center' }}
       >
         <Navbar />
         <Hero />
@@ -24,7 +25,10 @@ export default function Home() {
 
       {/* Content Sections */}
       <Value />
-      <How />
+      <Core />
+      <div id="how-it-works">
+        <How />
+      </div>
       <Learn />
       <div>
         <Mentor />

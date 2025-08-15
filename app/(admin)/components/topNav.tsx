@@ -2,30 +2,49 @@
 
 import { FiBell, FiBookmark } from "react-icons/fi";
 import {AiOutlineMenu} from 'react-icons/ai'
-import { Drawer, TextInput } from "@mantine/core";
+import { Drawer, Menu, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import AdminSidebar from "./sidebar";
+import { userWrapper } from "@/src/store";
+import { LuLogOut } from "react-icons/lu";
+import { cookieStorage } from "@ibnlanre/portal";
+import { useRouter } from "next/navigation";
+import { CiSearch } from "react-icons/ci";
 
 
 export default function TopNav() {
  
   const [opened, { open, close }] = useDisclosure(false);
+  const { user } = userWrapper((state) => ({
+      user: state.user,
+  }));
+  const router = useRouter()
 
+  const logout = ()=>{
+    cookieStorage.clear()
+    router.push('/admin_login')
+  }
   return (
     <nav className="w-full bg-white shadow-md "> {/* Added left-64 */}
        <Drawer 
             opened={opened} 
             onClose={close} 
             withCloseButton={false}
-            size={"xs"}
+            size={"65%"}
             styles={{
               body:{
                 padding:'0px',
-              }
+                // border:'1px solid red',
+                height: '100vh',
+                
+              },
+              
             }}
         >
-          <div className="h-screen">
-            <AdminSidebar/>
+          <div className="h-full">
+            <AdminSidebar
+              onSelectTab={close}
+            />
           </div>
       </Drawer>
       <div className=" mx-auto px-6 py-5 flex items-center justify-between">
@@ -38,7 +57,7 @@ export default function TopNav() {
           <TextInput          
             className=" border border-[white] text-gray-700   focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Search anything here..."
-            leftSection={ <FiBookmark/>}
+            leftSection={ <CiSearch />}
             size="md"
             styles={{
               input:{
@@ -56,10 +75,21 @@ export default function TopNav() {
           <FiBell className="text-gray-700 text-xl cursor-pointer" />
 
           {/* User Profile */}
-          <div className="relative">
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
-              Y {/* First letter of user’s name */}
-            </div>
+          <div className="">
+          <Menu shadow="md" width={200}>
+            <Menu.Target>
+              <div className="w-10 cursor-pointer h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
+                {user?.firstName && user?.firstName[0]} {/* First letter of user’s name */}
+              </div>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item onClick={logout} leftSection={<LuLogOut color="red" size={20} />}>
+                Logout
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+           
+
           </div>
         </div>
       </div>
