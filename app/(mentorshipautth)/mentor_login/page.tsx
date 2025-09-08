@@ -121,7 +121,7 @@ const MentorLoginPage = () => {
         </p>
         <div className="text-center text-sm text-gray-600 mt-4">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" className="text-blue-900 font-bold underline">
+          <Link href="/mentor_signup" className="text-blue-900 font-bold underline">
             Signup
           </Link>
         </div>

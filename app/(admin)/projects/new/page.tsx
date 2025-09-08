@@ -72,7 +72,7 @@ const CreateProject = () => {
             value: item?.user?._id
         })) || []
 
-        console.log(availableUserOptions)
+        // console.log(availableUserOptions)
 
         setMembersOptions( removeDuplicates(
             [
@@ -126,20 +126,27 @@ const CreateProject = () => {
     }
 
     const validateMembersPayload = (users: any)=>{
-        if(users?.selectedMembers.length < 1){
-            return false
-        }else if(users?.selectedProjectLead == ''){
-            return false
-        }else{
-            return true
-        }
+        // if(users?.selectedMembers.length < 1){
+        //     return false
+        // }
+        // else if(users?.selectedProjectLead == ''){
+        //     return false
+        // }else{
+        //     return true
+        // }
+        return true
     }
 
     const [tabs, setTabs] = useState<ITab[]>([
         { name: 'Basic Details', hasFormValidation:true,formState: form, isActive: true },
         { name: 'Timeline', hasFormValidation:true,  formState: timelineForm },
         { name: 'Skills', hasFormValidation:false, definedValidation:validateSkillsAndTools,  isActive: false },
-        { name: 'Users/Members', hasFormValidation:false, definedValidation: validateMembersPayload, isActive:false },
+        { 
+            name: 'Users/Members', 
+            hasFormValidation:false, 
+            definedValidation: validateMembersPayload, 
+            isActive:false
+        },
         { name: 'Others', hasFormValidation:true, formState: additionalInfoForm, isActive: false },
         { name: 'Preview', hasFormValidation:false, isActive: false },
 
@@ -314,9 +321,9 @@ const CreateProject = () => {
         if(selectedTools.length < 1){
             return toast.error('Select at least one domain/skill in the SKILLS tab')
         }
-        if(selectedMembers.length < 1 || selectedProjectLead==''){
-            return toast.error('At least 1 member and project lead must be selected')
-        }
+        // if(selectedMembers.length < 1 || selectedProjectLead==''){
+        //     return toast.error('At least 1 member and project lead must be selected')
+        // }
 
         const teamMembers = selectedMembers.map(item=>({
             user: item.value,

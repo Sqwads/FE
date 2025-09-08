@@ -104,7 +104,7 @@ const ProjectView: React.FC = () => {
   }
 
   const handleManageApplication = (applicationId: string, action: string) => {
-    console.log('Manage Application:', applicationId, action);
+    // console.log('Manage Application:', applicationId, action);
     updateApplicationStatus({
       applicationId,
       status: action
