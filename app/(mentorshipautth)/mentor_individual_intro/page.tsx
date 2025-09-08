@@ -41,7 +41,7 @@ const MentorIntroductionPage = () => {
     mutationKey: ['mentor', 'intro'],
     onSuccess(data, variables, context) {
         toast.success('Information updated successfully');
-        router.push('/mentor_login');
+        router.push('/mentor_dashboard');
     },
     onError(error:any, variables, context) {
         toast.error(error?.response?.data?.message || 'Failed to update your Information');

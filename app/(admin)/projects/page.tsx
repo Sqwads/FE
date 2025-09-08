@@ -43,8 +43,8 @@ const Projects = () => {
               cell:({ row})=>
                 <div className="">
                     {formatTextToSentenceCase(
-                        row.original.teamMembers?.map((item:any)=>item?.role).join(', ')
-                    )}
+                        row.original.skills?.map((item:any)=>item?.name).join(', ')
+                    ) || 'N/A'}
                 </div>
         },
         {
@@ -69,6 +69,9 @@ const Projects = () => {
                    <div className="flex rounded-full text-xs items-center justify-center border border-[#9BB7FF] h-8 w-8 text-[#001D69]">
                     {row.original?.teamMembers?.length - 2}+
                     </div>
+                  }
+                  { row.original?.teamMembers?.length == 0 &&
+                    <div className="text-gray-500">N/A</div>
                   }
                   
               </div>
