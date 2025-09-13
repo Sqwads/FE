@@ -167,6 +167,7 @@ const Discussions = ({
                     </div>
                     <div className='mb-7'>
                         <Textarea
+                        className="w-full border rounded p-3 h-40 resize-y"
                             placeholder="Description"
                            {...form.getInputProps('details')}
                             minRows={4}

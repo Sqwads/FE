@@ -42,6 +42,7 @@ const ScheduleModal = ({ opened, onClose, slot, mentor, note, isSubmitting, hand
         />
 
         <Textarea
+        className="w-full border rounded p-3 h-40 resize-y"
           label="Anything else to say? (optional)"
           placeholder="Type here..."
           minRows={3}

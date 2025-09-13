@@ -94,9 +94,10 @@ const BasicInformation = ({user}:any) => {
       />
 
       <Textarea
+      className="w-full border rounded p-3 h-40 resize-y"
         label="Bio"
         placeholder="Tell us about yourself..."
-        minRows={4}
+        rows={6}
         {...form.getInputProps('bio')}
       />
 

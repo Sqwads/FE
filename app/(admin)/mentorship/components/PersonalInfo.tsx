@@ -75,7 +75,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
             value={bio} 
             readOnly 
             rows={6}
-            className="w-full p-2 border border-gray-200 rounded-md bg-gray-50"
+            className="w-full p-2 h-40 resize-y border border-gray-200 rounded-md bg-gray-50"
           />
         </div>
         

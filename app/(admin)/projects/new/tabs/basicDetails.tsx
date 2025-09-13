@@ -95,6 +95,8 @@ const BasicDetails = ({
                     <div className="mb-4">
                         <div className="mb-1  text-[#16181BB2] text-sm lg:text-base">Project Overview</div>
                         <Textarea
+                        className="w-full border rounded p-3 h-40 resize-y"
+                        rows={6}
                             styles={{
                                 input: { fontSize: '1rem' }
                             }}
@@ -107,6 +109,8 @@ const BasicDetails = ({
                     <div className="mb-4">
                         <div className="mb-1  text-[#16181BB2] text-sm lg:text-base">Key Features</div>
                         <Textarea
+                        className="w-full border rounded p-3 h-40 resize-y"
+                        rows={6}
                             styles={{
                                 input: { fontSize: '1rem' }
                             }}
