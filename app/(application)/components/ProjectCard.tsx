@@ -25,7 +25,7 @@ const ProjectCard = ({
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
+    <Link href={`/user-projects/${projectId}`} className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
       <div className="relative h-40 overflow-hidden">
         {/* Replaced Image with img */}
         <img 
@@ -95,7 +95,7 @@ const ProjectCard = ({
           <span className="text-xs text-gray-500">{duration}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
