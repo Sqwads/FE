@@ -74,8 +74,8 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
           <textarea 
             value={bio} 
             readOnly 
-            rows={6}
-            className="w-full p-2 h-40 resize-y border border-gray-200 rounded-md bg-gray-50"
+            rows={10}
+            className="w-full p-2 resize-y border border-gray-200 rounded-md bg-gray-50"
           />
         </div>
         

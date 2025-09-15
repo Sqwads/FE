@@ -262,7 +262,7 @@ const CreatePostModule = () => {
             </div>
       
             <Textarea
-              className="w-full border rounded p-3 h-40 resize-y"
+              className="w-full border rounded p-3 resize-y"
               rows={6}
               label="Final thought"
               placeholder='e.g. "I hope this helps you in your journey!"'

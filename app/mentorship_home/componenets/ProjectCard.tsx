@@ -27,7 +27,6 @@ const ProjectCard = ({
   return (
     <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden">
       <div className="relative h-40 overflow-hidden">
-        {/* Replaced Image with img */}
         <img 
           src={image} 
           alt={title} 

@@ -167,10 +167,10 @@ const Discussions = ({
                     </div>
                     <div className='mb-7'>
                         <Textarea
-                        className="w-full border rounded p-3 h-40 resize-y"
+                        className="w-full rounded p-3 resize-y"
                             placeholder="Description"
                            {...form.getInputProps('details')}
-                            minRows={4}
+                            minRows={10}
                         />
                     </div>
                     <div className="flex justify-end">

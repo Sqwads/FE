@@ -115,8 +115,8 @@ const UserProfile = () => {
                         <div className="mb-3">
                             <div className="text-sm text-[#16181B80] mb-1">Bio</div>
                             <Textarea
-                            className="w-full border rounded p-3 h-40 resize-y"
-                            rows={6}
+                            className="w-full rounded p-3 resize-y"
+                            rows={10}
                                 readOnly
                                 size='xl'
                                 value={user?.profile?.bio}

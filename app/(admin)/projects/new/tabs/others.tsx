@@ -20,8 +20,8 @@ const Others = ({
                 <div className="mb-5">
                     <div className="mb-1  text-[#16181BB2] text-sm lg:text-base">Any additional Info</div>
                     <Textarea
-                    className="w-full border rounded p-3 h-40 resize-y"
-                    rows={6}
+                    className="w-full rounded p-3 resize-y"
+                    rows={10}
                         {...form?.getInputProps('additionalInfo')}
                         size='xl'
                         styles={{

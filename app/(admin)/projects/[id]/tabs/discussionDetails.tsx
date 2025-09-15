@@ -123,8 +123,8 @@ const DiscussionDetails = ({
                             value={commentText}
                             onChange={(e) => setCommentText(e.target.value)}
                             placeholder="Type your comment here |"
-                            className="w-full border rounded p-3 h-40 resize-y"  
-                            rows={6}
+                            className="w-full rounded p-3 resize-y"  
+                            rows={10}
                           />
                           <div className="flex justify-between items-center">
                             <div className="flex items-center space-x-2">
