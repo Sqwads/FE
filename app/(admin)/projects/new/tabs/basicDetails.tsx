@@ -1,9 +1,12 @@
 "use client"
-import { Textarea, TextInput } from '@mantine/core';
-import {  UseFormReturnType } from '@mantine/form';
+import { TextInput, Textarea } from '@mantine/core';
+import { UseFormReturnType } from '@mantine/form';
 import React, { useEffect, useRef, useState } from 'react';
 import { BsUpload } from 'react-icons/bs';
-import { BasicDetailsValidator } from '../validators';
+import { RichTextEditor, Link as RichTextLink } from '@mantine/tiptap';
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import '@mantine/tiptap/styles.css';
 
 const BasicDetails = ({
     handleProceed,
@@ -20,13 +23,42 @@ const BasicDetails = ({
     imageSrc?: any,
     previewMode?: boolean
 }) => {
-
-
-
     const fileInputRef = useRef<any>(null);
+    
+    // Initialize the rich text editor for key features
+    const featuresEditor = useEditor({
+        extensions: [StarterKit],
+        content: form?.values.features || '',
+        editorProps: {
+            attributes: {
+                class: 'prose',
+            },
+        },
+        onUpdate({ editor }) {
+            const value = editor.getHTML();
+            form?.setFieldValue('features', value);
+        },
+        immediatelyRender: false,
+        editable: !previewMode, // This is how you control editability
+    });
+
     const handleImageClick = () => {
         fileInputRef.current.click();
     };
+
+    // Update editor content when form values change (for edit mode)
+    useEffect(() => {
+        if (featuresEditor && form?.values.features) {
+            featuresEditor.commands.setContent(form.values.features);
+        }
+    }, [form?.values.features, featuresEditor]);
+
+    // Update editable state when previewMode changes
+    useEffect(() => {
+        if (featuresEditor) {
+            featuresEditor.setEditable(!previewMode);
+        }
+    }, [previewMode, featuresEditor]);
 
     return (
         <>
@@ -88,13 +120,14 @@ const BasicDetails = ({
                             size='md'
                             {...form?.getInputProps('description')}
                             disabled={previewMode}
-                        // placeholder='For e.g. Design a Weather Forecast Application for the Nigeria National Space Research and Development (NASRDA)'
                         />
                     </div>
 
                     <div className="mb-4">
                         <div className="mb-1  text-[#16181BB2] text-sm lg:text-base">Project Overview</div>
                         <Textarea
+                            className="w-full resize-y rounded p-3"
+                            rows={10}
                             styles={{
                                 input: { fontSize: '1rem' }
                             }}
@@ -106,14 +139,49 @@ const BasicDetails = ({
 
                     <div className="mb-4">
                         <div className="mb-1  text-[#16181BB2] text-sm lg:text-base">Key Features</div>
-                        <Textarea
-                            styles={{
-                                input: { fontSize: '1rem' }
-                            }}
-                            size='xl'
-                            {...form?.getInputProps('features')}
-                            disabled={previewMode}
-                        />
+                        {featuresEditor && (
+                            <RichTextEditor editor={featuresEditor} style={{ minHeight: 200 }}>
+                                {!previewMode && (
+                                    <RichTextEditor.Toolbar sticky stickyOffset={60}>
+                                        <RichTextEditor.ControlsGroup>
+                                            <RichTextEditor.Bold />
+                                            <RichTextEditor.Italic />
+                                            <RichTextEditor.Strikethrough />
+                                            <RichTextEditor.ClearFormatting />
+                                            <RichTextEditor.Highlight />
+                                            <RichTextEditor.Code />
+                                        </RichTextEditor.ControlsGroup>
+
+                                        <RichTextEditor.ControlsGroup>
+                                            <RichTextEditor.H1 />
+                                            <RichTextEditor.H2 />
+                                            <RichTextEditor.H3 />
+                                            <RichTextEditor.H4 />
+                                        </RichTextEditor.ControlsGroup>
+
+                                        <RichTextEditor.ControlsGroup>
+                                            <RichTextEditor.Blockquote />
+                                            <RichTextEditor.Hr />
+                                            <RichTextEditor.BulletList />
+                                            <RichTextEditor.OrderedList />
+                                            <RichTextEditor.Subscript />
+                                            <RichTextEditor.Superscript />
+                                        </RichTextEditor.ControlsGroup>
+
+                                        <RichTextEditor.ControlsGroup>
+                                            <RichTextEditor.Link />
+                                            <RichTextEditor.Unlink />
+                                        </RichTextEditor.ControlsGroup>
+
+                                        <RichTextEditor.ControlsGroup>
+                                            <RichTextEditor.Undo />
+                                            <RichTextEditor.Redo />
+                                        </RichTextEditor.ControlsGroup>
+                                    </RichTextEditor.Toolbar>
+                                )}
+                                <RichTextEditor.Content style={{ minHeight: 200 }} />
+                            </RichTextEditor>
+                        )}
                     </div>
 
                     {!previewMode &&
