@@ -25,7 +25,6 @@ const BasicDetails = ({
 }) => {
     const fileInputRef = useRef<any>(null);
     
-    // Initialize the rich text editor for key features
     const featuresEditor = useEditor({
         extensions: [StarterKit],
         content: form?.values.features || '',
@@ -39,7 +38,7 @@ const BasicDetails = ({
             form?.setFieldValue('features', value);
         },
         immediatelyRender: false,
-        editable: !previewMode, // This is how you control editability
+        editable: !previewMode, 
     });
 
     const handleImageClick = () => {
