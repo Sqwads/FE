@@ -47,7 +47,6 @@ const ProjectDescription: React.FC<ProjectDescriptionProps> = ({
       
       <div className="mt-6">
         <h3 className="font-medium text-gray-700">Key Features and Design Goals</h3>
-        {/* Replace the paragraph with div using dangerouslySetInnerHTML */}
         <div 
           className="text-gray-600 mt-2 leading-relaxed prose" 
           dangerouslySetInnerHTML={{ __html: features }}
