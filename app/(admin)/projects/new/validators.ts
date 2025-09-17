@@ -13,5 +13,5 @@ export const TimeLineValidator = Yup.object({
 })
 
 export const AdditionalInfoValidator = Yup.object({
-    additionalInfo: Yup.string().required('info is required')
+    additionalInfo: Yup.string().optional()
 })
