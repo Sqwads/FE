@@ -1,5 +1,5 @@
 "use client"
-import  React, { useState } from 'react';
+import React, { useState } from 'react';
 import { BsPlusLg, BsThreeDotsVertical } from 'react-icons/bs';
 import Card from './components/card';
 import { ColumnDef } from '@tanstack/react-table';
@@ -15,9 +15,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-
 const Projects = () => {
-
     const queryClient = useQueryClient()
     const colorCodes = {
         COMPLETED: ['#01C5691A','#01C569'],
@@ -35,69 +33,73 @@ const Projects = () => {
         {
             header: 'Project Name',
             accessorKey: 'name',
-            cell: value=>value.getValue()
+            cell: value => value.getValue()
         },
         {
-              header:'Domains',
-              accessorKey:'firstName',
-              cell:({ row})=>
-                <div className="">
-                    {formatTextToSentenceCase(
-                        row.original.skills?.map((item:any)=>item?.name).join(', ')
-                    ) || 'N/A'}
+            header: 'Users',
+            accessorKey: 'firstName',
+            cell: ({ row }) =>
+                <div className="flex">
+                    {row.original.teamMembers?.slice(0, 2)?.map((item: any, index: any) =>
+                        <div key={index}>
+                            {item?.user?.profileImage ?
+                                <img src={item?.user?.profileImage} className='h-8 w-8 rounded-full border object-cover' alt="image" /> :
+                                <div
+                                    className='rounded-full h-8 w-8 bg-blue-600 text-white font-medium ml-[-0.4rem] items-center justify-center flex text-lg'
+                                >
+                                    {item.user?.firstName[0]}
+                                </div>
+                            }
+                        </div>
+                    )}
+                    {
+                        (row.original?.teamMembers?.length - 2) > 0 &&
+                        <div className="flex rounded-full text-xs items-center justify-center border border-[#9BB7FF] h-8 w-8 text-[#001D69]">
+                            {row.original?.teamMembers?.length - 2}+
+                        </div>
+                    }
+                    {row.original?.teamMembers?.length == 0 &&
+                        <div className="text-gray-500">N/A</div>
+                    }
                 </div>
         },
         {
-            header:'Users',
-            accessorKey:'firstName',
-            cell:({ row})=>
-              <div className="flex">
-                  {row.original.teamMembers?.slice(0,2)?.map((item:any, index:any)=>
-                    <div key={index}>
-                        {item?.user?.profileImage ?
-                         <img src={item?.user?.profileImage} className='h-8 w-8 rounded-full border object-cover' alt="image" />:
-                         <div 
-                            className='rounded-full h-8 w-8 bg-blue-600 text-white font-medium ml-[-0.4rem] items-center justify-center flex text-lg'
-                        >
-                            {item.user?.firstName[0]}
-                        </div>
-                        }
-                    </div>
-                  )}
-                  {
-                   ( row.original?.teamMembers?.length - 2) > 0 &&
-                   <div className="flex rounded-full text-xs items-center justify-center border border-[#9BB7FF] h-8 w-8 text-[#001D69]">
-                    {row.original?.teamMembers?.length - 2}+
-                    </div>
-                  }
-                  { row.original?.teamMembers?.length == 0 &&
-                    <div className="text-gray-500">N/A</div>
-                  }
-                  
-              </div>
+            header: 'Domains',
+            accessorKey: 'firstName',
+            cell: ({ row }) =>
+                <div className="">
+                    {formatTextToSentenceCase(
+                        row.original.skills?.map((item: any) => item?.name).join(', ')
+                    ) || 'N/A'}
+                </div>
+        },
+
+          {
+            header: 'Creation Date',
+            accessorKey: 'createdAt',
+            cell: (value) => moment(value.getValue() as string).format('MMM DD, YYYY')
         },
         {
-            header:'Deadline',
-            accessorKey:'endDate' ,
-            cell:(value)=> moment(value.getValue() as string ).format('MMMM Do YYYY'),
+            header: 'Deadline',
+            accessorKey: 'endDate',
+            cell: (value) => moment(value.getValue() as string).format('MMMM Do YYYY'),
         },
         {
-            header:'Status',
-            accessorKey:'status' ,
-            
-            cell:({row})=> 
-                <div 
+            header: 'Status',
+            accessorKey: 'status',
+            cell: ({ row }) =>
+                <div
                     className='text-center py-1 rounded-md text-xs'
                     style={{
                         //@ts-expect-error
-                        background: colorCodes[`${row.original?.status}`][0], 
+                        background: colorCodes[`${row.original?.status}`][0],
                         //@ts-expect-error
                         border: `1px solid ${colorCodes[`${row.original?.status}`][1]}`,
                         //@ts-expect-error
-                        color:  colorCodes[`${row.original?.status}`][1]
-                        }}
-                > 
-                    {row.original?.status} 
+                        color: colorCodes[`${row.original?.status}`][1]
+                    }}
+                >
+                    {row.original?.status}
                 </div>
         },
         {
@@ -117,16 +119,15 @@ const Projects = () => {
                         <Menu.Item onClick={() => router.push(`/projects/new?mode=edit&project=${row.original._id}`)}>
                             Edit Project
                         </Menu.Item>
-                        <Menu.Item onClick={()=>handleDeleteProject(row.original?._id)} color='red' className="text-[red]">Archive Project</Menu.Item>
+                        <Menu.Item onClick={() => handleDeleteProject(row.original?._id)} color='red' className="text-[red]">Archive Project</Menu.Item>
                     </Menu.Dropdown>
                 </Menu>
             )
         }
-    
     ]
 
-    const {mutate:editProject, isPending: projectEditIsPending} = useMutation({
-        mutationFn: (data:any)=>instance.patch(`/project`, data),
+    const { mutate: editProject, isPending: projectEditIsPending } = useMutation({
+        mutationFn: (data: any) => instance.patch(`/project`, data),
         mutationKey: ['projectEdit'],
         onSuccess() {
             toast.success('Project Deleted Successfully')
@@ -135,33 +136,30 @@ const Projects = () => {
                 queryKey: ['projects']
             })
         },
-        onError(error:any) {
+        onError(error: any) {
             toast.error('Project Deletion Failed')
-            // console.log(error?.response?.data)
         },
     })
 
-
-    const {data: response, isPending} = useQuery({
-        queryFn:()=>instance.get(`/project/all`,  {
-            params:{
-              pageSize,
-              pageNumber: currentPage,
-              ...(searchQuery.length > 1 && {searchQuery})
+    const { data: response, isPending } = useQuery({
+        queryFn: () => instance.get(`/project/all`, {
+            params: {
+                pageSize,
+                pageNumber: currentPage,
+                ...(searchQuery.length > 1 && { searchQuery })
             }
         }),
         queryKey: ['projects', searchQuery, currentPage, pageSize],
         placeholderData: (prev) => prev
     })
-    const totalPages = Math.ceil(response?.data?.totalNoOfRecords/pageSize)
-    const {table} = useCustomTable({
-        columns:  projectDtHeader,
+    const totalPages = Math.ceil(response?.data?.totalNoOfRecords / pageSize)
+    const { table } = useCustomTable({
+        columns: projectDtHeader,
         tableData: response?.data?.projects,
     })
 
-    
-    const handleDeleteProject = (projectId: string)=>{
-        const selectedProject = response?.data?.projects?.find((item:any)=> item._id == projectId)
+    const handleDeleteProject = (projectId: string) => {
+        const selectedProject = response?.data?.projects?.find((item: any) => item._id == projectId)
         const userConfirmed = confirm(`Are you sure you want to delete the ${selectedProject?.name} Project ? Acion Cannot be Undone!!!`);
 
         if (userConfirmed) {
@@ -169,29 +167,28 @@ const Projects = () => {
                 isDeleted: true,
                 projectId
             })
-        } 
+        }
     }
 
-    const handleSearch = (e:any)=>{
+    const handleSearch = (e: any) => {
         const keyword = e.target.value
-        
         setCurrentPage(1)
         setSearchQuery(keyword)
-         
-      }
-    
-      const handleNextPage = ()=>{   
-        if(currentPage+1 <= totalPages){
-          setCurrentPage(currentPage+1)
+    }
+
+    const handleNextPage = () => {
+        if (currentPage + 1 <= totalPages) {
+            setCurrentPage(currentPage + 1)
         }
-      }
-    
-      const handlePrevPage = ()=>{
-        if(currentPage-1 > 0){
-          setCurrentPage(currentPage-1)
+    }
+
+    const handlePrevPage = () => {
+        if (currentPage - 1 > 0) {
+            setCurrentPage(currentPage - 1)
         }
-      }
-    return ( 
+    }
+
+    return (
         <div className='py-10 lg:px-10 px-3'>
             <div className="lg:flex justify-between lg:mb-14 mb-10 items-center  rounded-lg">
                 {/* Title and Subtitle */}
@@ -199,14 +196,13 @@ const Projects = () => {
                     <h1 className="lg:text-2xl text-2xl font ">Project Management</h1>
                     <p className="text-gray-500 mt-1">Manage and monitor all projects seamlessly</p>
                 </div>
-        
-                {/* Export as CSV Button */}
-                <Link href='/projects/new'>
-                <button
-                    className="flex lg:text-base text-sm  items-center gap-2 px-4 py-2 border  bg-[#9BB7FF33] text-[#0234B8] border-[#0234B8] rounded-lg  "
-                >
-                    <BsPlusLg /> New Project
-                </button>
+
+/                <Link href='/projects/new'>
+                    <button
+                        className="flex lg:text-base text-sm  items-center gap-2 px-4 py-2 border  bg-[#9BB7FF33] text-[#0234B8] border-[#0234B8] rounded-lg  "
+                    >
+                        <BsPlusLg /> New Project
+                    </button>
                 </Link>
             </div>
 
@@ -253,17 +249,17 @@ const Projects = () => {
             <div className="mt-10">
                 <SearchFilters
                     onChange={handleSearch}
-                    handleNextPage = {handleNextPage}
+                    handleNextPage={handleNextPage}
                     handlePrevPage={handlePrevPage}
-                    totalRecords = {response?.data?.totalNoOfRecords}
-                    currentPage = {currentPage}
-                    pageSize = {pageSize}
+                    totalRecords={response?.data?.totalNoOfRecords}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
                     showExportBtn
                 />
                 <AppTable table={table} />
             </div>
         </div>
-     );
+    );
 }
- 
+
 export default Projects;

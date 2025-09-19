@@ -6,8 +6,7 @@ interface ProjectDescriptionProps {
   overview: string;
   currentDay: string | number;
   endDay: string | number;
-  
-  features:string ;
+  features: string;
 }
 
 const ProjectDescription: React.FC<ProjectDescriptionProps> = ({
@@ -15,10 +14,9 @@ const ProjectDescription: React.FC<ProjectDescriptionProps> = ({
   features,
   endDay,
   currentDay,
-  
 }) => {
+  const progressWidth = (Number(currentDay) / Number(endDay)) * 100;
 
-  const progressWidth = (Number(currentDay) / Number(endDay)) * 100
   return (
     <div className="mt-6 lg:pr-36">
       {/* Timeline Progress (visible on left panel) */}
@@ -34,7 +32,10 @@ const ProjectDescription: React.FC<ProjectDescriptionProps> = ({
           </div>
         </div>
         <div className="h-2 bg-gray-200 opacity-50 mt-2">
-          <div className=" h-full bg-blue-800 rounded-full" style={{width: `${progressWidth> 100? 100: progressWidth}%`}}></div>
+          <div 
+            className="h-full bg-blue-800 rounded-full" 
+            style={{ width: `${progressWidth > 100 ? 100 : progressWidth}%` }}
+          ></div>
         </div>
       </div>
       <h2 className="text-xl font-semibold">Description</h2>
@@ -45,11 +46,12 @@ const ProjectDescription: React.FC<ProjectDescriptionProps> = ({
       </div>
       
       <div className="mt-6">
-        <h3 className="font-medium text-gray-700 ">Key Features and Design Goals</h3>
-        <p className="text-gray-600 mt-2 leading-relaxed whitespace-pre-line">{features}</p>
+        <h3 className="font-medium text-gray-700">Key Features and Design Goals</h3>
+        <div 
+          className="text-gray-600 mt-2 leading-relaxed prose" 
+          dangerouslySetInnerHTML={{ __html: features }}
+        />
       </div>
-
-      
     </div>
   );
 };

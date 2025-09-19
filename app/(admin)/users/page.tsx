@@ -380,6 +380,8 @@ const UserListPage = () => {
                 <div className="mb-3">
                   <div className="text-sm mb-1">Additional details (optional)</div>
                   <Textarea
+                  className="w-full border rounded p-3 resize-y"
+                  rows={10}
                        {...form.getInputProps('details')}
                   />
                 </div>
