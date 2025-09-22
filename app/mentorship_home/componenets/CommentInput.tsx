@@ -24,8 +24,8 @@ const CommentInput: React.FC<CommentInputProps> = ({ onCommentSubmit }) => {
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
         placeholder="Type your comment here |"
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none mb-3"
-        rows={3}
+        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y mb-3"
+        rows={10}
       />
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-2">

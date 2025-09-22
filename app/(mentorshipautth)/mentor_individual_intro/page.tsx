@@ -81,20 +81,22 @@ const MentorIntroductionPage = () => {
           <div className="space-y-6">
             {/* Mentorship Story */}
             <Textarea
+            className="w-full border rounded p-3 resize-y"
               label="Your mentorship story"
               placeholder="I started mentoring..."
               autosize
-              minRows={4}
+              rows={10}
               {...form.getInputProps("story")}
               styles={{ label: { marginBottom: "8px" } }}
             />
 
             {/* Bio */}
             <Textarea
+            className="w-full border rounded p-3 resize-y"
               label="Your bio"
               placeholder="I can help you with..."
               autosize
-              minRows={4}
+              rows={10}
               {...form.getInputProps("bio")}
               styles={{ label: { marginBottom: "8px" } }}
             />

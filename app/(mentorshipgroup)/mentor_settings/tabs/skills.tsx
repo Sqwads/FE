@@ -232,9 +232,10 @@ const SkillsExperience = ({user}:any) => {
             />
 
             <Textarea
+            className="w-full rounded p-3 resize-y"
               label="Description"
               placeholder="Type Here..."
-              minRows={3}
+              rows={10}
               {...form.getInputProps(`experiences.${index}.description`)}
             />
 

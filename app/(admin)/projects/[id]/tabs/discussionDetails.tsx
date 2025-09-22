@@ -119,11 +119,12 @@ const DiscussionDetails = ({
 
                     <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
                           <Textarea
+
                             value={commentText}
                             onChange={(e) => setCommentText(e.target.value)}
                             placeholder="Type your comment here |"
-                            className=" mb-3"
-                            rows={3}
+                            className="w-full rounded p-3 resize-y"  
+                            rows={10}
                           />
                           <div className="flex justify-between items-center">
                             <div className="flex items-center space-x-2">
@@ -137,7 +138,7 @@ const DiscussionDetails = ({
                             <button 
                               onClick={handleCommentSubmit}
                               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 disabled:opacity-50"
-                              disabled={!commentText.trim() || commentCreateIsPending} // Disable button if textarea is empty
+                              disabled={!commentText.trim() || commentCreateIsPending}
                             >
                               {commentCreateIsPending? 'Creating...':"Comment"}
                             </button>

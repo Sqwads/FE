@@ -204,11 +204,12 @@ const Portfolio = ({
                     {currentTab=='Project' && <PortfolioProject projects={projectResponse?.data?.projects} onProjectSelect={handleProjectSelect} /> }
                     {currentTab=='About' && 
                     <PortfolioAbout 
-                        user={{
-                            ...currentUser,
-                            bio: currentUser?.bio || `I am ${currentUser?.firstName} ${currentUser?.lastName}, a passionate and dedicated individual with a strong interest in ${formatTextToSentenceCase(currentUser?.skills_of_interest?.join(', ') || '')}. With a keen focus on ${formatTextToSentenceCase(currentUser?.topics_of_interest?.join(', ') || '')}, I am committed to continuous learning and growth in the tech industry. My objectives include finding exciting projects and building a robust portfolio that showcases my skills and achievements. I am always eager to collaborate, innovate, and contribute to impactful solutions.`
-                        }}
-                    /> 
+                            user={{
+                                ...currentUser,
+                                bio: currentUser?.bio 
+                            }}
+                         />
+
                     }
                </div>
             </div>
