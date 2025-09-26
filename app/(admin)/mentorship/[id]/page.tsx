@@ -183,16 +183,18 @@ const MentorProfile: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Personal Information */}
         <div className="lg:col-span-1">
-          <PersonalInfo 
-            fullName={`${mentor?.firstName} ${mentor?.lastName}`}
-            email={mentor?.email}
-            role={mentor?.title}
-            organization={mentor?.company}
-            bio={mentor?.bio}
-            socialLinks={{
-              linkedin: mentor?.linkedln_url
-            }}
-          />
+       <PersonalInfo 
+          fullName={`${mentor?.firstName} ${mentor?.lastName}`}
+          email={mentor?.email}
+          role={mentor?.title}
+          organization={mentor?.company}
+          bio={mentor?.bio}
+          socialLinks={{
+            linkedin: mentor?.linkedin_url,
+            facebook: mentor?.facebook_url,
+            twitter: mentor?.twitter_url, 
+          }}
+        />
         </div>
 
         {/* Right Column - Activity Panel */}
