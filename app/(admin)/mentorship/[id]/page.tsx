@@ -7,10 +7,12 @@ import PersonalInfo from '../components/PersonalInfo';
 import ActivityTabs from '../components/ActivityTabs';
 import SessionsSubTabs from '../components/SessionsSubTabs';
 import SessionsList, { SessionItem } from '../components/SessionsList';
+// import ReviewList from '../components/ReviewList';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { instance } from '@/api/instance';
 import moment from 'moment';
+import ReviewList from '@/app/(application)/mentors/components/review';
 
 const MentorProfile: React.FC = () => {
   const params = useParams()
@@ -106,7 +108,7 @@ const MentorProfile: React.FC = () => {
         { name: 'User 2' },
         { name: 'User 3' }
       ]
-    }
+    },
   ];
 
   const pendingSessions: SessionItem[] = [];
@@ -131,16 +133,8 @@ const MentorProfile: React.FC = () => {
   const getSocialLinks = (mentor: any) => {
     if (!mentor) return undefined;
     
-    console.log('Mentor social links data:', {
-      linkedin_url: mentor.linkedin_url,
-      linkedln_url: mentor.linkedln_url,
-      facebook_url: mentor.facebook_url,
-      twitter_url: mentor.twitter_url
-    });
-    
     const socialLinks: any = {};
     
-    // Only add social links that have valid URLs
     if (mentor.linkedin_url || mentor.linkedln_url) {
       socialLinks.linkedin = mentor.linkedin_url || mentor.linkedln_url;
     }
@@ -150,8 +144,6 @@ const MentorProfile: React.FC = () => {
     if (mentor.twitter_url) {
       socialLinks.twitter = mentor.twitter_url;
     }
-    
-    console.log('Processed social links:', socialLinks);
     
     return Object.keys(socialLinks).length > 0 ? socialLinks : undefined;
   };
@@ -179,7 +171,6 @@ const MentorProfile: React.FC = () => {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Personal Information */}
         <div className="lg:col-span-1">
           <PersonalInfo 
             fullName={`${mentor?.firstName} ${mentor?.lastName}`}
@@ -213,9 +204,7 @@ const MentorProfile: React.FC = () => {
             )}
 
             {activeTab === 'reviews' && (
-              <div className="py-4 text-center text-gray-500">
-                No reviews available at this time.
-              </div>
+              <ReviewList />
             )}
           </div>
         </div>
