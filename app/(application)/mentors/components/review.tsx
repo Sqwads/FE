@@ -41,7 +41,7 @@ const ReviewList = () => {
     onSuccess: () => {
       toast.success('Review submitted successfully!');
       setShowReviewForm(false);
-      setNewRating(5); // Reset to default 5 stars
+      setNewRating(5);
       setNewComment('');
       queryClient.invalidateQueries({ queryKey: ['mentor-reviews', mentorId] });
       queryClient.invalidateQueries({ queryKey: ['mentors', mentorId] });
