@@ -36,8 +36,8 @@ export default function MyProjectsPage() {
       queryFn: () => instance.get('/project/all', {
         params: { 
           userId: user?._id ,
-          pageSize,
-          page
+          // pageSize,
+          // page
         },
     }), 
       queryKey: ['projects'],

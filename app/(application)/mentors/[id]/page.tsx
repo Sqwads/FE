@@ -116,7 +116,7 @@ const MentorProfile = () => {
     };
 
     const handleSubmit = ()=>{
-
+        if(!selectedDate) return toast.error('Please select a date')
         const payload = {
             date: selectedDate,
             time: selectedSlot,
