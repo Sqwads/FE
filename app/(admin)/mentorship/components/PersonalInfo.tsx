@@ -79,7 +79,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
           />
         </div>
         
-        {socialLinks && (
+        {/* {socialLinks && (
           <div>
             <label className="block text-sm text-gray-600 mb-2">Social Links</label>
             <div className="flex space-x-2">
@@ -115,7 +115,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({
               )}
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
