@@ -7,7 +7,6 @@ import PersonalInfo from '../components/PersonalInfo';
 import ActivityTabs from '../components/ActivityTabs';
 import SessionsSubTabs from '../components/SessionsSubTabs';
 import SessionsList, { SessionItem } from '../components/SessionsList';
-// import ReviewList from '../components/ReviewList';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { instance } from '@/api/instance';
@@ -35,82 +34,8 @@ const MentorProfile: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'sessions' | 'reviews'>('sessions');
   const [activeSubTab, setActiveSubTab] = useState<'upcoming' | 'pending' | 'past' | 'cancelled'>('upcoming');
 
-  // Sample data for sessions
-  const upcomingSessions: SessionItem[] = [
-    {
-      id: '1',
-      date: {
-        day: 'Wed',
-        dayOfMonth: 25
-      },
-      time: '09:00-09:30',
-      sessionType: 'General Review Session',
-      title: 'General Review Session',
-      participants: [
-        { name: 'Nnenna Oyekachi' }
-      ]
-    },
-    {
-      id: '2',
-      date: {
-        day: 'Fri',
-        dayOfMonth: 27
-      },
-      time: '09:00-09:30',
-      sessionType: 'Weekly Digest Session',
-      title: 'General Review Session',
-      participants: [
-        { name: 'Nnenna Oyekachi' },
-        { name: 'User 2' },
-        { name: 'User 3' },
-        { name: 'User 4' }
-      ]
-    },
-    {
-      id: '3',
-      date: {
-        day: 'Mon',
-        dayOfMonth: 30
-      },
-      time: '09:00-09:30',
-      sessionType: 'Resume Review Session',
-      title: 'Resume Review Session',
-      participants: [
-        { name: 'Usman Sani' }
-      ]
-    },
-    {
-      id: '4',
-      date: {
-        day: 'Wed',
-        dayOfMonth: 2,
-        month: 'March'
-      },
-      time: '09:00-09:30',
-      sessionType: 'General Review Session',
-      title: 'General Review Session',
-      participants: [
-        { name: 'Nnenna Oyekachi' }
-      ]
-    },
-    {
-      id: '5',
-      date: {
-        day: 'Thu',
-        dayOfMonth: 3,
-        month: 'March'
-      },
-      time: '09:00-09:30',
-      sessionType: 'Weekly Digest Session',
-      title: 'General Review Session',
-      participants: [
-        { name: 'Nnenna Oyekachi' },
-        { name: 'User 2' },
-        { name: 'User 3' }
-      ]
-    },
-  ];
-
+  // REMOVED ALL DUMMY DATA - Will use real API data
+  const upcomingSessions: SessionItem[] = [];
   const pendingSessions: SessionItem[] = [];
   const pastSessions: SessionItem[] = [];
   const cancelledSessions: SessionItem[] = [];
