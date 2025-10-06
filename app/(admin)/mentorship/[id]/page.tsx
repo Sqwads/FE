@@ -17,11 +17,65 @@ const MentorProfile: React.FC = () => {
   const params = useParams()
   const mentorId = params.id
 
+  // Fetch mentor data
   const { data: response, isPending } = useQuery({
     queryFn: () => instance.get(`/mentors/${mentorId}`),
     queryKey: ['mentor', mentorId],
     enabled: !!mentorId
   });
+
+  const { data: sessionsResponse, isLoading: sessionsLoading } = useQuery({
+    queryFn: () => instance.get(`/mentors/mentor-bookings/${mentorId}`),
+    queryKey: ['mentor-sessions', mentorId],
+    enabled: !!mentorId,
+  });
+
+  console.log('Sessions API Response:', sessionsResponse?.data);
+
+const transformSessionsData = (apiData: any): SessionItem[] => {
+  if (!apiData?.data) return [];
+  
+  return apiData.data.map((session: any, index: number) => {
+    const sessionDate = new Date(session.date);
+    const startTime = session.startTime || "09:00";
+    const endTime = session.endTime || "09:30";
+
+    return {
+      id: session._id || `session-${index}`,
+      date: {
+        day: sessionDate.toLocaleDateString('en-US', { weekday: 'short' }),
+        dayOfMonth: sessionDate.getDate(),
+        month: sessionDate.toLocaleDateString('en-US', { month: 'long' }),
+      },
+      time: `${startTime} - ${endTime}`,
+      sessionType: session.sessionType || session.title || 'General Session',
+      title: session.title || 'Session',
+      participants: session.participants?.length
+        ? session.participants.map((p: any) => ({ 
+            name: `${p.firstName} ${p.lastName}`,
+            avatar: p.profileImage 
+          }))
+        : session.mentee
+          ? [{ 
+              name: `${session.mentee.firstName} ${session.mentee.lastName}`,
+              avatar: session.mentee.profileImage 
+            }]
+          : [],
+    };
+  });
+};
+
+  const allSessions = sessionsResponse?.data ? transformSessionsData(sessionsResponse.data) : [];
+
+  // Filter sessions by status
+  const filterSessionsByStatus = (sessions: SessionItem[], status: string) => {
+    return sessions; 
+  };
+
+  const upcomingSessions = filterSessionsByStatus(allSessions, 'upcoming');
+  const pendingSessions = filterSessionsByStatus(allSessions, 'pending');
+  const pastSessions = filterSessionsByStatus(allSessions, 'past');
+  const cancelledSessions = filterSessionsByStatus(allSessions, 'cancelled');
 
   const trimText = (email: string) => {
     if (!email) return null;
@@ -33,12 +87,6 @@ const MentorProfile: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState<'sessions' | 'reviews'>('sessions');
   const [activeSubTab, setActiveSubTab] = useState<'upcoming' | 'pending' | 'past' | 'cancelled'>('upcoming');
-
-  // REMOVED ALL DUMMY DATA - Will use real API data
-  const upcomingSessions: SessionItem[] = [];
-  const pendingSessions: SessionItem[] = [];
-  const pastSessions: SessionItem[] = [];
-  const cancelledSessions: SessionItem[] = [];
 
   const getActiveSessions = () => {
     switch (activeSubTab) {
@@ -86,7 +134,7 @@ const MentorProfile: React.FC = () => {
         name={`${mentor?.firstName} ${mentor?.lastName}`}
         joinDate={moment(mentor?.created_at as string).format('MMMM Do YYYY').toUpperCase()}
         stats={{
-          sessions: 0,
+          sessions: allSessions.length,
           rating: '5.0',
           duration: '0 Hours',
           email: trimText(mentor?.email || ''),
@@ -124,7 +172,13 @@ const MentorProfile: React.FC = () => {
                   onSubTabChange={setActiveSubTab} 
                 />
                 
-                <SessionsList sessions={getActiveSessions()} />
+                {sessionsLoading ? (
+                  <div className="py-4 text-center text-gray-500">
+                    Loading sessions...
+                  </div>
+                ) : (
+                  <SessionsList sessions={getActiveSessions()} />
+                )}
               </>
             )}
 
