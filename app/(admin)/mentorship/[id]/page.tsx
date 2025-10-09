@@ -35,11 +35,20 @@ const MentorProfile: React.FC = () => {
 const transformSessionsData = (apiData: any): SessionItem[] => {
   if (!apiData?.data) return [];
   
+  const getSessionType = (title: string): string => {
+    const typeMap: { [key: string]: string } = {
+      'another test': 'General Review Session',
+      'again': 'General Review Session', 
+      'want to learn': 'Weekly Digest Session',
+      'Next week': 'Resume Review Session',
+    };
+    return typeMap[title] || title || 'Mentoring Session';
+  };
+  
   return apiData.data.map((session: any, index: number) => {
     const sessionDate = new Date(session.date);
-    const startTime = session.startTime || "09:00";
-    const endTime = session.endTime || "09:30";
-
+    const sessionType = getSessionType(session.title);
+    
     return {
       id: session._id || `session-${index}`,
       date: {
@@ -47,20 +56,14 @@ const transformSessionsData = (apiData: any): SessionItem[] => {
         dayOfMonth: sessionDate.getDate(),
         month: sessionDate.toLocaleDateString('en-US', { month: 'long' }),
       },
-      time: `${startTime} - ${endTime}`,
-      sessionType: session.sessionType || session.title || 'General Session',
-      title: session.title || 'Session',
-      participants: session.participants?.length
-        ? session.participants.map((p: any) => ({ 
-            name: `${p.firstName} ${p.lastName}`,
-            avatar: p.profileImage 
-          }))
-        : session.mentee
-          ? [{ 
-              name: `${session.mentee.firstName} ${session.mentee.lastName}`,
-              avatar: session.mentee.profileImage 
-            }]
-          : [],
+      time: session.time || '09:00-09:30',
+      sessionType: sessionType,
+      title: session.title || `Session ${index + 1}`,
+      participants: session.mentee ? [{
+        name: `${session.mentee.firstName} ${session.mentee.lastName}`,
+        firstName: session.mentee.firstName,
+        lastName: session.mentee.lastName
+      }] : []
     };
   });
 };

@@ -17,7 +17,6 @@ interface ProjectSidebarProps {
   participants?: any[]; 
   projectLead?: any;
   additionalParticipants?: number;
-  // Add alertMessage prop if it's dynamic, otherwise define inside
   alertMessage?: string; 
 }
 
@@ -29,7 +28,7 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
   participants=[], 
   additionalParticipants,
   projectLead,
-  alertMessage = "Review and finalize tasks" // Default message from user's code
+  alertMessage = "Review and finalize tasks" 
 }) => {
   return (
     <div className={`space-y-0 border-l px-7  w-[300px] sticky top-5 `}>
@@ -50,7 +49,6 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
         <h3 className="text-lg text-[#001D69] font-bold mb-4">Skills Required</h3>
         <div className="flex flex-wrap gap-x-4">
           {skills?.map((skill, index) => (
-            // Use SkillBadge component
             <SkillBadge key={index} name={skill} icon={skill[0]} />
           ))}
         </div>
@@ -59,11 +57,15 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
       {/* Participants */}
       <div>
         <h3 className="text-lg text-[#001D69] font-bold mb-4 mt-7">Participants</h3>
-        <ParticipantCard
-          name={`${projectLead?.firstName} ${projectLead?.lastName}`}
-          role={'Project Lead'}
-          image={projectLead?.image}
-        />
+        
+        {projectLead && (
+          <ParticipantCard
+            name={`${projectLead.firstName} ${projectLead.lastName}`}
+            role={'Project Lead'}
+            image={projectLead?.image}
+          />
+        )}
+        
         {participants?.slice(0,2)?.map((participant, index) => (
           <ParticipantCard 
             key={index}
@@ -84,4 +86,3 @@ const ProjectSidebar: React.FC<ProjectSidebarProps> = ({
 };
 
 export default ProjectSidebar;
-
