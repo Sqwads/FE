@@ -15,7 +15,8 @@ export interface SessionItem {
   title: string;        
   participants: {
     name: string;
-    avatar?: string;
+    firstName?: string;
+    lastName?: string;
   }[];
 }
 
@@ -43,6 +44,14 @@ const SessionsList: React.FC<SessionsListProps> = ({ sessions }) => {
     });
 
     return groups;
+  };
+
+  // Get first letter for avatar - ONLY CHANGE I MADE
+  const getInitial = (name: string, firstName?: string, lastName?: string): string => {
+    if (firstName && lastName) {
+      return firstName.charAt(0).toUpperCase();
+    }
+    return name.charAt(0).toUpperCase();
   };
 
   const sessionGroups = groupSessionsByMonth();
@@ -103,8 +112,16 @@ const SessionsList: React.FC<SessionsListProps> = ({ sessions }) => {
                       </span>
                       <span className="text-gray-400">⇔</span>
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
-                          <User className="w-3 h-3 text-white" />
+                        {/* ONLY CHANGED THIS PART - Avatar with letter instead of blue icon */}
+                        <div className="w-6 h-6 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs font-medium text-gray-700">
+                          {session.participants[0] ? 
+                            getInitial(
+                              session.participants[0].name, 
+                              session.participants[0].firstName, 
+                              session.participants[0].lastName
+                            ) 
+                            : '?'
+                          }
                         </div>
                         <span className="text-sm text-gray-700">
                           {session.participants[0]?.name || 'No participant'}
