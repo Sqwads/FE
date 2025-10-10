@@ -23,7 +23,7 @@ import { useRouter } from 'next/navigation';
 const MentorDashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-   const [pageSize] = useState(5)
+   const [pageSize] = useState(50)
    const router = useRouter()
 
 

@@ -4,7 +4,7 @@ import React from "react";
 
 const AboutSection = ({ mentor }: any) => {
   const colorCodes = ["#EE46BC", "#01C569", "#36BFFA", "#6172F3", "#FFA52F"];
-  console.log(mentor.experiences);
+  console.log(mentor?.experiences);
 
   if (!mentor) {
     return <div className="text-gray-400 italic">No mentor Info.</div>;

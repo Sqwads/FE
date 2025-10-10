@@ -26,7 +26,7 @@ const Projects = () => {
 
     const [searchQuery, setSearchQuery] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
-    const [pageSize] = useState(10)
+    const [pageSize] = useState(30)
     const router = useRouter()
    
     const projectDtHeader: ColumnDef<any>[] = [
