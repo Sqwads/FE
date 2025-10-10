@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 interface ActivityTabsProps {
   activeTab: 'sessions' | 'reviews';
@@ -12,7 +12,7 @@ const ActivityTabs: React.FC<ActivityTabsProps> = ({
   onTabChange
 }) => {
   return (
-    <div className="border-b border-gray-200 mb-4">
+    <div className="border-b border-gray-200 mb-6">
       <div className="flex">
         <button
           className={`py-2 px-4 text-sm font-medium ${

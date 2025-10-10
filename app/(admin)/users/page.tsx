@@ -24,7 +24,7 @@ const UserListPage = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [isCustomPeriod, setIsCustomPeriod] = useState(false)
-  const [pageSize] = useState(5)
+  const [pageSize] = useState(50)
   const [selectedUser, setSelectedUser] = useState<any>(null)
   const [opened, { open, close }] = useDisclosure(false);
   const [verificationMoalOpened, { open:openVerificationModal, close:closeVerificationModal }] = useDisclosure(false);
