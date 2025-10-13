@@ -120,15 +120,46 @@ const UserProfile = () => {
 
           <div className="text-[#16181B80]">Social Links</div>
           <div className="flex gap-x-3 mt-3 mb-10">
-            <div className="flex rounded-full bg-[#EFF3FF] border border-[#0234B8] justify-center items-center bg h-8 w-8">
-              <FaLinkedinIn color="#0234B8" className="cursor-pointer" />
+            <div className={`flex ${!user?.profile?.socialProfile?.linkedin && 'opacity-50 cursor-not-allowed'} rounded-full bg-[#EFF3FF] border border-[#0234B8] justify-center items-center bg h-8 w-8`}>
+                {user?.profile?.socialProfile?.linkedin ? (
+                  <a
+                    href={user.profile.socialProfile.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaLinkedinIn color="#0234B8" className="cursor-pointer" />
+                  </a>
+                ) : (
+                  <FaLinkedinIn color="#0234B8" className="cursor-not-allowed opacity-50" />
+                )}
             </div>
-            <div className="flex rounded-full justify-center bg-[#EFF3FF] border border-[#0234B8] items-center bg h-8 w-8">
+            <div  className={`flex ${!user?.profile?.socialProfile?.facebook && 'opacity-50 cursor-not-allowed'} rounded-full justify-center bg-[#EFF3FF] border border-[#0234B8] items-center bg h-8 w-8`}>
               {" "}
-              <FaFacebookF color="#0234B8" className="cursor-pointer" />
+                {user?.profile?.socialProfile?.facebook ? (
+                  <a
+                    href={user.profile.socialProfile.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebookF color="#0234B8" className="cursor-pointer" />
+                  </a>
+                ) : (
+                  <FaFacebookF color="#0234B8" className="cursor-not-allowed opacity-50" />
+                )}
+              
             </div>
-            <div className="flex rounded-full justify-center bg-[#EFF3FF] border border-[#0234B8] items-center bg h-8 w-8">
-              <BsTwitterX color="#0234B8" className="cursor-pointer" />
+            <div className={`flex ${!user?.profile?.socialProfile?.twitter && 'opacity-50 cursor-not-allowed'} rounded-full justify-center bg-[#EFF3FF] border border-[#0234B8] items-center bg h-8 w-8`}>
+                {user?.profile?.socialProfile?.twitter ? (
+                  <a
+                    href={user.profile.socialProfile.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <BsTwitterX color="#0234B8" className="cursor-pointer" />
+                  </a>
+                ) : (
+                  <BsTwitterX color="#0234B8" className="cursor-not-allowed opacity-50" />
+                )}
             </div>
           </div>
 
@@ -149,7 +180,7 @@ const UserProfile = () => {
             {tabs.map((item, idx) => (
               <div
                 key={idx}
-                onClick={() => handleTabSwitch(idx)}
+                // onClick={() => handleTabSwitch(idx)}
                 className={`${
                   item.isActive
                     ? "border-b-4 rounded-b  border-[#001D69]  rouded-md"
