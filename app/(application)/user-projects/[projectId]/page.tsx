@@ -27,16 +27,16 @@ import { Select, Button } from '@mantine/core';
 import toast from 'react-hot-toast';
 import { userWrapper } from '@/store';
 
-
 function ProjectDetailsContent() {
   const [activeTab, setActiveTab] = useState('Description');
   const [modalOpened, { open:openModal, close:closeModal }] = useDisclosure(false);
   const params = useParams()
   const projectId = params.projectId
   const [selectedDiscussion, setSelectedDiscussion] = useState<any>(null);
- 
 
-
+  const { user } = userWrapper((state: any) => ({
+    user: state.user,
+  }));
 
   const {data: fetchedProject} = useQuery({
       queryFn: ()=>instance.get(`/project/${projectId}`),
@@ -64,6 +64,15 @@ function ProjectDetailsContent() {
     },
   })
 
+  const handleApplyClick = () => {
+    if (!user?.socialProfile?.linkedin) {
+      toast.error('Please upload your LinkedIn profile in the settings page before you can apply for projects.');
+      return;
+    }
+    
+    openModal();
+  };
+
   const handleApplyForProject = () => {
     if (!role) {
       toast.error('Please select a role');
@@ -72,9 +81,8 @@ function ProjectDetailsContent() {
     mutate({
       project: projectId,
       role: role,
-      user: fetchedProject?.data?.projectLead?._id // Assuming you want to apply as the project lead
+      user: fetchedProject?.data?.projectLead?._id
     })
-    
   };
   
 
@@ -104,13 +112,10 @@ function ProjectDetailsContent() {
               />
               <div className="mt-4 md:mt-0 flex-shrink-0">
                 <button
-                  onClick={openModal}
+                  onClick={handleApplyClick}
                   className={`text-sm  bg-blue-900  text-white px-4 py-2 rounded-md flex items-center  sm:text-base`}
                 >
                   Apply For Project
-                  {/* {isMember ? 'Leave Project' : 'Join Project'}
-                  L
-                  {isMember ? <FiX className="ml-2" /> : <HiOutlineArrowRight className="ml-2" />} */}
                 </button>
               </div>
             </div>
