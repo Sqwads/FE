@@ -93,7 +93,7 @@ export default function DashboardPage() {
   return (
     <div className="lg:px-8 px-3 py-14">
       {needsLinkedInNotification && (
-        <div className="fixed top-12 right-4 z-50 max-w-sm bg-[#e0d2bd] border border-[#FFA52F] rounded-lg shadow-lg p-4 animate-fade-in">
+        <div className="fixed top-12 right-4 z-50 max-w-sm bg-[#e7ddce] border border-[#FFA52F] rounded-lg shadow-lg p-4 animate-fade-in">
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center mb-2">
