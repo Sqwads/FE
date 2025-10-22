@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { userWrapper } from '@/store';
-import { FiClock, FiCompass, FiStar } from 'react-icons/fi';
+import { FiClock, FiCompass, FiStar, FiX,FiAlertCircle  } from 'react-icons/fi';
 import { HiCheckBadge } from "react-icons/hi2";
 import { MdOutlineWavingHand } from 'react-icons/md';
 import Link from 'next/link';
@@ -24,12 +24,13 @@ export default function DashboardPage() {
     user: state.user,
   }));
 
+  const [showLinkedInNotification, setShowLinkedInNotification] = useState(true);
+
   const profile = {
     skill: user?.skills_of_interest?.length > 0,
     experience: user?.experiences?.length > 0,
     socialProfile : (!!user?.socialProfile?.twitter && !!user?.socialProfile?.linkedin ),
     location: !!user?.location
-
   }
 
   const profileFields = Object.values(profile);
@@ -37,7 +38,6 @@ export default function DashboardPage() {
   const profileCompletion = Math.round((completedFields / profileFields.length) * 100);
 
   const [currentPage, setCurrentPage] = useState(1);
-
 
   const { data: projectResponse, isLoading: projectIsLoading } = useQuery({ 
     queryFn: () => instance.get('/project/all', {
@@ -60,9 +60,8 @@ export default function DashboardPage() {
     queryKey: ['projects-explore', currentPage],
   });
 
-
   const { data: response, isLoading } = useQuery({
-    queryFn: () => instance.get('/analytics/user'), // Replace with your API endpoint
+    queryFn: () => instance.get('/analytics/user'),
     queryKey: ['project-analytics'],
   });
 
@@ -78,10 +77,57 @@ export default function DashboardPage() {
       setCurrentPage(currentPage-1)
     }
   }
+
+  // Check if user needs LinkedIn notification
+  const needsLinkedInNotification = !user?.socialProfile?.linkedin && showLinkedInNotification;
+
+  const handleCloseNotification = () => {
+    setShowLinkedInNotification(false);
+  };
+
+  const handleGoToSettings = () => {
+    window.location.href = '/settings';
+  };
   
 
   return (
     <div className="lg:px-8 px-3 py-14">
+      {needsLinkedInNotification && (
+        <div className="fixed top-12 right-4 z-50 max-w-sm bg-[#e0d2bd] border border-[#FFA52F] rounded-lg shadow-lg p-4 animate-fade-in">
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <div className="flex items-center mb-2">
+                <div className="w-6 h-6 bg-[#FFA52F1A] rounded-full flex items-center justify-center mr-2">
+                    <FiAlertCircle className="text-[#FFA52F]" size={16} />
+              </div>
+                <h3 className="text-sm font-semibold text-[#16181B]">
+                  Update Your LinkedIn!
+                </h3>
+              </div>
+              <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+                Add your{' '}
+                <button 
+                  onClick={handleGoToSettings}
+                  className="text-[#16181BB2] hover:text-blue-800 underline font-medium"
+                >
+                  LinkedIn URL
+                </button>
+                {' '}now. This ensures other members can professionally vet and connect with you before project participation begins.
+              </p>
+              <div className="flex space-x-2">
+               
+              </div>
+            </div>
+            <button
+              onClick={handleCloseNotification}
+              className="text-gray-400 hover:text-gray-600 ml-2 flex-shrink-0"
+            >
+              <FiX size={16} />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Welcome Header */}
       <div className="lg:mb-10 mb-5">
         <h1 className="lg:text-3xl text-2xl  flex items-center">
