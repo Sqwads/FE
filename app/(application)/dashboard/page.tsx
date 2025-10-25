@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { userWrapper } from '@/store';
 import { FiClock, FiCompass, FiStar, FiX,FiAlertCircle  } from 'react-icons/fi';
@@ -20,11 +20,77 @@ import { PiWarningOctagonFill } from "react-icons/pi";
 import { instance } from '@/api/instance';
 
 export default function DashboardPage() {
-  const { user } = userWrapper((state: any) => ({
+  const { user, setUser } = userWrapper((state: any) => ({
     user: state.user,
+    setUser: state.setUser,
   }));
 
+  // Fix: Better LinkedIn validation and persistent state
   const [showLinkedInNotification, setShowLinkedInNotification] = useState(true);
+
+  // Fetch fresh user data on component mount
+  const { data: freshUserData } = useQuery({
+    queryFn: () => instance.get('/user/profile'),
+    queryKey: ['user-profile-dashboard'],
+    enabled: true,
+  });
+
+  // Update store with fresh user data when it loads
+  useEffect(() => {
+    if (freshUserData?.data && setUser) {
+      setUser(freshUserData.data);
+    }
+  }, [freshUserData, setUser]);
+
+  // Listen for store updates from other components
+  useEffect(() => {
+    const handleUserProfileUpdate = () => {
+      // Refetch fresh data when we get the update event
+      window.location.reload(); // Simple refresh to ensure latest data
+    };
+
+    window.addEventListener('userProfileUpdated', handleUserProfileUpdate);
+    
+    return () => {
+      window.removeEventListener('userProfileUpdated', handleUserProfileUpdate);
+    };
+  }, []);
+
+  // LinkedIn URL validation
+  const hasValidLinkedIn = () => {
+    const linkedinUrl = user?.socialProfile?.linkedin;
+    return linkedinUrl && 
+           linkedinUrl.trim() !== '' && 
+           linkedinUrl.length > 5;
+  };
+
+  // Load persisted state on component mount
+  useEffect(() => {
+    const notificationClosed = localStorage.getItem('linkedinNotificationClosed');
+    if (notificationClosed === 'true') {
+      setShowLinkedInNotification(false);
+    }
+  }, []);
+
+  // Reset notification state when user updates their LinkedIn
+  useEffect(() => {
+    if (hasValidLinkedIn()) {
+      setShowLinkedInNotification(false);
+      localStorage.removeItem('linkedinNotificationClosed');
+    }
+  }, [user?.socialProfile?.linkedin]);
+
+  const needsLinkedInNotification = !hasValidLinkedIn() && showLinkedInNotification;
+
+  // Persist the closed state in localStorage
+  const handleCloseNotification = () => {
+    setShowLinkedInNotification(false);
+    localStorage.setItem('linkedinNotificationClosed', 'true');
+  };
+
+  const handleGoToSettings = () => {
+    window.location.href = '/settings';
+  };
 
   const profile = {
     skill: user?.skills_of_interest?.length > 0,
@@ -78,18 +144,6 @@ export default function DashboardPage() {
     }
   }
 
-  // Check if user needs LinkedIn notification
-  const needsLinkedInNotification = !user?.socialProfile?.linkedin && showLinkedInNotification;
-
-  const handleCloseNotification = () => {
-    setShowLinkedInNotification(false);
-  };
-
-  const handleGoToSettings = () => {
-    window.location.href = '/settings';
-  };
-  
-
   return (
     <div className="lg:px-8 px-3 py-14">
       {needsLinkedInNotification && (
@@ -101,7 +155,7 @@ export default function DashboardPage() {
                     <FiAlertCircle className="text-[#FFA52F]" size={16} />
               </div>
                 <h3 className="text-sm font-semibold text-[#16181B]">
-                  Update Your LinkedIn!
+                  Update Your Socials!
                 </h3>
               </div>
               <p className="text-xs text-gray-600 mb-3 leading-relaxed">
@@ -110,7 +164,7 @@ export default function DashboardPage() {
                   onClick={handleGoToSettings}
                   className="text-[#16181BB2] hover:text-blue-800 underline font-medium"
                 >
-                  LinkedIn URL
+                  Social URLs
                 </button>
                 {' '}now. This ensures other members can professionally vet and connect with you before project participation begins.
               </p>

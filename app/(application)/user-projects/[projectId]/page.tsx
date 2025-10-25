@@ -27,6 +27,12 @@ import { Select, Button } from '@mantine/core';
 import toast from 'react-hot-toast';
 import { userWrapper } from '@/store';
 
+// Define types for better TypeScript support
+interface UserData {
+  socialProfile?: {
+    linkedin?: string;
+  };
+}
 
 function ProjectDetailsContent() {
   const [activeTab, setActiveTab] = useState('Description');
@@ -74,28 +80,22 @@ function ProjectDetailsContent() {
     },
   })
 
+  // FIXED: Added proper TypeScript type for userData parameter
+  const hasValidLinkedIn = (userData: UserData) => {
+    const linkedinUrl = userData?.socialProfile?.linkedin;
+    return linkedinUrl && 
+           linkedinUrl.trim() !== '' && 
+           linkedinUrl.length > 10;
+  };
+
   // UPDATED: Handle apply button click with better LinkedIn validation
   const handleApplyClick = async () => {
-    // First try to use store data
-    let hasLinkedIn = user?.socialProfile?.linkedin;
-    
-    // If no LinkedIn in store, try to fetch fresh data
-    if (!hasLinkedIn) {
-      try {
-        const freshData = await refetchUser();
-        hasLinkedIn = freshData.data?.data?.socialProfile?.linkedin;
-      } catch (error) {
-        console.log('Error fetching fresh user data:', error);
-      }
-    }
-
-    // Check if user has LinkedIn profile
-    if (!hasLinkedIn) {
-      openLinkedinModal(); // Open the LinkedIn required modal
+    // Use the validation function
+    if (!hasValidLinkedIn(user)) {
+      openLinkedinModal();
       return;
     }
     
-    // If LinkedIn exists, open the normal role selection modal
     openModal();
   };
 
