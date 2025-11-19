@@ -1,14 +1,13 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { FiCheckCircle, FiX } from 'react-icons/fi'; // Using react-icons
+import { FiCheckCircle, FiX } from 'react-icons/fi';
 
 interface ProfileCompletionCardProps {
-  onDismiss?: () => void; // Optional dismiss handler
+  onDismiss?: () => void;
 }
 
 const ProfileCompletionCard: React.FC<ProfileCompletionCardProps> = ({ onDismiss }) => {
-  // Example progress - replace with actual logic
   const completionProgress = 70; // Example: 70%
   const router = useRouter()
 

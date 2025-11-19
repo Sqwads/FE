@@ -1,9 +1,8 @@
 "use client";
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { FiArrowDown, FiArrowUp } from 'react-icons/fi'; // Using react-icons
+import { FiArrowDown, FiArrowUp } from 'react-icons/fi';
 
-// Sample data - replace with actual data fetching
 const data = [
   { name: 'Jan', uv: 400 },
   { name: 'Feb', uv: 300 },
@@ -20,9 +19,8 @@ const data = [
 ];
 
 const PerformanceChart = () => {
-  // Example performance change - replace with actual logic
-  const performanceChange = -24; // Example: decreased by 24%
-  const performancePeriod = "last 12 months"; // Example period
+  const performanceChange = -24; 
+  const performancePeriod = "last 12 months";
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">

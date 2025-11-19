@@ -7,11 +7,9 @@ interface NavigationTabsProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   tabs:string[];
-  // Removed tabs array definition from here, should be passed as prop or defined in parent
 }
 
 const NavigationTabs: React.FC<NavigationTabsProps> = ({ activeTab, setActiveTab }) => {
-  // Define tabs within the component or pass as prop if they can change
   const tabs = ['Description',  'Discussion', 'Members'];
   
   return (

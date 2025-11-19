@@ -4,7 +4,6 @@ import { FiBell, FiBookmark } from "react-icons/fi";
 import {AiOutlineMenu} from 'react-icons/ai'
 import { Drawer, Menu, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-// import AdminSidebar from "./sidebar";
 import { userWrapper } from "../../../src/store";
 import { LuLogOut } from "react-icons/lu";
 import { cookieStorage } from "@ibnlanre/portal";
@@ -25,7 +24,7 @@ export default function TopNav() {
     router.push('/mentor_login')
   }
   return (
-    <nav className="w-full bg-white shadow-md "> {/* Added left-64 */}
+    <nav className="w-full bg-white shadow-md ">
        <Drawer 
             opened={opened} 
             onClose={close} 
@@ -79,7 +78,7 @@ export default function TopNav() {
           <Menu shadow="md" width={200}>
             <Menu.Target>
               <div className="w-10 cursor-pointer h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
-                {user?.firstName && user?.firstName[0]} {/* First letter of user’s name */}
+                {user?.firstName && user?.firstName[0]} 
               </div>
             </Menu.Target>
             <Menu.Dropdown>

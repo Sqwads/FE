@@ -14,13 +14,11 @@ import ReactionButtons from '../../../../components/ReactionButtons';
 import CommentInput from '../../../../components/CommentInput';
 
 export default function DiscussionThreadPage({ params }: any) {
-  // Destructure with defaults to ensure type safety
   const { projectId = '', discussionId = '' } = params;
 
   const [activeTab, setActiveTab] = useState('Discussion');
   const [isMember, setIsMember] = useState(false);
 
-  // Sample data with proper typing
   const projectData: any = {
     id: projectId,
     title: 'Weather Forecast App',
