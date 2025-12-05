@@ -170,6 +170,7 @@ const ProjectView: React.FC = () => {
               applications={fetchedApplications?.data?.data || []}
               projectId={projectId as string}
               handleManageApplication={handleManageApplication}
+              projectName={fetchedProject?.data?.name}
             />
           )}
         </div>
