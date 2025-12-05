@@ -118,7 +118,7 @@ const CreateProject = () => {
 
 
     const validateSkillsAndTools = (updatedSelectedTools:any[])=>{
-        console.log(updatedSelectedTools)
+        // console.log(updatedSelectedTools)
         if(updatedSelectedTools.length <= 0){
             return false
         }
