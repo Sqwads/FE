@@ -3,12 +3,21 @@ import React, { useEffect } from 'react';
 import { Button, TextInput } from '@mantine/core';
 import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup'
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { instance } from '@/api/instance';
 import toast from 'react-hot-toast';
-
+import { userWrapper } from '@/store';
 
 const SocialProfiles = ({ user }: any) => {
+    const queryClient = useQueryClient();
+    const { setUser } = userWrapper((state: any) => ({
+        setUser: state.setUser,
+    }));
+
+    useEffect(() => {
+        console.log('🔍 SocialProfiles - CURRENT USER:', user);
+        console.log('🔍 SocialProfiles - CURRENT LINKEDIN:', user?.socialProfile?.linkedin);
+    }, [user]);
 
     const validator = Yup.object({
         linkedin: Yup.string().url('Invalid LinkedIn URL'),
@@ -33,6 +42,7 @@ const SocialProfiles = ({ user }: any) => {
 
     useEffect(() => {
         if (user?.socialProfile) {
+            console.log('🔄 Setting form values from user:', user.socialProfile);
             form.setValues({
                 linkedin: user.socialProfile.linkedin || '',
                 twitter: user.socialProfile.twitter || '',
@@ -45,7 +55,7 @@ const SocialProfiles = ({ user }: any) => {
     }, [user?.socialProfile]);
 
     const socialPlatforms = [
-        { id: 'linkedin', label: 'LinkedIn', placeholder: 'Enter link' },
+        { id: 'linkedin', label: 'LinkedIn', placeholder: 'https://linkedin.com/in/yourname' },
         { id: 'twitter', label: 'Twitter', placeholder: 'Enter link' },
         { id: 'facebook', label: 'Facebook', placeholder: 'Enter link' },
         { id: 'instagram', label: 'Instagram', placeholder: 'Enter link' },
@@ -54,10 +64,29 @@ const SocialProfiles = ({ user }: any) => {
     ];
 
     const { mutate, isPending } = useMutation({
-        mutationFn: (data: any) => instance.patch('/user', data),
+        mutationFn: (data: any) => {
+            return instance.patch('/user', data);
+        },
         mutationKey: ['user', 'update'],
-        onSuccess() {
+        onSuccess: async (response) => {
+            
             toast.success("Changes Saved !!!");
+            
+            try {
+                console.log('🔄 Fetching updated user data...');
+                const userResponse = await instance.get('/user/profile');
+                
+                if (userResponse.data) {
+                    console.log('🔄 UPDATING STORE WITH:', userResponse.data);
+                    setUser(userResponse.data);
+                } else {
+                }
+            } catch (error) {
+
+            }
+            
+            queryClient.invalidateQueries({ queryKey: ['user'] });
+            window.dispatchEvent(new Event('userProfileUpdated'));
         },
         onError(error: any) {
             toast.error(error?.response?.data?.message || 'Action Failed');
@@ -68,13 +97,11 @@ const SocialProfiles = ({ user }: any) => {
         mutate({
             socialProfile: values
         });
-
     }
 
     return (
         <div className="space-y-6">
             <h3 className="text-xl font-semibold text-card-foreground mb-6">SOCIAL PROFILES</h3>
-
             <div className="space-y-4">
                 <form onSubmit={form.onSubmit(handleSubmit)}>
                     {socialPlatforms.map((platform) => (

@@ -18,7 +18,7 @@ function ProjectDetailsContent({ params }: any) {
   const [activeTab, setActiveTab] = useState('Description'); 
   const [isMember, setIsMember] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<any>(null); // Changed to any
+  const [error, setError] = useState<any>(null);
 
   // Initialize with safe defaults
   const [projectData, setProjectData] = useState<any>({
@@ -38,10 +38,8 @@ function ProjectDetailsContent({ params }: any) {
   });
 
   useEffect(() => {
-    // Simulate API fetch
     const fetchProjectData = async () => {
       try {
-        // Using mock data for now
         const mockData: any = {
           id: params?.projectId || '1',
           title: 'Weather Forecast App',
@@ -105,7 +103,6 @@ function ProjectDetailsContent({ params }: any) {
       <div className="flex flex-col lg:flex-row mr-0">
         {/* Main Content Column */}
         <div className="lg:w-2/3">
-          {/* Project Header & Join Button */}
           <div className="mb-6">
             <div className="flex flex-col md:flex-row justify-between items-start gap-4">
               <ProjectHeader 
