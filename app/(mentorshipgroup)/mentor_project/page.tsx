@@ -40,7 +40,7 @@ const MonitoringProject = () => {
   });
 
   const { data: response, isLoading } = useQuery({
-    queryFn: () => instance.get('/analytics/user'), // Replace with your API endpoint
+    queryFn: () => instance.get('/analytics/user'),
     queryKey: ['project-analytics'],
   });
   return (

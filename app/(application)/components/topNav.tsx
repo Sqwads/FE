@@ -27,7 +27,7 @@ export default function TopNav() {
     router.push('/login')
   }
   return (
-    <nav className="w-full bg-white shadow-md "> {/* Added left-64 */}
+    <nav className="w-full bg-white shadow-md ">
        <Drawer 
             opened={opened} 
             onClose={close} 
@@ -74,8 +74,6 @@ export default function TopNav() {
 
         {/* Right Side - Icons and Profile */}
         <div className="flex items-center gap-4">
-          {/* <FiBookmark className="text-gray-700 text-xl cursor-pointer" />
-          <FiBell className="text-gray-700 text-xl cursor-pointer" /> */}
 
           {/* User Profile */}
           <div className="">

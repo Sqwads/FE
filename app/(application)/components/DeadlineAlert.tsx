@@ -8,7 +8,7 @@ interface DeadlineAlertProps {
 }
 
 const DeadlineAlert: React.FC<DeadlineAlertProps> = ({ daysLeft, onClose, projectName }) => {
-  if (daysLeft < 0) return null; // Or handle overdue differently
+  if (daysLeft < 0) return null;
 
   let message = `Your project is due in ${daysLeft} day${daysLeft === 1 ? '' : 's'}. Kindly review and finalize tasks to stay on track.`;
   if (projectName) {

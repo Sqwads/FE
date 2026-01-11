@@ -4,7 +4,6 @@ import React from 'react';
 import Image from 'next/image';
 import { formatTextToSentenceCase } from '@/common';
 
-// Define TypeScript interfaces for component props
 interface ParticipantCardProps {
   name: string;
   role: string;

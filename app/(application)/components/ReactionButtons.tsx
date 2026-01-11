@@ -10,8 +10,6 @@ interface Reaction {
 
 interface ReactionButtonsProps {
   reactions: Reaction[];
-  // Add function prop for handling reaction clicks if needed
-  // onReactionClick: (emoji: string) => void;
 }
 
 const ReactionButtons: React.FC<ReactionButtonsProps> = ({ reactions }) => {
@@ -21,7 +19,6 @@ const ReactionButtons: React.FC<ReactionButtonsProps> = ({ reactions }) => {
         <button 
           key={index} 
           className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-sm transition-colors duration-150"
-          // onClick={() => onReactionClick(reaction.emoji)} // Uncomment if click handling is needed
         >
           <span>{reaction.emoji}</span>
           <span className="ml-1 font-medium">{reaction.count}</span>

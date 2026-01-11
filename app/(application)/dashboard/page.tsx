@@ -45,8 +45,7 @@ export default function DashboardPage() {
   // Listen for store updates from other components
   useEffect(() => {
     const handleUserProfileUpdate = () => {
-      // Refetch fresh data when we get the update event
-      window.location.reload(); // Simple refresh to ensure latest data
+      window.location.reload(); 
     };
 
     window.addEventListener('userProfileUpdated', handleUserProfileUpdate);

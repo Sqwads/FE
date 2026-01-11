@@ -12,8 +12,8 @@ interface CircularProgressProps {
 const CircularProgress: React.FC<CircularProgressProps> = ({
   percentage,
   color,
-  size = 180, // Increased size to match design
-  strokeWidth = 10, // Increased stroke width for better visibility
+  size = 180,
+  strokeWidth = 10,
   label,
   rating
 }) => {

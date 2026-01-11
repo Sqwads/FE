@@ -6,14 +6,13 @@ import React from 'react';
 interface ProjectTimelineProps {
   currentDay: number;
   endDay: number;
-  // Consider adding progress as a prop if it's dynamic
   progressPercentage?: number; 
 }
 
 const ProjectTimeline: React.FC<ProjectTimelineProps> = ({ 
   currentDay, 
   endDay, 
-  progressPercentage = 40 // Default progress from user's code
+  progressPercentage = 40
 }) => {
 
    const progressWidth = (Number(currentDay) / Number(endDay)) * 100

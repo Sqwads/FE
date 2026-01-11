@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { FiArrowLeft, FiX } from 'react-icons/fi';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
-// Import components with absolute paths (recommended)
 import ProjectHeader from '../../../../components/ProjectHeader';
 import NavigationTabs from '../../../../components/NavigationTabs';
 import ProjectSidebar from '../../../../components/ProjectSidebar';
