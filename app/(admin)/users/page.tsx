@@ -9,6 +9,9 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { instance } from "@/src/api/instance";
 import moment from 'moment'
+import jsPDF from 'jspdf';
+import * as XLSX from 'xlsx';
+import autoTable from 'jspdf-autotable';
 import { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { useDisclosure } from "@mantine/hooks";
@@ -24,7 +27,7 @@ const UserListPage = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [isCustomPeriod, setIsCustomPeriod] = useState(false)
-  const [pageSize] = useState(5)
+  const [pageSize] = useState(50)
   const [selectedUser, setSelectedUser] = useState<any>(null)
   const [opened, { open, close }] = useDisclosure(false);
   const [verificationMoalOpened, { open:openVerificationModal, close:closeVerificationModal }] = useDisclosure(false);
@@ -75,6 +78,20 @@ const UserListPage = () => {
     queryKey: ['users', searchQuery, currentPage, pageSize],
     placeholderData: (prev) => prev
   })
+
+const { refetch: fetchAllUsersForExport, isFetching: isExporting } = useQuery({
+  queryKey: ['users-export', searchQuery],
+  queryFn: () =>
+    instance.get('/user/all', {
+      params: {
+        pageSize: usersData?.data?.totalNoOfRecords || 100, 
+        pageNumber: 1,
+        ...(searchQuery.length > 1 && { searchQuery }),
+      },
+    }),
+  enabled: false,
+});
+
   const totalPages = Math.ceil(usersData?.data?.totalNoOfRecords/pageSize)
 
   const userDataHeader : ColumnDef<any>[] =[
@@ -237,6 +254,55 @@ const UserListPage = () => {
     mutate(payload)
   }
 
+const handleExportUsers = async () => {
+  try {
+    const res = await fetchAllUsersForExport();
+    const users = res.data?.data?.users || [];
+
+    if (!users.length) {
+      toast.error('No users to export');
+      return;
+    }
+
+    const excelData = users.map((user: any) => ({
+      "First Name": user.firstName,
+      "Last Name": user.lastName,
+      "Email Address": user.email,
+      "Domain": formatTextToSentenceCase(user.skills_of_interest?.[0] || 'N/A'),
+      "Status": user.status,
+      "Projects": user.projects || 0,
+      "Date Joined": moment(user.createdAt).format('YYYY-MM-DD HH:mm'),
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+    
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+
+const max_email_width = excelData.reduce((w: number, r: any) => 
+  Math.max(w, r["Email Address"] ? r["Email Address"].length : 10), 10
+);
+
+worksheet["!cols"] = [ 
+  { wch: 15 }, 
+  { wch: 15 },
+  { wch: max_email_width },
+  { wch: 20 },
+  { wch: 12 },
+  { wch: 10 },
+  { wch: 20 } 
+];
+
+
+    XLSX.writeFile(workbook, `Sqwads_Users_Export_${moment().format('YYYY-MM-DD')}.xlsx`);
+    
+    toast.success('Excel file downloaded successfully');
+  } catch (err) {
+    console.error('Export Error:', err);
+    toast.error('Failed to generate Excel file');
+  }
+};
+
   const customePeriodUnits = [
     {label:'Days', value:'1'},
     {label:'Weeks', value:'7'},
@@ -257,17 +323,19 @@ const UserListPage = () => {
     
           {/* Export as CSV Button */}
           <button
-            className="lg:flex hidden lg:text-base text-sm  items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200"
-            aria-label="Export as CSV"
-          >
-            Export as CSV
-            <Image 
-              src="/images/download.png"
-              alt="download"
-              width={30}
-              height={20}
-            />
-          </button>
+            onClick={handleExportUsers}
+            disabled={isExporting}
+            className="lg:flex hidden lg:text-base text-sm items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200 disabled:opacity-50"
+            >
+              {isExporting ? 'Preparing Excel...' : 'Export as Excel'}
+              <Image
+                src="/images/download.png"
+                alt="download"
+                width={30}
+                height={20}
+              />
+            </button>
+
         </div>
 
         <SearchFilters
@@ -436,6 +504,7 @@ const UserListPage = () => {
                     >
                       Cancel
                     </button>
+
                     <button 
                       disabled={isPending}
                       onClick={handleFinalizeSuspension}
