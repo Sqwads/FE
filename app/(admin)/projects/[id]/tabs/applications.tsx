@@ -1,6 +1,7 @@
 "use client"
 import AppTable from '@/app/(admin)/components/appTable';
 import { formatTextToSentenceCase } from '@/common';
+import { exportToCsv } from '@/common/export';
 import { useCustomTable } from '@/hooks/useCustomTable';
 import { Badge, Button, Menu } from '@mantine/core';
 import { ColumnDef } from '@tanstack/react-table';
@@ -12,10 +13,12 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 const Applications = ({
     applications,
     projectId,
+    projectName,
     handleManageApplication
 }:{
     applications: any[],
     projectId: string,
+    projectName?: string,
     handleManageApplication: (applicationId: string, action: string) => void
 }) => {
 
@@ -96,9 +99,35 @@ const Applications = ({
         columns:  userDataHeader,
         tableData: applications || [],
     })
+
+    const handleExportCSV = () => {
+        // console.log('Exporting CSV...');
+        const csvData = applications.map(app => ({
+            Name: `${app.user?.firstName} ${app.user?.lastName}`,
+            'Role Applied': formatTextToSentenceCase(app.role),
+            Email: app.user?.email,
+            'Application Date': moment(app.createdAt).format('MMMM Do YYYY'),
+            Status: app.status,
+        }));
+        const filename = `project_${projectName}_applications.csv`;
+
+        exportToCsv(filename, csvData);
+        // console.log('CSV Exported.');
+    }
     return ( 
-        <div className='py-7'>
-             <AppTable table={table} />
+        <div className='py-'>
+            
+            <AppTable table={table} />
+
+            <div className="flex  mt-5"> 
+                <button
+                    className="flex  lg:text-base text-sm  items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200"
+                    aria-label="Export as CSV"
+                    onClick={handleExportCSV}
+                >
+                    Export as CSV
+                </button>
+            </div>
 
              {applications.length === 0 && (
                 <div className='text-center lg:text-xl lg:mt-24 mt-14 text-gray-400 '>
