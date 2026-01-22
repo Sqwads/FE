@@ -2,7 +2,7 @@
 
 import { TextInput, Button } from "@mantine/core";
 import { FiSearch } from "react-icons/fi";
-import {  BsListUl } from "react-icons/bs";
+import { BsListUl } from "react-icons/bs";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 const SearchFilters = ({
@@ -12,23 +12,27 @@ const SearchFilters = ({
   showExportBtn,
   currentPage,
   totalRecords,
-  pageSize
-}:{
-  onChange: (e:any)=>void,
-  handleNextPage:()=>void,
-  handlePrevPage:()=>void,
+  pageSize,
+  onExport,
+  isExporting
+}: {
+  onChange: (e: any) => void,
+  handleNextPage: () => void,
+  handlePrevPage: () => void,
   currentPage: number,
-  totalRecords:number,
-  pageSize:number,
-  showExportBtn?: boolean
+  totalRecords: number,
+  pageSize: number,
+  showExportBtn?: boolean,
+  onExport?: () => void,
+  isExporting?: boolean
 }) => {
- 
-  const pageStart = ((currentPage -1) * pageSize )+ 1
-  const end = pageStart + pageSize -1 
-  const pageEnd = end > totalRecords ? totalRecords: end
-  const totalPage = Math.ceil(totalRecords/pageSize)
 
-  
+  const pageStart = ((currentPage - 1) * pageSize) + 1
+  const end = pageStart + pageSize - 1
+  const pageEnd = end > totalRecords ? totalRecords : end
+  const totalPage = Math.ceil(totalRecords / pageSize)
+
+
   return (
     <div className="flex flex-col md:flex-row justify-between items-center w-full py-7 gap-4">
       {/* Search & Filters */}
@@ -40,7 +44,7 @@ const SearchFilters = ({
             leftSection={<FiSearch size={16} className="text-gray-500" />}
             size="md"
             className="w-full"
-            onChange={(e)=>onChange(e)}
+            onChange={(e) => onChange(e)}
             styles={{
               input: {
                 background: "#F6F6F6",
@@ -66,14 +70,16 @@ const SearchFilters = ({
             Filters
           </Button>
           {showExportBtn &&
-          <button
-              className="flex lg:hidden lg:text-base text-sm  items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200"
+            <button
+              className="flex lg:hidden lg:text-base text-sm  items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Export as CSV"
+              onClick={onExport}
+              disabled={isExporting}
             >
-              Export as CSV
-            
+              {isExporting ? 'Exporting...' : 'Export as CSV'}
+
             </button>
-            }
+          }
           {/* <Button
             variant="outline"
             leftSection={<BsFilter size={16} />}
@@ -87,13 +93,13 @@ const SearchFilters = ({
 
       {/* Pagination */}
       <div className="flex items-center gap-4">
-        <span className="text-gray-500"> {`${pageStart} to ${pageEnd } of ${totalRecords}`}</span>
+        <span className="text-gray-500"> {`${pageStart} to ${pageEnd} of ${totalRecords}`}</span>
         <Button
           variant="subtle"
           size="compact-icon"
           aria-label="Previous Page"
           onClick={handlePrevPage}
-          disabled={currentPage-1 <= 0}
+          disabled={currentPage - 1 <= 0}
         >
           <IoChevronBack size={16} />
         </Button>
@@ -101,7 +107,7 @@ const SearchFilters = ({
           variant="subtle"
           size="compact-icon"
           aria-label="Next Page"
-          disabled={currentPage+1 > totalPage }
+          disabled={currentPage + 1 > totalPage}
           onClick={handleNextPage}
         >
           <IoChevronForward size={16} />
