@@ -3,9 +3,9 @@ import { cookieStorage } from "@ibnlanre/portal";
 import axios from "axios";
 
 export const instance = axios.create({
-  // baseURL: `${process.env.NEXT_PUBLIC_API}/api/v1`,
+  baseURL: `${process.env.NEXT_PUBLIC_API}/api/v1`,
   // withCredentials: true, 
-  baseURL:'/api/v1'
+  // baseURL:'/api/v1'
 });
 
 instance.interceptors.request.use(
