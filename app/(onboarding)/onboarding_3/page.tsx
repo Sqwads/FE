@@ -18,8 +18,8 @@ const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) =>
   return (
     <div
       className={`border rounded-lg p-4 cursor-pointer transition duration-200 ${isSelected
-          ? "bg-blue-100 border-blue-500 shadow-lg"
-          : "bg-white border-gray-300 hover:shadow-md"
+        ? "bg-blue-100 border-blue-500 shadow-lg"
+        : "bg-white border-gray-300 hover:shadow-md"
         }`}
       onClick={onSelect}
     >
@@ -44,14 +44,12 @@ const FinalOnboarding = () => {
     { label: "Ecommerce", imageSrc: "/images/ecommerce.png", value: "ecommerce" },
     { label: "Insurance", imageSrc: "/images/insurance.png", value: "insurance" },
     { label: "Hospitality", imageSrc: "/images/hospitality.png", value: "hospitality" },
-    { label: "Education", imageSrc: "/images/education.png", value: "education" },
-    { label: "Technology", imageSrc: "/images/technology.png", value: "technology" },
-    { label: "Entertainment", imageSrc: "/images/entertainment.png", value: "entertainment" },
-    { label: "Real Estate", imageSrc: "/images/real-estate.png", value: "real_estate" },
-    { label: "Logistics", imageSrc: "/images/logistics.png", value: "logistics" },
-    { label: "Manufacturing", imageSrc: "/images/manufacturing.png", value: "manufacturing" },
-
-
+    { label: "Education", imageSrc: "/images/agric.png", value: "education" },
+    { label: "Technology", imageSrc: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop&q=60", value: "technology" },
+    { label: "Entertainment", imageSrc: "https://images.unsplash.com/photo-1603190287605-e6ade32fa852?w=500&auto=format&fit=crop&q=60", value: "entertainment" },
+    { label: "Real Estate", imageSrc: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&auto=format&fit=crop&q=60", value: "real_estate" },
+    { label: "Logistics", imageSrc: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=500&auto=format&fit=crop&q=60", value: "logistics" },
+    { label: "Manufacturing", imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&auto=format&fit=crop&q=60", value: "manufacturing" },
   ];
 
   const handleSelect = (value: string) => {
@@ -100,7 +98,7 @@ const FinalOnboarding = () => {
         </div>
 
         {/* Card Grid - Fixed 2 Columns */}
-        <div className="grid grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {domains.map((domain) => (
             <Card
               key={domain.label}

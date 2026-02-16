@@ -53,7 +53,7 @@ const OnboardingStage_2 = () => {
     { label: "Digital Marketing", imageSrc: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=500", value: 'digital_marketing' },
     { label: "Content Writing", imageSrc: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=500", value: 'content_writing' },
     { label: "Sales & Business", imageSrc: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=500", value: 'sales' },
-    { label: "Human Resources", imageSrc: "https://images.unsplash.com/photo-1521791136064-7986c2923216?auto=format&fit=crop&q=80&w=500", value: 'hr' },
+    { label: "Human Resources", imageSrc: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=500", value: 'hr' },
     { label: "Customer Success", imageSrc: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=500", value: 'customer_success' },
     { label: "Finance & Accounting", imageSrc: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=500", value: 'finance' },
     { label: "Cybersecurity", imageSrc: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=500", value: 'cybersecurity' },
