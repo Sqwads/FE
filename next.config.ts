@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
+  logging: {
+    fetches: {
+      fullUrl: false, // User requested no fetching logs
+    },
+  },
   experimental: {
     // missingSuspenseWithCSRBailout: false,
     optimizePackageImports: [
