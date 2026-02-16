@@ -1,7 +1,6 @@
 "use client";
 import { instance } from "@/src/api/instance";
 import { useMutation } from "@tanstack/react-query";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -18,15 +17,14 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ imageSrc, label, isSelected, onSelect }) => {
   return (
     <div
-      className={`border rounded-lg p-4 cursor-pointer transition duration-200 ${
-        isSelected
+      className={`border rounded-lg p-4 cursor-pointer transition duration-200 ${isSelected
           ? "bg-blue-100 border-blue-500 shadow-lg"
           : "bg-white border-gray-300 hover:shadow-md"
-      }`}
+        }`}
       onClick={onSelect}
     >
       <div className="w-full h-20 relative mb-3">
-        <Image src={imageSrc} alt={label} fill className="rounded-md object-cover" />
+        <img src={imageSrc} alt={label} className="w-full h-full rounded-md object-cover" />
       </div>
       <h3 className={`text-center font-medium ${isSelected ? "text-blue-800" : "text-gray-800"}`}>
         {label}
@@ -46,6 +44,14 @@ const FinalOnboarding = () => {
     { label: "Ecommerce", imageSrc: "/images/ecommerce.png", value: "ecommerce" },
     { label: "Insurance", imageSrc: "/images/insurance.png", value: "insurance" },
     { label: "Hospitality", imageSrc: "/images/hospitality.png", value: "hospitality" },
+    { label: "Education", imageSrc: "/images/education.png", value: "education" },
+    { label: "Technology", imageSrc: "/images/technology.png", value: "technology" },
+    { label: "Entertainment", imageSrc: "/images/entertainment.png", value: "entertainment" },
+    { label: "Real Estate", imageSrc: "/images/real-estate.png", value: "real_estate" },
+    { label: "Logistics", imageSrc: "/images/logistics.png", value: "logistics" },
+    { label: "Manufacturing", imageSrc: "/images/manufacturing.png", value: "manufacturing" },
+
+
   ];
 
   const handleSelect = (value: string) => {
@@ -109,9 +115,8 @@ const FinalOnboarding = () => {
         {/* Continue Button */}
         <button
           onClick={handleSubmit}
-          className={`flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full ${
-            isPending && "opacity-50"
-          }`}
+          className={`flex items-center justify-center bg-blue-800 text-white px-8 py-4 rounded-md hover:bg-blue-900 w-full ${isPending && "opacity-50"
+            }`}
           disabled={selectedDomains.length === 0 || isPending}
         >
           {isPending ? "Submitting..." : "Setup my Custom feed"}

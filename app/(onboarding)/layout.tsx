@@ -29,7 +29,7 @@ export default function OnBoardingLayout({ children }: Readonly<{ children: Reac
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row justify-between items-center lg:w-[80%] mx-auto">
         {/* Left Section (Shared Across All Pages) */}
-        <div className="flex flex-col items-start text-left lg:w-1/2 mb-10 lg:mb-0">
+        {/* <div className="flex flex-col items-start text-left lg:w-1/2 mb-10 lg:mb-0">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
             Let’s Know You Better
           </h1>
@@ -44,10 +44,10 @@ export default function OnBoardingLayout({ children }: Readonly<{ children: Reac
             height={250}
             className="rounded-md"
           />
-        </div>
+        </div> */}
 
         {/* Dynamic Content */}
-        <div className="lg:w-1/2 w-full">{children}</div>
+        <div className=" w-full">{children}</div>
       </div>
 
       {/* Footer */}
