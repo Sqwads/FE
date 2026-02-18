@@ -14,7 +14,9 @@ const SearchFilters = ({
   totalRecords,
   pageSize,
   onExport,
-  isExporting
+  isExporting,
+  onFilterClick,
+  isFilterActive
 }: {
   onChange: (e: any) => void,
   handleNextPage: () => void,
@@ -24,7 +26,9 @@ const SearchFilters = ({
   pageSize: number,
   showExportBtn?: boolean,
   onExport?: () => void,
-  isExporting?: boolean
+  isExporting?: boolean;
+  onFilterClick?: () => void;
+  isFilterActive?: boolean;
 }) => {
 
   const pageStart = ((currentPage - 1) * pageSize) + 1
@@ -64,10 +68,14 @@ const SearchFilters = ({
           <Button
             variant="outline"
             leftSection={<BsListUl size={16} />}
-            className="flex-1 md:flex-none"
+            className={`flex-1 md:flex-none relative ${isFilterActive ? 'bg-blue-50 border-blue-500 text-blue-600' : ''}`}
             aria-label="Filters"
+            onClick={onFilterClick}
           >
             Filters
+            {isFilterActive && (
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            )}
           </Button>
           {showExportBtn &&
             <button
