@@ -11,7 +11,7 @@ import { instance } from "@/src/api/instance";
 import { exportToCsv } from "@/src/common/export";
 import moment from 'moment'
 import { useState } from "react";
-import { FiShoppingCart } from "react-icons/fi";
+import { FiPlus, FiShoppingCart, FiTrash2, FiX } from "react-icons/fi";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm, yupResolver } from "@mantine/form";
 import { UserSuspensionValidator } from "@/src/validators/validators";
@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { formatTextToSentenceCase } from "@/src/common";
 import { Loader } from "@mantine/core";
+import { domains } from "@/common/data";
 
 const UserListPage = () => {
   const router = useRouter()
@@ -29,8 +30,10 @@ const UserListPage = () => {
   const [pageSize] = useState(50)
   const [selectedUser, setSelectedUser] = useState<any>(null)
   const [opened, { open, close }] = useDisclosure(false);
+  const [filterModalOpened, { open: openFilterModal, close: closeFilterModal }] = useDisclosure(false);
   const [verificationMoalOpened, { open: openVerificationModal, close: closeVerificationModal }] = useDisclosure(false);
   const [isExporting, setIsExporting] = useState(false)
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   const [periodUnit, setPeriodUnit] = useState<any>('1')
   const [periodOptions, setPeriodOptions] = useState([
     { label: 'A day', value: '1', isActive: false },
@@ -38,6 +41,15 @@ const UserListPage = () => {
     { label: '5 days', value: '5' },
     { label: '1 Week', value: '7' }
   ])
+  const [interviewModalOpened, { open: openInterviewModal, close: closeInterviewModal }] = useDisclosure(false);
+
+  // Interview invite state
+  const [inviteMessage, setInviteMessage] = useState('');
+  const [timeSlots, setTimeSlots] = useState<{ date: string; startTime: string; endTime: string }[]>([
+    { date: '', startTime: '', endTime: '' }
+  ]);
+  const [interviewerEmails, setInterviewerEmails] = useState<string[]>([]);
+  const [interviewerInput, setInterviewerInput] = useState('');
 
   const form = useForm({
     initialValues: {
@@ -64,6 +76,19 @@ const UserListPage = () => {
     },
   })
 
+  const { mutate: sendUserInterviewInvite, isPending: interviewInvitePending } = useMutation({
+    mutationFn: (data: any) => instance.post(`/interview/invite-user`, data),
+    mutationKey: ['user-interview-invite'],
+    onSuccess() {
+      toast.success('Interview invite sent successfully!')
+      closeInterviewModal()
+      resetInterviewForm()
+    },
+    onError(error: any) {
+      toast.error(error?.response?.data?.message || 'Failed to send interview invite');
+    }
+  })
+
   const { data: usersData, isLoading: userInfoIsLoading } = useQuery({
     queryFn: () => instance.get(
       '/user/all',
@@ -71,11 +96,12 @@ const UserListPage = () => {
         params: {
           pageSize,
           pageNumber: currentPage,
-          ...(searchQuery.length > 1 && { searchQuery })
+          ...(searchQuery.length > 1 && { searchQuery }),
+          ...(selectedDomain && { domain: selectedDomain })
         }
       }
     ),
-    queryKey: ['users', searchQuery, currentPage, pageSize],
+    queryKey: ['users', searchQuery, currentPage, pageSize, selectedDomain],
     placeholderData: (prev) => prev
   })
 
@@ -158,6 +184,7 @@ const UserListPage = () => {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item onClick={() => router.push(`/users/${row.original._id}`)}>View Profile</Menu.Item>
+            <Menu.Item onClick={() => handleInviteToInterview(row.original)} color="blue">Invite to Interview</Menu.Item>
             <Menu.Item className="!cursor-not-allowed">Edit User</Menu.Item>
             {row.original?.status == 'ACTIVE' && <Menu.Item onClick={() => handleSuspendUser(row.original)} color="red">Suspend User</Menu.Item>}
             {row.original?.status == 'SUSPENDED' && <Menu.Item onClick={() => handleActivateUser(row.original?.userId)} color="#028d4c">Activate User</Menu.Item>}
@@ -278,12 +305,90 @@ const UserListPage = () => {
     mutate(payload)
   }
 
+  // Interview invite handlers
+  const handleInviteToInterview = (user: any) => {
+    setSelectedUser(user);
+    const userName = `${user?.firstName || ''}`;
+    setInviteMessage(
+      `Hi ${userName},\n\nWe'd like to invite you for a short interview to get to know you better and discuss potential opportunities at Sqwads.\n\nPlease select a date and time that works best for you from the available options.\n\nLooking forward to speaking with you!`
+    );
+    setTimeSlots([{ date: '', startTime: '', endTime: '' }]);
+    setInterviewerEmails([]);
+    setInterviewerInput('');
+    openInterviewModal();
+  }
+
+  const resetInterviewForm = () => {
+    setSelectedUser(null);
+    setInviteMessage('');
+    setTimeSlots([{ date: '', startTime: '', endTime: '' }]);
+    setInterviewerEmails([]);
+    setInterviewerInput('');
+  }
+
+  const addInterviewerEmail = () => {
+    const email = interviewerInput.trim();
+    if (!email) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return toast.error('Please enter a valid email');
+    }
+    if (interviewerEmails.includes(email)) {
+      return toast.error('Email already added');
+    }
+    setInterviewerEmails([...interviewerEmails, email]);
+    setInterviewerInput('');
+  }
+
+  const removeInterviewerEmail = (email: string) => {
+    setInterviewerEmails(interviewerEmails.filter(e => e !== email));
+  }
+
+  const addTimeSlot = () => {
+    setTimeSlots([...timeSlots, { date: '', startTime: '', endTime: '' }]);
+  }
+
+  const removeTimeSlot = (index: number) => {
+    if (timeSlots.length > 1) {
+      setTimeSlots(timeSlots.filter((_, i) => i !== index));
+    }
+  }
+
+  const updateTimeSlot = (index: number, field: string, value: string) => {
+    const updated = [...timeSlots];
+    updated[index] = { ...updated[index], [field]: value };
+    setTimeSlots(updated);
+  }
+
+  const handleSubmitInterviewInvite = () => {
+    // Validate
+    if (!inviteMessage.trim()) {
+      return toast.error('Please enter an invite message');
+    }
+
+    const validSlots = timeSlots.filter(s => s.date && s.startTime && s.endTime);
+    if (validSlots.length === 0) {
+      return toast.error('Please add at least one complete time slot');
+    }
+
+    sendUserInterviewInvite({
+      userId: selectedUser?._id,
+      inviteMessage: inviteMessage.trim(),
+      availableSlots: validSlots,
+      ...(interviewerEmails.length > 0 && { interviewerEmails }),
+    });
+  }
+
   const customePeriodUnits = [
     { label: 'Days', value: '1' },
     { label: 'Weeks', value: '7' },
     { label: 'Months', value: '30' },
     { label: 'Years', value: '365' },
   ]
+
+  const availableDomains = domains.map(domain => ({
+    value: domain.value,
+    label: domain.label
+  }))
 
 
 
@@ -327,6 +432,8 @@ const UserListPage = () => {
         showExportBtn
         onExport={handleExportCSV}
         isExporting={isExporting}
+        onFilterClick={openFilterModal}
+        isFilterActive={!!selectedDomain}
       />
 
       <AppTable
@@ -493,11 +600,183 @@ const UserListPage = () => {
               {isPending ? 'Suspending...' : 'Confirm'}
             </button>
           </div>
-
         </div>
       </Modal>
 
-    </section>
+      <Modal
+        centered
+        opened={filterModalOpened}
+        onClose={closeFilterModal}
+        title="Filter by Domain"
+      >
+        <div className="flex flex-col gap-4">
+          <Select
+            label="Select Domain"
+            placeholder="Choose a domain"
+            data={availableDomains}
+
+            value={selectedDomain}
+            onChange={setSelectedDomain}
+            clearable
+          />
+          <div className="flex justify-end gap-2 mt-4">
+            <Button variant="default" onClick={() => {
+              setSelectedDomain(null);
+              closeFilterModal();
+            }}>Clear</Button>
+            <Button onClick={closeFilterModal}>Apply</Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Interview Invite Modal */}
+      <Modal
+        opened={interviewModalOpened}
+        centered
+        onClose={closeInterviewModal}
+        title={
+          <span className="text-lg font-semibold text-[#001D69]">
+            Invite to Interview
+          </span>
+        }
+        size="lg"
+      >
+        <div className="py-4 px-2">
+          {selectedUser && (
+            <div className="mb-5 p-3 bg-blue-50 rounded-lg">
+              <p className="text-sm text-gray-600">
+                Inviting <strong>{selectedUser?.firstName} {selectedUser?.lastName}</strong> ({selectedUser?.email})
+              </p>
+            </div>
+          )}
+
+          <div className="mb-5">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Invite Message</label>
+            <Textarea
+              value={inviteMessage}
+              onChange={(e) => setInviteMessage(e.currentTarget.value)}
+              minRows={6}
+              autosize
+              placeholder="Write your invite message..."
+              styles={{
+                input: {
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                }
+              }}
+            />
+          </div>
+
+          <div className="mb-5">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Other Interviewers (optional)</label>
+            <div className="flex gap-2 mb-2">
+              <input
+                type="email"
+                value={interviewerInput}
+                onChange={(e) => setInterviewerInput(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addInterviewerEmail(); } }}
+                placeholder="Enter interviewer email"
+                className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <button
+                type="button"
+                onClick={addInterviewerEmail}
+                className="px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 transition-colors"
+              >
+                Add
+              </button>
+            </div>
+            {interviewerEmails.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {interviewerEmails.map((email) => (
+                  <span key={email} className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200">
+                    {email}
+                    <button type="button" onClick={() => removeInterviewerEmail(email)} className="hover:text-red-500">
+                      <FiX size={12} />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="mb-5">
+            <div className="flex items-center justify-between mb-3">
+              <label className="block text-sm font-medium text-gray-700">Available Time Slots</label>
+              <button
+                type="button"
+                onClick={addTimeSlot}
+                className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 transition-colors"
+              >
+                <FiPlus size={16} />
+                Add Slot
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {timeSlots.map((slot, index) => (
+                <div key={index} className="flex items-end gap-2 p-3 bg-gray-50 rounded-lg">
+                  <div className="flex-1">
+                    <label className="block text-xs text-gray-500 mb-1">Date</label>
+                    <input
+                      type="date"
+                      value={slot.date}
+                      onChange={(e) => updateTimeSlot(index, 'date', e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-xs text-gray-500 mb-1">Start Time</label>
+                    <input
+                      type="time"
+                      value={slot.startTime}
+                      onChange={(e) => updateTimeSlot(index, 'startTime', e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-xs text-gray-500 mb-1">End Time</label>
+                    <input
+                      type="time"
+                      value={slot.endTime}
+                      onChange={(e) => updateTimeSlot(index, 'endTime', e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                  {timeSlots.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeTimeSlot(index)}
+                      className="p-2 text-red-400 hover:text-red-600 transition-colors"
+                    >
+                      <FiTrash2 size={18} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-3 mt-6">
+            <button
+              onClick={closeInterviewModal}
+              className="px-4 py-2 text-sm border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              disabled={interviewInvitePending}
+              onClick={handleSubmitInterviewInvite}
+              className="px-6 py-2 text-sm bg-[#001D69] text-white rounded-lg hover:bg-[#002a8f] disabled:opacity-50 transition-colors"
+            >
+              {interviewInvitePending ? 'Sending...' : 'Send Invite'}
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+    </section >
   );
 }
 
