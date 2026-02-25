@@ -45,6 +45,19 @@ const BlogPostDetail = ({ post }: any) => {
   const imageUrl = post?.cover_image || "/images/blog-placeholder.png";
 
   const handleShare = (platform: "facebook" | "twitter" | "linkedin" | "whatsapp") => {
+    if (platform === "linkedin") {
+      const encoded = encodeURIComponent(postUrl);
+      const encodedTitle = encodeURIComponent(title);
+      // Try to open the LinkedIn app via deep link
+      const appDeepLink = `linkedin://shareArticle?mini=true&url=${encoded}&title=${encodedTitle}`;
+      const webFallback = `https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`;
+      window.location.href = appDeepLink;
+      // If the app isn't installed, the browser stays on this page — fall back to web after 600ms
+      setTimeout(() => {
+        window.open(webFallback, "_blank", "noopener,noreferrer,width=600,height=500");
+      }, 600);
+      return;
+    }
     const url = buildShareUrl(platform, postUrl, title);
     window.open(url, "_blank", "noopener,noreferrer,width=600,height=500");
   };
