@@ -72,8 +72,6 @@ export default function DashboardPage() {
   const completedFields = profileFields.filter(Boolean).length;
   const profileCompletion = Math.round((completedFields / profileFields.length) * 100);
 
-  const [currentPage, setCurrentPage] = useState(1);
-
   const { data: projectResponse, isLoading: projectIsLoading } = useQuery({
     queryFn: () => instance.get('/project/all', {
       params: {
@@ -88,30 +86,17 @@ export default function DashboardPage() {
   const { data: exploreProjectResponse, isLoading: exploreProjectIsLoading } = useQuery({
     queryFn: () => instance.get('/project/all', {
       params: {
-        pageNumber: currentPage,
-        pageSize: 8
+        pageNumber: 1,
+        pageSize: 4
       },
     }),
-    queryKey: ['projects-explore', currentPage],
+    queryKey: ['projects-explore', 1],
   });
 
   const { data: response, isLoading } = useQuery({
     queryFn: () => instance.get('/analytics/user'),
     queryKey: ['project-analytics'],
   });
-
-  const totalPages = Math.ceil(exploreProjectResponse?.data?.totalNoOfRecords / 8)
-  const handleNextPage = () => {
-    if (currentPage + 1 <= totalPages) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
-
-  const handlePrevPage = () => {
-    if (currentPage - 1 > 0) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
 
   return (
     <div className="lg:px-8 px-3 py-14">
@@ -265,8 +250,8 @@ export default function DashboardPage() {
 
       {/* Explore Projects Section */}
       <div className="lg:mb-28 mb-20">
-        <SectionHeader title="Explore Projects" icon={<FiCompass size={20} />} seeAllLink='/user-projects' showSeeAll={false} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:mt-10">
+        <SectionHeader title="Explore Projects" icon={<FiCompass size={20} />} seeAllLink='/explore-projects' showSeeAll={true} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:mt-10 mt-6">
           {exploreProjectResponse?.data?.projects?.map((item: any, idx: number) =>
             <ProjectCard
               key={idx}
@@ -278,26 +263,6 @@ export default function DashboardPage() {
               collaborators={item?.teamMembers?.map((member: any) => member?.user)}
             />
           )}
-        </div>
-
-        <div className="flex justify-center mt-6 space-x-4">
-          <button
-            className={`px-4 py-2 rounded bg-gray-200 text-gray-700 font-medium hover:bg-gray-300 transition disabled:opacity-50 disabled:cursor-not-allowed`}
-            onClick={handlePrevPage}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          <span className="px-3 py-2 text-gray-600 font-semibold">
-            Page {currentPage}
-          </span>
-          <button
-            className={`px-4 py-2 rounded bg-blue-600 text-white font-medium hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed`}
-            onClick={handleNextPage}
-            disabled={currentPage >= totalPages}
-          >
-            Next
-          </button>
         </div>
       </div>
 
