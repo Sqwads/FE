@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { use, useState } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { IoMdPeople } from "react-icons/io";
-import { FaProjectDiagram } from 'react-icons/fa';
+import { FaProjectDiagram, FaCog } from 'react-icons/fa';
 import { HiOutlineHome, HiOutlineClipboardList } from 'react-icons/hi';
 import { BsDatabase } from 'react-icons/bs';
 import { usePathname } from 'next/navigation';
@@ -103,6 +103,14 @@ const Sidebar = ({
               ${pathname?.startsWith('/portfolio') ? activeClasses : inactiveClasses}`}
           >
             <IoBagRemove /> Portfolio
+          </Link>
+          <Link
+            onClick={onSelectTab}
+            href="/settings"
+            className={`flex items-center gap-3 px-4 py-3 text-gray-700  rounded-md
+              ${pathname?.startsWith('/settings') ? activeClasses : inactiveClasses}`}
+          >
+            <FaCog /> Settings
           </Link>
         </nav>
 

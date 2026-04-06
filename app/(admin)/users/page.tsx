@@ -34,6 +34,8 @@ const UserListPage = () => {
   const [verificationMoalOpened, { open: openVerificationModal, close: closeVerificationModal }] = useDisclosure(false);
   const [isExporting, setIsExporting] = useState(false)
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
+  const [interviewedBefore, setInterviewedBefore] = useState<boolean | null>(null);
+  const [availableForProjects, setAvailableForProjects] = useState<boolean | null>(null);
   const [periodUnit, setPeriodUnit] = useState<any>('1')
   const [periodOptions, setPeriodOptions] = useState([
     { label: 'A day', value: '1', isActive: false },
@@ -81,6 +83,7 @@ const UserListPage = () => {
     mutationKey: ['user-interview-invite'],
     onSuccess() {
       toast.success('Interview invite sent successfully!')
+      queryClient.invalidateQueries({ queryKey: ['users'] });
       closeInterviewModal()
       resetInterviewForm()
     },
@@ -97,11 +100,13 @@ const UserListPage = () => {
           pageSize,
           pageNumber: currentPage,
           ...(searchQuery.length > 1 && { searchQuery }),
-          ...(selectedDomain && { domain: selectedDomain })
+          ...(selectedDomain && { domain: selectedDomain }),
+          ...(interviewedBefore !== null && { interviewedBefore }),
+          ...(availableForProjects !== null && { availableForProjects })
         }
       }
     ),
-    queryKey: ['users', searchQuery, currentPage, pageSize, selectedDomain],
+    queryKey: ['users', searchQuery, currentPage, pageSize, selectedDomain, interviewedBefore, availableForProjects],
     placeholderData: (prev) => prev
   })
 
@@ -151,6 +156,43 @@ const UserListPage = () => {
       header: 'Projects',
       accessorKey: 'projects',
       cell: (value) => value.getValue() || 0,
+    },
+    {
+      header: 'Interviewed',
+      accessorKey: 'interviewed',
+      cell: ({ row }) => {
+        const count = row.original.interviewCount || 0;
+        return count > 0 ? (
+          <Badge color="blue" variant="light" radius="sm" size="md">
+            Yes
+          </Badge>
+        ) : (
+          <Badge color="gray" variant="light" radius="sm" size="md">
+            No
+          </Badge>
+        );
+      },
+    },
+    {
+      header: '# Interviews',
+      accessorKey: 'interviewCount',
+      cell: ({ row }) => row.original.interviewCount || 0,
+    },
+    {
+      header: 'Available',
+      accessorKey: 'availableForProjects',
+      cell: ({ row }) => {
+        const isAvailable = row.original.availableForProjects;
+        return isAvailable ? (
+          <Badge color="green" variant="light" radius="sm" size="md">
+            Yes
+          </Badge>
+        ) : (
+          <Badge color="red" variant="light" radius="sm" size="md">
+            No
+          </Badge>
+        );
+      },
     },
     {
       header: 'Status',
@@ -433,7 +475,7 @@ const UserListPage = () => {
         onExport={handleExportCSV}
         isExporting={isExporting}
         onFilterClick={openFilterModal}
-        isFilterActive={!!selectedDomain}
+        isFilterActive={!!selectedDomain || interviewedBefore !== null || availableForProjects !== null}
       />
 
       <AppTable
@@ -607,21 +649,44 @@ const UserListPage = () => {
         centered
         opened={filterModalOpened}
         onClose={closeFilterModal}
-        title="Filter by Domain"
+        title="Filter Users"
       >
         <div className="flex flex-col gap-4">
           <Select
             label="Select Domain"
             placeholder="Choose a domain"
             data={availableDomains}
-
             value={selectedDomain}
             onChange={setSelectedDomain}
+            clearable
+          />
+          <Select
+            label="Interview Status"
+            placeholder="Filter by interview status"
+            data={[
+              { value: 'true', label: 'Interviewed Before' },
+              { value: 'false', label: 'Never Interviewed' },
+            ]}
+            value={interviewedBefore !== null ? String(interviewedBefore) : null}
+            onChange={(val) => setInterviewedBefore(val === null ? null : val === 'true')}
+            clearable
+          />
+          <Select
+            label="Available for Projects"
+            placeholder="Filter by availability"
+            data={[
+              { value: 'true', label: 'Available' },
+              { value: 'false', label: 'Not Available' },
+            ]}
+            value={availableForProjects !== null ? String(availableForProjects) : null}
+            onChange={(val) => setAvailableForProjects(val === null ? null : val === 'true')}
             clearable
           />
           <div className="flex justify-end gap-2 mt-4">
             <Button variant="default" onClick={() => {
               setSelectedDomain(null);
+              setInterviewedBefore(null);
+              setAvailableForProjects(null);
               closeFilterModal();
             }}>Clear</Button>
             <Button onClick={closeFilterModal}>Apply</Button>
