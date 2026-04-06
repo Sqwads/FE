@@ -1,7 +1,7 @@
 "use client"
 import  React, { Suspense, useRef, useState } from 'react';
 import { IoShareSocial } from 'react-icons/io5';
-import { MdEdit, MdOutlineFileUpload } from 'react-icons/md';
+import { MdEdit, MdOutlineFileUpload, MdLocationOn, MdEmail, MdWork, MdStar } from 'react-icons/md';
 import PortfolioProject from './tabs/projects';
 import PortfolioAbout from './tabs/about';
 import ProjectDetails from './tabs/project-details';
@@ -13,7 +13,6 @@ import { formatTextToSentenceCase } from '@/common';
 import toast from 'react-hot-toast';
 
 
-
 const Portfolio = ({
     isPublic = false
 }:{
@@ -21,11 +20,11 @@ const Portfolio = ({
 }) => {
 
     const searchParams = useSearchParams()
-    const [currentTab, setCurrentTab] = useState('About');
+    const [currentTab, setCurrentTab] = useState('Project');
     const [detailsMode, setDetailsMode] = useState(false);
     const [selectedProject, setSelectedProject] = useState<any>(null);
-     const [file, setFile] = useState<any>(null);
-      const [profileImageSrc, setProfileImageSrc] = useState<any>(null);
+    const [file, setFile] = useState<any>(null);
+    const [profileImageSrc, setProfileImageSrc] = useState<any>(null);
     const imageInputRef = useRef<HTMLInputElement | null>(null);
     const router = useRouter()
     const userId = searchParams.get('userId');
@@ -39,7 +38,7 @@ const Portfolio = ({
     };
 
     const { data: projectResponse, isLoading: projectIsLoading } = useQuery({ 
-          queryFn: () => instance.get('/project/all', {
+        queryFn: () => instance.get('/project/all', {
         params: { 
             userId: user?._id || userId,
             type: 'portfolio',
@@ -49,7 +48,7 @@ const Portfolio = ({
         enabled: !!user?._id || !!userId
     });
 
-     const {data:userData} = useQuery({
+    const {data:userData} = useQuery({
         queryFn: ()=>instance.get(`/user/${userId}`),
         queryKey: ['user', userId],
         enabled: !!userId
@@ -62,8 +61,7 @@ const Portfolio = ({
         setDetailsMode(true);
     };
 
-     const handleImageUpload = (file: File) => {
-        // console.log(file)
+    const handleImageUpload = (file: File) => {
         setFile(file);
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -75,9 +73,8 @@ const Portfolio = ({
 
     const copyText = ()=>{
         const text = `https://sqwads-dev.vercel.app/project-public?userId=${user?._id}`
-        console.log(text)
         navigator.clipboard.writeText(text);
-        toast.success('Link to project copied')
+        toast.success('Link to portfolio copied')
     }
 
     const { mutate, isPending } = useMutation({
@@ -93,133 +90,179 @@ const Portfolio = ({
 
     const handleSubmit = (file: File) => {
         const formData = new FormData()
-        // console.log(file)
         formData.append('file', file)
         formData.append('fileIsCoverImage', 'true' )
         mutate(formData)
     };
 
     const currentUser = userId ? fetchedUser: user
-    
+    const projects = projectResponse?.data?.projects || []
 
     return ( 
-        <div className='bg-[#F5F5F5] '>
-        <div className=' pb-20 bg-white shadow' >
-
-            
-           {!detailsMode && 
-            <>
-            <div 
-                className="bg-[#F5F5F5] h-48 flex flex-col items-center justify-center"
-                style={{
-                    background:'linear-gradient(90deg, #f7cac9 0%, #ede574 100%)',
-                    minHeight: 140,
-                    alignItems: "center",
-                    ...((profileImageSrc || currentUser?.coverImage) && {
-                        backgroundImage: `url(${profileImageSrc || currentUser?.coverImage})`,
-                        // backgroundPosition: 'center',
-                        // backgroundRepeat:'no-repeat',
-                        // backgroundSize:'cover'
-                    }),
-                    
-                }} 
-            >
-               {/* {(!isPublic && !user?.coverImage)&&
-               <>
-                <div  
-                    className="h-14 cursor-not-allowed border w-14 rounded-full flex items-center justify-center">
-                    <MdOutlineFileUpload color='gray' size={22} />
-                </div>
-                <div className="font-semibold text-sm text-[gray] mt-2">Upload a cover image</div>
-               </>
-               } */}
-
-                <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    id="profile-image-input"
-                    onChange={e => {
-                        if (e.target.files && e.target.files[0]) {
-                            handleImageUpload(e.target.files[0]);
-                        }
-                    }}
-                    ref={imageInputRef}
-                />
-
-               
-            </div>
-
-            <div className="lg:px-10 px-4 border">
-                <div className="lg:flex  py-5 ">
-                    <img src={currentUser?.profileImage || "/images/profile.jpg"} className='lg:h-32 lg:w-32 h-24 w-24 object-cover rounded-full border mt-[-70px]' alt="" />
-                    <div className='flex-1 flex items-center ml-5 lg:mt-0 mt-3 lg:mb-4 mb-6'>
-                            <div>
-                                <div className="text-xl font-medium mb-">{currentUser?.firstName } {currentUser?.lastName }</div>
-                                <div className=" text-[#16181BB2] ">
-                                    
-                                    {formatTextToSentenceCase(currentUser?.skills_of_interest[0] || '')}
-                                    
-                               
-                                </div>
-                                {!isPublic && <div onClick={handleImageClick} className='hidden mt-2 lg:block text-blue-700 text-sm underline cursor-pointer'>Edit Cover Image</div>}
-                            </div>
-                         {!isPublic &&  <div onClick={handleImageClick} className='ml-5 block lg:hidden  text-blue-700 text-sm underline cursor-pointer'>Edit Cover Image</div>}
-                    </div>
-
-                    {!isPublic && 
-                    <>
-                    <div className='flex items-center '>
-                        <button onClick={()=>router.push('/settings')} className='bg-[#EFF3FF] border lg:text-sm text-sm border-[#001D69] flex items-center  text-[#001D69] px-4 py-2 rounded-md mr-3'> <MdEdit className='mr-2' color='#001D69' /> Edit Profile</button>
-                        <button onClick={copyText} className='px-4 py-2 rounded-md lg:text-sm text-sm bg-[#001D69] flex items-center text-white'><IoShareSocial className='mr-2' color='white' /> Share Portfolio</button>
-                         {/* <a
-                            href={`https://www.facebook.com/sharer/sharer.php?u=https://sqwads-dev.vercel.app/projects/68334f99a3584c928cc6637d`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >share</a> */}
-                      
-                    </div>
-                    </>
-                    }
-                </div>
-
-                <div className='border-b lg:mt-6 flex gap-x-5'>
-                     <div 
-                        className={`${currentTab=='About' ? 'border-b-2 py-1  font-medium border-[#001D69] text-[#001D69]':'text-[#16181B80]'} font-normal cursor-pointer py-1 px-3 `}
-                        onClick={()=>setCurrentTab('About')}
-                    >
-                        About
-                    </div>
-
+        <div className='bg-gray-50 min-h-screen'>
+            {!detailsMode && (
+                <>
+                    {/* Cover Image Section */}
                     <div 
-                        className={`${currentTab=='Project' ? 'border-b-2 py-1  font-medium border-[#001D69] text-[#001D69]':'text-[#16181B80]'} font-normal cursor-pointer py-1 px-3 `}
-                        onClick={()=>setCurrentTab('Project')}>
-                        Project
+                        className="relative h-48 md:h-80 lg:h-64 flex items-center justify-center overflow-hidden"
+                        style={{
+                            background: profileImageSrc || currentUser?.coverImage 
+                                ? `url(${profileImageSrc || currentUser?.coverImage}) center/cover no-repeat`
+                                : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        }}
+                    >
+                        <input
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            id="profile-image-input"
+                            onChange={e => {
+                                if (e.target.files && e.target.files[0]) {
+                                    handleImageUpload(e.target.files[0]);
+                                }
+                            }}
+                            ref={imageInputRef}
+                        />
+                        {!isPublic && (
+                            <button 
+                                onClick={handleImageClick}
+                                className="absolute bottom-4 right-4 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all"
+                            >
+                                <MdEdit size={18} /> Edit Cover
+                            </button>
+                        )}
                     </div>
 
-                   
-                </div>
-                
-               <div>
-                    {currentTab=='Project' && <PortfolioProject projects={projectResponse?.data?.projects} onProjectSelect={handleProjectSelect} /> }
-                    {currentTab=='About' && 
-                    <PortfolioAbout 
-                            user={{
-                                ...currentUser,
-                                bio: currentUser?.bio 
-                            }}
-                         />
+                    {/* Profile Section */}
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-10">
+                        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+                            <div className="flex flex-col md:flex-row gap-6 items-start">
+                                {/* Profile Image */}
+                                <div className="relative flex-shrink-0">
+                                    <img 
+                                        src={currentUser?.profileImage || "/images/profile.jpg"} 
+                                        className='w-32 h-32 md:w-40 md:h-40 object-cover rounded-2xl border-4 border-white shadow-lg' 
+                                        alt="" 
+                                    />
+                                    {currentUser?.availableForProjects && (
+                                        <div className="absolute -bottom-2 -right-2 bg-green-500 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
+                                            <MdStar size={14} /> Available
+                                        </div>
+                                    )}
+                                </div>
 
-                    }
-               </div>
-            </div>
-            </>
-           }
+                                {/* User Info */}
+                                <div className="flex-1 w-full">
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                        <div>
+                                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                                                {currentUser?.firstName} {currentUser?.lastName}
+                                            </h1>
+                                            <p className="text-lg text-[#667eea] font-medium mt-1">
+                                                {currentUser?.title || 'Professional'}
+                                            </p>
+                                        </div>
+                                        {!isPublic && (
+                                            <div className="flex gap-3">
+                                                <button 
+                                                    onClick={()=>router.push('/settings')}
+                                                    className='bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center gap-2 transition-all'
+                                                >
+                                                    <MdEdit size={18} /> Edit Profile
+                                                </button>
+                                                <button 
+                                                    onClick={copyText}
+                                                    className='bg-[#667eea] hover:bg-[#764ba2] text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all'
+                                                >
+                                                    <IoShareSocial size={18} /> Share
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
 
-           {
-            detailsMode && <ProjectDetails project={selectedProject} onBackToProjects={()=>setDetailsMode(false)} />
-           }
-        </div>
+                                    {/* Skills Tags */}
+                                    <div className="flex flex-wrap gap-2 mt-4">
+                                        {currentUser?.skills_of_interest?.slice(0, 5).map((skill: string, idx: number) => (
+                                            <span 
+                                                key={idx}
+                                                className="bg-gradient-to-r from-blue-50 to-purple-50 text-gray-700 px-3 py-1 rounded-full text-sm font-medium border border-gray-200"
+                                            >
+                                                {formatTextToSentenceCase(skill)}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {/* Quick Stats */}
+                                    <div className="flex flex-wrap gap-6 mt-6 pt-6 border-t border-gray-100">
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-gray-900">{projects.length}</div>
+                                            <div className="text-sm text-gray-500">Projects</div>
+                                        </div>
+                                        <div className="text-center">
+                                            <div className="text-2xl font-bold text-gray-900">{currentUser?.experiences?.length || 0}</div>
+                                            <div className="text-sm text-gray-500">Experience</div>
+                                        </div>
+                                        {currentUser?.location && (
+                                            <div className="flex items-center gap-1 text-gray-500">
+                                                <MdLocationOn size={18} />
+                                                <span className="text-sm">{currentUser.location}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Bio Preview */}
+                            {currentUser?.bio && (
+                                <div className="mt-6 pt-6 border-t border-gray-100">
+                                    <p className="text-gray-600 line-clamp-2">
+                                        {currentUser.bio}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Tab Navigation */}
+                        <div className="mt-8">
+                            <div className="flex gap-1 bg-gray-200/50 p-1 rounded-xl w-fit">
+                               
+                                <button
+                                    onClick={()=>setCurrentTab('Project')}
+                                    className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                                        currentTab === 'Project' 
+                                            ? 'bg-white text-gray-900 shadow-lg' 
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    Projects ({projects.length})
+                                </button>
+                                 <button
+                                    onClick={()=>setCurrentTab('About')}
+                                    className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                                        currentTab === 'About' 
+                                            ? 'bg-white text-gray-900 shadow-lg' 
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    About
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Tab Content */}
+                        <div className="mt-6 pb-12">
+                            {currentTab === 'Project' && (
+                                <PortfolioProject projects={projects} onProjectSelect={handleProjectSelect} />
+                            )}
+                            {currentTab === 'About' && (
+                                <PortfolioAbout user={currentUser} />
+                            )}
+                        </div>
+                    </div>
+                </>
+            )}
+
+            {detailsMode && <ProjectDetails project={selectedProject} onBackToProjects={()=>setDetailsMode(false)} />}
         </div>
     );
 }

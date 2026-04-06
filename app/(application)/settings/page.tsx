@@ -4,6 +4,7 @@ import BasicInformation from './tabs/basicDetails';
 import SkillsExperience from './tabs/skills';
 import SocialProfiles from './tabs/social';
 import Security from './tabs/security';
+import Availability from './tabs/availability';
 import { useRef } from 'react';
 import { MdModeEdit } from 'react-icons/md';
 import { instance } from '@/api/instance';
@@ -51,14 +52,15 @@ const UserProfile = () => {
 
     const sidebarItems = [
         { id: 'basic', label: 'Basic Information' },
+        { id: 'availability', label: 'Availability' },
         { id: 'skills', label: 'Skills & Experience' },
         { id: 'social', label: 'Social Profiles' },
         { id: 'security', label: 'Security' }
     ];
 
     const {data:response, isPending: userInfoIsLoading} = useQuery({
-        queryFn: ()=>instance.get('/user/profile'),
-        queryKey: ['user-profile'],
+        queryFn: ()=>instance.get('/user'),
+        queryKey: ['user'],
     });
 
     const user = response?.data
@@ -146,6 +148,7 @@ const UserProfile = () => {
                 {activeSection === 'basic' && (
                   <BasicInformation user={user} />
                 )}
+                {activeSection === 'availability' && <Availability user={user} />}
                 {activeSection === 'skills' && <SkillsExperience user={user}  />}
                 {activeSection === 'social' && <SocialProfiles user={user} />}
                 {activeSection === 'security' && <Security  />}
