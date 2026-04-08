@@ -15,8 +15,8 @@ const SocialProfiles = ({ user }: any) => {
     }));
 
     useEffect(() => {
-        console.log('🔍 SocialProfiles - CURRENT USER:', user);
-        console.log('🔍 SocialProfiles - CURRENT LINKEDIN:', user?.socialProfile?.linkedin);
+        // console.log('🔍 SocialProfiles - CURRENT USER:', user);
+        // console.log('🔍 SocialProfiles - CURRENT LINKEDIN:', user?.socialProfile?.linkedin);
     }, [user]);
 
     const validator = Yup.object({

@@ -36,8 +36,8 @@ interface UserData {
 
 function ProjectDetailsContent() {
   const [activeTab, setActiveTab] = useState('Description');
-  const [modalOpened, { open:openModal, close:closeModal }] = useDisclosure(false);
-  const [linkedinModalOpened, { open:openLinkedinModal, close:closeLinkedinModal }] = useDisclosure(false);
+  const [modalOpened, { open: openModal, close: closeModal }] = useDisclosure(false);
+  const [linkedinModalOpened, { open: openLinkedinModal, close: closeLinkedinModal }] = useDisclosure(false);
   const params = useParams()
   const projectId = params.projectId
   const [selectedDiscussion, setSelectedDiscussion] = useState<any>(null);
@@ -54,10 +54,10 @@ function ProjectDetailsContent() {
     enabled: false, // We'll manually trigger this when needed
   });
 
-  const {data: fetchedProject} = useQuery({
-      queryFn: ()=>instance.get(`/project/${projectId}`),
-      queryKey: ['projects', projectId],
-      enabled: !!projectId
+  const { data: fetchedProject } = useQuery({
+    queryFn: () => instance.get(`/project/${projectId}`),
+    queryKey: ['projects', projectId],
+    enabled: !!projectId
   })
 
   const [role, setRole] = useState('');
@@ -66,9 +66,9 @@ function ProjectDetailsContent() {
     setSelectedDiscussion(id);
   }
 
-  const available_roles = fetchedProject?.data?.skills?.map((role: any) =>role?.name) || [];
+  const available_roles = fetchedProject?.data?.skills?.map((role: any) => role?.name) || [];
 
-  const {mutate, isPending} = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: any) => instance.post(`/project/application/`, data),
     mutationKey: ['join-project', projectId],
     onSuccess(response) {
@@ -80,22 +80,26 @@ function ProjectDetailsContent() {
     },
   })
 
-  // FIXED: Added proper TypeScript type for userData parameter
-  const hasValidLinkedIn = (userData: UserData) => {
-    const linkedinUrl = userData?.socialProfile?.linkedin;
-    return linkedinUrl && 
-           linkedinUrl.trim() !== '' && 
-           linkedinUrl.length > 10;
+  // UPDATED: Full profile completeness check
+  const checkProfileCompleteness = (userData: any) => {
+    if (!userData) return false;
+
+    const hasSkills = userData?.skills_of_interest?.length > 0;
+    const hasExperience = userData?.experiences?.length > 0;
+    const hasSocials = !!userData?.socialProfile?.twitter && !!userData?.socialProfile?.linkedin;
+    const hasLocation = !!userData?.location;
+
+    return hasSkills  && hasSocials && hasLocation;
   };
 
-  // UPDATED: Handle apply button click with better LinkedIn validation
+  // UPDATED: Handle apply button click with full profile validation
   const handleApplyClick = async () => {
     // Use the validation function
-    if (!hasValidLinkedIn(user)) {
-      openLinkedinModal();
+    if (!checkProfileCompleteness(user)) {
+      openLinkedinModal(); // Reusing the state name, but content will be updated
       return;
     }
-    
+
     openModal();
   };
 
@@ -116,7 +120,7 @@ function ProjectDetailsContent() {
     closeLinkedinModal();
     window.location.href = '/settings'; // Redirect to settings page
   };
-  
+
 
   return (
     <div className="px-4 lg:px-8 py-14">
@@ -161,7 +165,7 @@ function ProjectDetailsContent() {
 
           {/* Tab Content */}
           {activeTab === 'Description' && (
-            <ProjectDescription 
+            <ProjectDescription
               overview={fetchedProject?.data?.overview}
               features={fetchedProject?.data?.features}
               currentDay={getDayDifference(fetchedProject?.data?.startDate, fetchedProject?.data?.endDate).currentDay}
@@ -169,23 +173,23 @@ function ProjectDetailsContent() {
             />
           )}
 
-        
-          {(activeTab === 'Discussion'  && !selectedDiscussion) && (
-              <Discussions
-                projectId={projectId}
-                onDiscussionClick={handleDiscussionClick}
-              />
+
+          {(activeTab === 'Discussion' && !selectedDiscussion) && (
+            <Discussions
+              projectId={projectId}
+              onDiscussionClick={handleDiscussionClick}
+            />
           )}
 
-           {
-              activeTab === 'Discussion' && selectedDiscussion && (
-                <DiscussionDetails
-                  discussionId={selectedDiscussion}
-                  onBack={() => setSelectedDiscussion(null)}
-                />
-              )
-            }
-          
+          {
+            activeTab === 'Discussion' && selectedDiscussion && (
+              <DiscussionDetails
+                discussionId={selectedDiscussion}
+                onBack={() => setSelectedDiscussion(null)}
+              />
+            )
+          }
+
           {activeTab === 'Members' && (
             <Members
               members={fetchedProject?.data?.teamMembers}
@@ -195,22 +199,22 @@ function ProjectDetailsContent() {
 
         <ProjectSidebar
           image={fetchedProject?.data?.coverImage}
-          skills={fetchedProject?.data?.skills?.flatMap((item:any)=> item?.tools).slice(0,3)|| []}
+          skills={fetchedProject?.data?.skills?.flatMap((item: any) => item?.tools).slice(0, 3) || []}
           participants={fetchedProject?.data?.teamMembers}
           projectLead={fetchedProject?.data?.projectLead}
         />
       </div>
 
       {/* Existing Role Selection Modal */}
-      <Modal 
+      <Modal
         centered
-        opened={modalOpened} 
-        onClose={closeModal} 
+        opened={modalOpened}
+        onClose={closeModal}
         size={'md'}
         styles={{
-            content:{
-            borderRadius:"1rem",  
-            }
+          content: {
+            borderRadius: "1rem",
+          }
         }}
       >
         <div>
@@ -227,70 +231,62 @@ function ProjectDetailsContent() {
             className="bg-blue-900 text-sm mt-5 text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleApplyForProject}
           >
-           {isPending ? 'Applying...' : 'Submit Application'}
+            {isPending ? 'Applying...' : 'Submit Application'}
           </button>
         </div>
       </Modal>
 
       {/* LinkedIn Required Modal */}
-      <Modal 
+      <Modal
         centered
-        opened={linkedinModalOpened} 
-        onClose={closeLinkedinModal} 
+        opened={linkedinModalOpened}
+        onClose={closeLinkedinModal}
         size={'sm'}
         styles={{
-            content:{
-            borderRadius:"1rem",  
-            }
+          content: {
+            borderRadius: "1rem",
+          }
         }}
       >
-        <div className="text-center py-6 px-4">
-          {/* Icon */}
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg 
-              className="w-8 h-8 text-blue-600" 
-              fill="none" 
-              stroke="currentColor" 
+        <div className="flex flex-col items-center text-center p-4">
+          <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+            <svg
+              className="w-8 h-8 text-blue-600"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" 
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
               />
             </svg>
           </div>
 
-          {/* Title */}
-          <h3 className="text-xl font-semibold text-gray-900 mb-3">
-            Complete Your Profile
-          </h3>
-
-          {/* Message */}
-          <p className="text-gray-600 mb-6 leading-relaxed">
-            To apply for projects, we need your LinkedIn profile to help project leads learn more about your professional background and experience.
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Complete Your Profile</h3>
+          <p className="text-gray-600 mb-6">
+            Please complete your profile details (Skills, Experience, Socials, and Location) to apply for projects and connect with others.
           </p>
 
-          {/* Debug info - you can remove this later */}
-          <div className="text-xs text-gray-400 mb-4">
-            Current LinkedIn: {user?.socialProfile?.linkedin || 'Not found'}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col space-y-3">
-            <button
+          <div className="w-full space-y-2">
+            <Button
               onClick={handleGoToSettings}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+              fullWidth
+              size="md"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
             >
-              Add LinkedIn Profile
-            </button>
-            <button
+              Go to Settings
+            </Button>
+            <Button
+              variant="subtle"
+              color="gray"
+              fullWidth
               onClick={closeLinkedinModal}
-              className="text-gray-600 hover:text-gray-800 py-2 font-medium transition-colors"
             >
               Maybe Later
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>

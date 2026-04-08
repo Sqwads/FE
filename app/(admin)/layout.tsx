@@ -36,7 +36,7 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
 
   return (
     <div className="flex h-screen">
-      <LoadingOverlay visible={userInfoIsLoading} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} />
+      {/* <LoadingOverlay visible={userInfoIsLoading} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} /> */}
       {/* Main Content Area */}
       <div className="w-64 hidden md:block">
            <AdminSidebar />

@@ -1,5 +1,5 @@
 "use client";
-import { Textarea, TextInput } from "@mantine/core";
+import { Textarea, TextInput, Badge } from "@mantine/core";
 import React, { useState } from "react";
 import { BsTwitterX } from "react-icons/bs";
 import { FaFacebookF, FaLinkedinIn, FaRegCopy } from "react-icons/fa";
@@ -79,6 +79,28 @@ const UserProfile = () => {
             <div className="font-medium xl:text-lg text-lg">
               {formatTextToSentenceCase(
                 user?.profile?.skills_of_interest[0] || ""
+              )}
+            </div>
+          </div>
+          <div className="">
+            <div className="text text-[#16181B80]"> Interviews </div>
+            <div className="lg:font-medium xl:text-lg text-base">
+              {user?.profile?.interviewCount || 0}
+            </div>
+          </div>
+          <div className="">
+            <div className="text text-[#16181B80]"> Available for Projects </div>
+            <div className="lg:font-medium xl:text-lg text-base">
+              {user?.profile?.availableForProjects ? (
+                <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-full">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  Available
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-600 text-sm font-medium px-3 py-1 rounded-full">
+                  <span className="w-2 h-2 bg-gray-400 rounded-full"></span>
+                  Not Available
+                </span>
               )}
             </div>
           </div>

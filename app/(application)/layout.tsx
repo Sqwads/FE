@@ -9,6 +9,7 @@ import { LoadingOverlay } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { userWrapper } from '../../src/store';
 import TopNav from './components/topNav';
+import Preloader from '../components/preloader';
 
 export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 
@@ -34,9 +35,11 @@ export default function AppLayout({ children }: Readonly<{ children: React.React
       return
     }
 
+    if(userInfoIsLoading) return <Preloader />
+
     return(
        <div className="flex h-screen ">
-             <LoadingOverlay visible={userInfoIsLoading} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} />
+             {/* <LoadingOverlay visible={userInfoIsLoading} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} /> */}
              {/* Main Content Area */}
              <div className="w-64 hidden md:block">
                   <Sidebar />
