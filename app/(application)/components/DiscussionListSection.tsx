@@ -4,7 +4,7 @@ import DiscussionListItem, { DiscussionListItemProps } from './DiscussionListIte
 interface DiscussionListSectionProps {
   title: string;
   discussions: DiscussionListItemProps[];
-  projectSlug: string; // Passed down to DiscussionListItem for link construction
+  projectSlug: string;
 }
 
 const DiscussionListSection: React.FC<DiscussionListSectionProps> = ({

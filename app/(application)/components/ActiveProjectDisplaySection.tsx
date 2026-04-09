@@ -4,14 +4,14 @@ import React from 'react';
 import Link from 'next/link';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import SectionHeader from './SectionHeader';
-import ActiveProjectCard from './ActiveProjectCard'; // Removed the { ActiveProject } import
+import ActiveProjectCard from './ActiveProjectCard';
 
 const ActiveProjectDisplaySection = ({ 
   title, 
   icon, 
   projects = [], 
   seeAllLink,
-}: any) => { // Changed to any type
+}: any) => {
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
@@ -24,7 +24,7 @@ const ActiveProjectDisplaySection = ({
       </div>
       {projects && projects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
-          {projects.map((project: any) => { // Added any type
+          {projects.map((project: any) => {
             const dynamicLink = `/dashboard/projects/${project.id}`;
             console.log(`ActiveProjectDisplaySection: Mapping project ID: ${project.id}, Generated resumeLink: ${dynamicLink}`);
             return (

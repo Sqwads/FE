@@ -8,14 +8,14 @@ interface SectionHeaderProps {
   title: string;
   icon: React.ReactNode;
   showSeeAll?: boolean;
-  seeAllLink?: string; // Add this line
+  seeAllLink?: string;
 }
 
 const SectionHeader: React.FC<SectionHeaderProps> = ({ 
   title, 
   icon, 
   showSeeAll = false,
-  seeAllLink = "#" // Add with default value
+  seeAllLink = "#"
 }) => {
   return (
     <div className="flex items-center justify-between mb-4">

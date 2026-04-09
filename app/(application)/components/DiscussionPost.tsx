@@ -10,7 +10,7 @@ interface DiscussionPostProps {
   avatarUrl: string;
   postedTime: string;
   title: string;
-  content: string; // Assuming content is HTML or markdown string
+  content: string;
   upvotes: number;
   commentsCount: number;
 }
@@ -61,7 +61,6 @@ const DiscussionPost: React.FC<DiscussionPostProps> = ({
       <h2 className="text-2xl font-medium text-[#001D69] mb-4">{title}</h2>
       {/* Render content - assuming simple paragraphs for now */}
       <div className="prose prose-sm max-w-none text-[#16181B80]" dangerouslySetInnerHTML={{ __html: content.replace(/\\n/g, '<br />') }}>
-        {/* Content will be rendered here */}
       </div>
     </div>
   );

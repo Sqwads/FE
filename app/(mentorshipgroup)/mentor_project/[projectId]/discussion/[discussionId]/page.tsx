@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { FiArrowLeft, FiX } from 'react-icons/fi';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 
-// Import components with absolute paths (recommended)
 import ProjectHeader from '../../../../components/ProjectHeader';
 import NavigationTabs from '../../../../components/NavigationTabs';
 import ProjectSidebar from '../../../../components/ProjectSidebar';
@@ -14,13 +13,11 @@ import ReactionButtons from '../../../../components/ReactionButtons';
 import CommentInput from '../../../../components/CommentInput';
 
 export default function DiscussionThreadPage({ params }: any) {
-  // Destructure with defaults to ensure type safety
   const { projectId = '', discussionId = '' } = params;
 
   const [activeTab, setActiveTab] = useState('Discussion');
   const [isMember, setIsMember] = useState(false);
 
-  // Sample data with proper typing
   const projectData: any = {
     id: projectId,
     title: 'Weather Forecast App',

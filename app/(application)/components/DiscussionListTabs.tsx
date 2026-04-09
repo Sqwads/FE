@@ -3,7 +3,7 @@ import React from 'react';
 interface DiscussionListTabsProps {
   activeSubTab: string;
   onSubTabChange: (tabName: string) => void;
-  tabs: string[]; // e.g., ['All', 'Owned']
+  tabs: string[];
 }
 
 const DiscussionListTabs: React.FC<DiscussionListTabsProps> = ({

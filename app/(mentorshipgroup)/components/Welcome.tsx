@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { FiUser } from 'react-icons/fi'; // Example icon, replace if needed
+import { FiUser } from 'react-icons/fi'; 
 
 interface WelcomeHeaderProps {
   mentorName: string;

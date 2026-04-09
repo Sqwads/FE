@@ -8,7 +8,7 @@ interface EmptyStateProps {
   description: string;
   actionText?: string;
   actionLink?: string;
-  illustration?: React.ReactNode; // Add this line
+  illustration?: React.ReactNode;
 }
 
 const EmptyState: React.FC<EmptyStateProps> = ({ 

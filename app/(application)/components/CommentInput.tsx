@@ -14,7 +14,7 @@ const CommentInput: React.FC<CommentInputProps> = ({ onCommentSubmit }) => {
   const handleSubmit = () => {
     if (commentText.trim()) {
       onCommentSubmit(commentText);
-      setCommentText(''); // Clear input after submit
+      setCommentText('');
     }
   };
 

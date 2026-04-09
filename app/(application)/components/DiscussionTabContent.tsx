@@ -68,7 +68,6 @@ export const sampleDiscussions = [
     comments: 20,
     isPinned: false,
   },
-  // Add more sample discussions if needed
 ];
 
 const DiscussionTabContent: React.FC = () => {
@@ -78,10 +77,6 @@ const DiscussionTabContent: React.FC = () => {
 
   const pinnedDiscussions = sampleDiscussions.filter(d => d.isPinned);
   const otherDiscussions = sampleDiscussions.filter(d => !d.isPinned);
-
-  // TODO: Implement actual filtering based on searchTerm and activeFilter
-  // TODO: Implement actual sorting based on sortOrder
-
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Discussions</h2>
@@ -121,12 +116,10 @@ const DiscussionTabContent: React.FC = () => {
           </button>
         </div>
         <div className="relative">
-          {/* Basic dropdown appearance, functionality to be added */}
           <button className="flex items-center text-sm text-gray-600 hover:text-gray-800">
             {sortOrder}
             <FiChevronDown className="ml-1" />
           </button>
-          {/* Dropdown menu would go here */}
         </div>
       </div>
 

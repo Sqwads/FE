@@ -261,8 +261,6 @@ const EmptyUpcomingState: React.FC = () => {
 
 // Main Upcoming component
 const Upcoming = ({data}:{data: any[]}) => {
-  // For demo purposes, you can toggle between empty and non-empty states
-  // In a real app, this would be determined by actual data
   const [hasUpcomingSessions, setHasUpcomingSessions] = useState(false);
   const [selectedSession, setSelectedSession] = useState<any>(null);
   

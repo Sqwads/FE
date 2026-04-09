@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Image from 'next/image'; // Assuming Next.js is being used
+import Image from 'next/image'; 
 
 interface StatCardProps {
   title: string;

@@ -15,7 +15,6 @@ interface Project {
   tags: string[];
   duration: string;
   collaborators?: number;
-  // Add any other project properties you need
 }
 
 interface ProjectDisplaySectionProps {
@@ -41,7 +40,6 @@ const ProjectDisplaySection = ({
   emptyStateContent,
   lgGridCols = 4
 }: ProjectDisplaySectionProps) => {
-  // Dynamically generate grid classes based on lgGridCols
   const gridClasses = `grid grid-cols-1 sm:grid-cols-2 gap-6 ${
     lgGridCols === 2 ? 'lg:grid-cols-2' : 
     lgGridCols === 3 ? 'lg:grid-cols-3' : 
