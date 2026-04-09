@@ -820,20 +820,7 @@ const UserListPage = () => {
                     >
                       <FiTrash2 size={18} />
                     </button>
-<<<<<<< HEAD
-
-                    <button 
-                      disabled={isPending}
-                      onClick={handleFinalizeSuspension}
-                      className={`py-2 ml-3 text-sm rounded-md bg-[#F532251A] border border-[#F53225] px-4 text-[#F53225] ${isPending && 'opacity-50'}`}
-                    >
-                        {isPending ?'Suspending...':'Confirm'}
-                    </button>
-                    </div>
-                  
-=======
                   )}
->>>>>>> 9f2112afbffd79884d1285dcb46d7345a2008b83
                 </div>
               ))}
             </div>
