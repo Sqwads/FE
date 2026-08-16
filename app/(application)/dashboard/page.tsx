@@ -16,6 +16,7 @@ import ActionCard from '../components/ActionCard';
 import ProjectCard from '../components/ProjectCard';
 import SectionHeader from '../components/SectionHeader';
 import EmptyState from '../components/EmptyState';
+import XpSummaryCard from '../components/XpSummaryCard';
 import { FaCheckCircle, FaClock } from 'react-icons/fa';
 import { PiWarningOctagonFill } from "react-icons/pi";
 import { instance } from '@/api/instance';
@@ -194,8 +195,9 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Action Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      {/* Action Cards & XP */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <XpSummaryCard />
         <Link href="/settings" className="block">
           <ActionCard
             title="Finish Setting Up Your Profile"
