@@ -2,6 +2,7 @@
 
 import { FiBell, FiBookmark } from "react-icons/fi";
 import {AiOutlineMenu} from 'react-icons/ai'
+import Image from 'next/image';
 import { Drawer, Menu, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import AdminSidebar from "./sidebar";
@@ -50,9 +51,10 @@ export default function TopNav() {
       
       <div className=" mx-auto px-6 py-5 flex items-center justify-between">
        
-        {/* Search Bar */}
-        <div className="md:hidden">
-          <AiOutlineMenu  onClick={open} size={27} />
+        {/* Search Bar and Mobile Logo */}
+        <div className="md:hidden flex items-center gap-3">
+          <AiOutlineMenu onClick={open} size={27} />
+          <Image src="/images/sqwads-logo-2.png" alt="Sqwads Logo" width={80} height={40} className="ml-2" />
         </div>
         <div className="flex-1 max-w-[40rem] hidden md:block">
           <TextInput          
