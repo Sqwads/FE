@@ -17,7 +17,7 @@ const NavigationTabs: React.FC<NavigationTabsProps> = ({
   
   return (
     <div
-      className="flex  border-b mt-10 mb-6 overflow-x-scroll w-full"
+      className="flex  border-b mt-10 mb-6 overflow-x-scroll w-full border-gray-200"
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       <style>

@@ -14,9 +14,7 @@ import { instance } from '@/api/instance';
 import { useQuery } from '@tanstack/react-query';
 
 const MentorDashboardPage = () => {
-   const {user} = userWrapper((state)=>({
-      user: state.user
-    }))
+   const user = userWrapper((state) => state.user);
 
     const [selectedDate, setSelectedDate] = useState(new Date());
 

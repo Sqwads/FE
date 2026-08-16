@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import React from 'react';
-import '@mantine/core/styles.css';
 import '../globals.css';
 import { AiOutlineClose } from 'react-icons/ai';
 

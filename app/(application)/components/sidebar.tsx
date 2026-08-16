@@ -22,9 +22,7 @@ const Sidebar = ({
 
 
   const pathname = usePathname();
-  const { user } = userWrapper((state: any) => ({
-    user: state.user,
-  }));
+  const user = userWrapper((state: any) => state.user);
   const [mentorsOpen, setMentorsOpen] = useState(false)
   const [projectsOpen, setProjectsOpen] = useState(false)
 
@@ -118,7 +116,7 @@ const Sidebar = ({
         <div className="mt-auto text-xs text-gray-400 text-center">
           <div className="flex items-center gap-3 p-4 rounded-lg">
             {user?.profileImage ?
-              <img src={user?.profileImage} className="w-10 h-10 rounded-full border object-cover" alt="" />
+              <img src={user?.profileImage} className="w-10 h-10 rounded-full border object-cover border-gray-200" alt="" />
               :
               <div className="w-10 h-10 flex items-center justify-center bg-blue-900 text-white font-bold rounded-full">
                 {user?.firstName?.[0]}

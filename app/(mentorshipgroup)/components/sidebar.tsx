@@ -21,9 +21,7 @@ const Sidebar = ({
   onSelectTab?: () => void;
 }) => {
   const pathname = usePathname();
-  const { user } = userWrapper((state: any) => ({
-    user: state.user,
-  }));
+  const user = userWrapper((state: any) => state.user);
 
   // State for dropdown menus
   const [sessionsOpen, setSessionsOpen] = useState(true);
@@ -189,7 +187,7 @@ const Sidebar = ({
       <div className="p-4 border-t border-blue-100">
         <div className="flex items-center">
           {user?.profileImage ?
-          <img src={user?.profileImage} className='w-12 h-12 object-cover rounded-full border' />:
+          <img src={user?.profileImage} className='w-12 h-12 object-cover rounded-full border border-gray-200' />:
           <div className="w-8 h-8 rounded-full bg-blue-900 text-white flex items-center justify-center font-medium">
             {user?.firstName?.[0] || 'N/A'}
           </div>

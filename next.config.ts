@@ -16,7 +16,6 @@ const nextConfig = {
       '@mantine/dates',
       'lucide-react',
       'recharts',
-      'framer-motion',
     ],
   },
   async rewrites() {
@@ -30,10 +29,6 @@ const nextConfig = {
       // },
     ];
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
 };
 
 export default nextConfig;

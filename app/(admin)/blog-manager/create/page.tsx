@@ -7,8 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Textarea, TextInput } from '@mantine/core';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import '@mantine/core/styles.css';
-import '@mantine/tiptap/styles.css';
+import '@mantine/tiptap/styles.layer.css';
 import * as yup from 'yup';
 import { useForm, yupResolver } from '@mantine/form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -262,7 +261,7 @@ const CreatePostModule = () => {
             </div>
       
             <Textarea
-              className="w-full border rounded p-3 resize-y"
+              className="w-full border rounded p-3 resize-y border-gray-200"
               rows={6}
               label="Final thought"
               placeholder='e.g. "I hope this helps you in your journey!"'

@@ -121,7 +121,7 @@ const CalendarSidebar = ({
       />
 
       {/* Today's schedule */}
-      <div className="border-t pt-4">
+      <div className="border-t pt-4 border-gray-200">
         <div className="flex justify-between items-center mb-2">
           <h3 className="font-semibold text-gray-800">Today</h3>
           <p className="text-sm text-gray-500">{formattedSelectedDate}</p>

@@ -142,7 +142,7 @@ const SessionDetailsView = ({
       </div>
 
       {/* Session date and time info */}
-      <div className="flex flex-col md:flex-row md:items-center border-b pb-6 mb-6">
+      <div className="flex flex-col md:flex-row md:items-center border-b pb-6 mb-6 border-gray-200">
         <div className="flex items-center mr-8 mb-3 md:mb-0">
           <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2">
             <FiCalendar className="text-gray-500" />

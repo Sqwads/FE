@@ -19,9 +19,7 @@ const AdminSidebar = ({
  
   const pathname = usePathname();
   const router = useRouter()
-  const { user } = userWrapper((state) => ({
-    user: state.user,
-  }));
+  const user = userWrapper((state) => state.user);
 
 
   const logout = ()=>{

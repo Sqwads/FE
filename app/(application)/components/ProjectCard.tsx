@@ -92,9 +92,9 @@ const ProjectCard = ({
         </div>
 
         <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-          <Link href={`/user-projects/${projectId}`} className="text-blue-600 text-sm font-medium inline-flex items-center">
+          <span className="text-blue-600 text-sm font-medium inline-flex items-center">
             Learn more <HiOutlineArrowRight className="ml-1" />
-          </Link>
+          </span>
           <span className="text-xs text-gray-500">{duration}</span>
         </div>
       </div>

@@ -103,7 +103,7 @@ const MentorTable: React.FC<MentorTableProps> = ({
         </thead>
         <tbody>
           {mentors.map((mentor, index) => (
-            <tr key={mentor.id} className="bg-white border-b hover:bg-gray-50">
+            <tr key={mentor.id} className="bg-white border-b hover:bg-gray-50 border-gray-200">
               <td className="px-6 py-4 flex items-center">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white bg-${mentor.avatarColor}-500 mr-3`}>
                   {mentor.initials}

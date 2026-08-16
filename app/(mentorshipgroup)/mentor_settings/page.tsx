@@ -77,7 +77,7 @@ const handleImageClick = () => {
                 src={profileImageSrc || user?.profileImage || '/images/profile.jpg'}
                 alt="Profile"
                 onClick={handleImageClick}
-                className="w-20 border cursor-pointer h-20 rounded-full object-cover"
+                className="w-20 border cursor-pointer h-20 rounded-full object-cover border-gray-200"
             />
 
             <input
@@ -117,7 +117,7 @@ const handleImageClick = () => {
               <button
                 key={item.id}
                 onClick={() => setActiveSection(item.id)}
-                className={`lg:w-full text-left border lg:border-0 px-2 lg:px-6 py-2 flex items-center rounded-md text-sm transition-colors ${
+                className={`lg:w-full text-left border border-gray-200 lg:border-0 px-2 lg:px-6 py-2 flex items-center rounded-md text-sm transition-colors ${
                   activeSection === item.id
                     ? 'font-semibold text-primary-foreground'
                     : 'text-muted-foreground hover:text-foreground hover:bg-accent'

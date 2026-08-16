@@ -14,7 +14,7 @@ const ActionCard = ({
   actionText 
 }: any) => {
   return (
-    <div className="bg-white rounded-lg p-5 border  shadow-sm">
+    <div className="bg-white rounded-lg p-5 border border-gray-200  shadow-sm">
       <div className="flex items-start">
         {icon && <div className="mr-3 mt-1 rounded-full h-10 w-10 flex justify-center items-center bg-[#9BB7FF66]">{icon}</div>}
         {illustration && (

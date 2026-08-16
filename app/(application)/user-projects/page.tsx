@@ -20,9 +20,7 @@ import { instance } from '@/api/instance';
 import EmptyState from '../components/EmptyState';
 
 export default function MyProjectsPage() {
-  const { user } = userWrapper((state: any) => ({
-    user: state.user,
-  }));
+  const user = userWrapper((state: any) => state.user);
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);

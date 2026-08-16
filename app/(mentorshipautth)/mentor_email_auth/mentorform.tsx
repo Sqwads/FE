@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { instance } from "@/src/api/instance";
 import { cookieStorage } from "@ibnlanre/portal";
+import Link from "next/link";
 
 const MentorEmailAuthForm = () => {
   const [otp, setOtp] = useState("");
@@ -139,9 +140,8 @@ const MentorEmailAuthForm = () => {
         <button
           onClick={handleSubmit}
           type="submit"
-          className={`px-10 py-3 bg-[#001D69] text-white rounded mb-5 transition ${
-            isPending && "opacity-50"
-          }`}
+          className={`px-10 py-3 bg-[#001D69] text-white rounded mb-5 transition ${isPending && "opacity-50"
+            }`}
         >
           {isPending ? "Submitting..." : "Submit"}
         </button>
@@ -151,17 +151,29 @@ const MentorEmailAuthForm = () => {
           <button
             onClick={handleResendCode}
             disabled={isResendDisabled}
-            className={`${
-              isResendDisabled
+            className={`${isResendDisabled
                 ? "text-gray-400 cursor-not-allowed"
                 : "text-blue-500 hover:underline"
-            }`}
+              }`}
           >
             Resend Code
           </button>
           <span>|</span>
           <span>{timer > 0 ? `00:${timer.toString().padStart(2, "0")}` : ""}</span>
         </div>
+
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-600">
+            Proceed to login here{" "}
+            <Link
+              href="/mentor_login"
+              className="text-blue-500 font-medium hover:underline"
+            >
+              Login
+            </Link>
+          </p>
+        </div>
+
       </div>
     </div>
   );

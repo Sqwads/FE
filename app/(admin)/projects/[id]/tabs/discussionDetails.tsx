@@ -88,7 +88,7 @@ const DiscussionDetails = ({
                     <div className="mb-14 mt-14">
                         <h3 className="text-lg font-medium mb-4 flex items-center"> <BiSolidCommentDetail size={27} className='mr-3' /> Comments ({comments?.length || 0})</h3>
                         {comments?.map((item:any, index:number)=>
-                         <div key={index} className="border-t  lg:px-7 px-2 py-5">
+                         <div key={index} className="border-t  lg:px-7 px-2 py-5 border-gray-200">
                             <div className="flex flex-shrink">
                                 {/* <img src="/images/alex.png" className='h-14 w-14 rounded-full object-cover mr-4' alt="" /> */}
                                 <div className="flex rounded-full h-10 w-10 mr-4 bg-blue-800 items-center justify-center text-2xl text-white font-medium">

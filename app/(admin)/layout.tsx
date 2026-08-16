@@ -6,51 +6,47 @@ import { useRouter } from 'next/navigation';
 import { instance } from '@/src/api/instance';
 import { cookieStorage } from '@ibnlanre/portal';
 import { useQuery } from '@tanstack/react-query';
-import '@mantine/core/styles.css';
 import { userWrapper } from '@/src/store';
-import { LoadingOverlay } from '@mantine/core';
+import Preloader from '../components/preloader';
 
-export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const router = useRouter();
+  const setUser = userWrapper((state) => state.setUser);
 
-  const {user, setUser} = userWrapper((state)=>({
-    setUser: state.setUser,
-    user: state.user
-  }))
-  // console.log(user?.firstName)
-  const { data: response, isPending: userInfoIsLoading } = useQuery({
+  const { data: response, isPending: userInfoIsLoading, isError } = useQuery({
     queryFn: () => instance.get('/user/admin'),
     queryKey: ['admin'],
-    // enabled: !!user,
   });
 
-  useEffect(()=>{
-      setUser(response?.data)
-  }, [response?.data])
+  useEffect(() => {
+    setUser(response?.data);
+  }, [response?.data, setUser]);
 
-  if (!response && !userInfoIsLoading) {
-    cookieStorage.clear();
-    router.push('/');
-    return null;
+  useEffect(() => {
+    if (!userInfoIsLoading && isError) {
+      cookieStorage.clear();
+      router.push('/');
+    }
+  }, [isError, userInfoIsLoading, router]);
+
+  if (userInfoIsLoading) {
+    return <Preloader />;
   }
 
   return (
     <div className="flex h-screen">
-      {/* <LoadingOverlay visible={userInfoIsLoading} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} /> */}
       {/* Main Content Area */}
       <div className="w-64 hidden md:block">
-           <AdminSidebar />
+        <AdminSidebar />
       </div>
 
-       
       {/* Main Content */}
-      <div className="flex-1 h-screen overflow-y-scroll   ">
+      <div className="flex-1 h-screen overflow-y-scroll">
         <TopNav />
         <div>
-            {children}
+          {children}
         </div>
       </div>
-     
     </div>
   );
 }

@@ -12,9 +12,7 @@ import { instance } from '@/api/instance';
 import { useQuery } from '@tanstack/react-query';
 
 const MonitoringProject = () => {
-       const { user } = userWrapper((state: any) => ({
-    user: state.user,
-  }));
+       const user = userWrapper((state: any) => state.user);
 
   console.log(user)
 

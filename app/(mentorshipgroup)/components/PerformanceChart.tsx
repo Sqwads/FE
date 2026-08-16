@@ -38,7 +38,7 @@ const PerformanceChart = () => {
           </div>
         </div>
         {/* Placeholder for dropdown - implement if needed */}
-        <button className="text-xs text-gray-500 border rounded px-2 py-1 hover:bg-gray-100">
+        <button className="text-xs text-gray-500 border rounded px-2 py-1 hover:bg-gray-100 border-gray-200">
           {performancePeriod}
         </button>
       </div>

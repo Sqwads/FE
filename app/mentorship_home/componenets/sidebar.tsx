@@ -20,9 +20,7 @@ const Sidebar = ({
   
 
   const pathname = usePathname();
-  const {user} = userWrapper((state: any) => ({
-    user: state.user,
-  }));
+  const user = userWrapper((state: any) => state.user);
 
   const trimText = (email: string) => {
     if(!email) return null;

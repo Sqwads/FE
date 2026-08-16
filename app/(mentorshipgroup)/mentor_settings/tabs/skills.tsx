@@ -149,7 +149,7 @@ const SkillsExperience = ({user}:any) => {
             {form.values.skills?.map((skill: string, index: number) => (
               <div
                 key={index}
-                className="flex items-center border gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
+                className="flex items-center border gap-1 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm border-gray-200"
               >
                 {skill}
                 <button

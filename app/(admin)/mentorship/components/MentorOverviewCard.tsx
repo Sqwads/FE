@@ -32,7 +32,7 @@ const MentorOverviewCard: React.FC<MentorOverviewCardProps> = ({
       <div className="flex items-center">
         <div className="w-16 h-16 rounded-full bg-gray-200 overflow-hidden mr-4">
           {avatarUrl ?
-            <img className='h-full w-full object-cover border' src={avatarUrl} alt="" />:
+            <img className='h-full w-full object-cover border border-gray-200' src={avatarUrl} alt="" />:
            <div className="w-full h-full flex items-center justify-center text-gray-500">
             { name.split(' ').map(n => n[0]).join('')}
           </div>

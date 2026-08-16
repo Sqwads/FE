@@ -27,7 +27,7 @@ const MentorCard: React.FC<MentorCardProps> = ({
   const router = useRouter()
 
   return (
-    <div className="relative bg-white rounded-xl shadow border  flex flex-col items-start w-full h-full transition duration-200 hover:shadow-lg">
+    <div className="relative bg-white rounded-xl shadow border  flex flex-col items-start w-full h-full transition duration-200 hover:shadow-lg border-gray-200">
       {ribbonText && (
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-blue-700 text-white text-xs font-semibold px-2 py-1 rounded-md uppercase">{ribbonText}</span>
@@ -36,7 +36,7 @@ const MentorCard: React.FC<MentorCardProps> = ({
       <img
         src={image  || '/images/profile.jpg'}
         alt={name}
-        className="w-full lg:h-48 h-64 mb-5 object-cover rounded-lg border mb-4"
+        className="w-full lg:h-48 h-64 mb-5 object-cover rounded-lg border mb-4 border-gray-200"
       />
       <div className="mb-2 px-4">
         <div className="font-bold text-lg">{name}</div>
