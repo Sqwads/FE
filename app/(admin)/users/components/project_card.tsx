@@ -37,9 +37,9 @@ const ProjectCard = ({
     };
      
     return ( 
-        <div className='border rounded-lg'>
-            <img src={project?.coverImage? project?.coverImage: "/images/signup_bg.png" }className='w-full object-cover h-32 rounded-lg border' alt="project" />
-            <div className="py-5 px-3 border-b">
+        <div className='border rounded-lg border-gray-200'>
+            <img src={project?.coverImage? project?.coverImage: "/images/signup_bg.png" }className='w-full object-cover h-32 rounded-lg border border-gray-200' alt="project" />
+            <div className="py-5 px-3 border-b border-gray-200">
                 <div className="text-lg font-semibold mb-2">{project?.name}</div>
                 <div className="text-sm text-[#16181BB2] mb-7 min-h-10">
                     {trimSentence(project?.overview)}

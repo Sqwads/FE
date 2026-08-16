@@ -12,11 +12,11 @@ const AssessmentResult: NextPage = () => {
 
       <AssessmentHeader />
 
-      <div className="border rounded-lg p-8 mb-6 shadow-sm">
+      <div className="border rounded-lg p-8 mb-6 shadow-sm border-gray-200">
         {/* Top Cards Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Marks Scored Card */}
-          <div className="border rounded-lg p-5 relative shadow-sm">
+          <div className="border rounded-lg p-5 relative shadow-sm border-gray-200">
             <div className="flex justify-between items-start">
               <div>
                 <h3 className="font-medium text-gray-700 text-lg">Marks Scored</h3>
@@ -46,7 +46,7 @@ const AssessmentResult: NextPage = () => {
           </div>
 
           {/* Rank Card */}
-          <div className="border rounded-lg p-5 relative shadow-sm">
+          <div className="border rounded-lg p-5 relative shadow-sm border-gray-200">
             <div className="flex justify-between items-start">
               <div>
                 <h3 className="font-medium text-gray-700 text-lg">Rank</h3>
@@ -78,7 +78,7 @@ const AssessmentResult: NextPage = () => {
           </div>
 
           {/* Time Spent Card */}
-          <div className="border rounded-lg p-5 relative shadow-sm">
+          <div className="border rounded-lg p-5 relative shadow-sm border-gray-200">
             <div className="flex justify-between items-start">
               <div>
                 <h3 className="font-medium text-gray-700 text-lg">Time Spent</h3>

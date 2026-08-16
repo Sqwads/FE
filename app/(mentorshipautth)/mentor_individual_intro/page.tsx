@@ -81,7 +81,7 @@ const MentorIntroductionPage = () => {
           <div className="space-y-6">
             {/* Mentorship Story */}
             <Textarea
-            className="w-full border rounded p-3 resize-y"
+            className="w-full border rounded p-3 resize-y border-gray-200"
               label="Your mentorship story"
               placeholder="I started mentoring..."
               autosize
@@ -92,7 +92,7 @@ const MentorIntroductionPage = () => {
 
             {/* Bio */}
             <Textarea
-            className="w-full border rounded p-3 resize-y"
+            className="w-full border rounded p-3 resize-y border-gray-200"
               label="Your bio"
               placeholder="I can help you with..."
               autosize

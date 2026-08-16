@@ -5,55 +5,48 @@ import { instance } from '../../src/api/instance';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { cookieStorage } from '@ibnlanre/portal';
-import { LoadingOverlay } from '@mantine/core';
-import '@mantine/core/styles.css';
 import { userWrapper } from '../../src/store';
 import TopNav from './components/topNav';
 import Preloader from '../components/preloader';
 
 export default function AppLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const setUser = userWrapper((state) => state.setUser);
+  const router = useRouter();
 
-    const {user, setUser} = userWrapper((state)=>({
-      setUser: state.setUser,
-      user: state.user
-    }))
+  const { data: response, isPending: userInfoIsLoading, isError } = useQuery({
+    queryFn: () => instance.get('/user'),
+    queryKey: ['user'],
+  });
 
-    const router = useRouter()
-    const {data:response, isPending: userInfoIsLoading} = useQuery({
-      queryFn: ()=>instance.get('/user'),
-      queryKey: ['user'],
-    });
+  useEffect(() => {
+    setUser(response?.data);
+  }, [response?.data, setUser]);
 
-    useEffect(()=>{
-          setUser(response?.data)
-    }, [response?.data])
-    
-
-    if(!response && !userInfoIsLoading ){
-      cookieStorage.clear()
-      router.push('/')
-      return
+  useEffect(() => {
+    if (!userInfoIsLoading && isError) {
+      cookieStorage.clear();
+      router.push('/');
     }
+  }, [isError, userInfoIsLoading, router]);
 
-    if(userInfoIsLoading) return <Preloader />
+  if (userInfoIsLoading) {
+    return <Preloader />;
+  }
 
-    return(
-       <div className="flex h-screen ">
-             {/* <LoadingOverlay visible={userInfoIsLoading} zIndex={1000} overlayProps={{ radius: "xl", blur: 1 }} /> */}
-             {/* Main Content Area */}
-             <div className="w-64 hidden md:block">
-                  <Sidebar />
-             </div>
-       
-              
-             {/* Main Content */}
-             <div  className="flex-1 h-screen overflow-y-scroll   ">
-               <TopNav />
-               <div  className='  '>
-                   {children}
-               </div>
-             </div>
-            
+  return (
+    <div className="flex h-screen">
+      {/* Main Content Area */}
+      <div className="w-64 hidden md:block">
+        <Sidebar />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 h-screen overflow-y-scroll">
+        <TopNav />
+        <div>
+          {children}
         </div>
-    )
+      </div>
+    </div>
+  );
 }

@@ -87,7 +87,7 @@ const ReviewList = () => {
 
       {/* Review Form */}
       {showReviewForm && (
-        <div className="bg-gray-50 p-6 rounded-lg border">
+        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <h3 className="text-lg font-semibold mb-4">Rate this Mentor</h3>
           
           {/* Static 5-star rating (non-interactive) */}
@@ -149,12 +149,12 @@ const ReviewList = () => {
       ) : (
         <div className="space-y-6">
           {reviews.map((review) => (
-            <div key={review._id} className="border-b pb-6 last:border-b-0">
+            <div key={review._id} className="border-b pb-6 last:border-b-0 border-gray-200">
               <div className="flex gap-4">
                 <img
                   src={review.userId.profileImage || '/images/profile.jpg'}
                   alt={`${review.userId.firstName} ${review.userId.lastName}`}
-                  className="rounded-full w-12 h-12 object-cover border"
+                  className="rounded-full w-12 h-12 object-cover border border-gray-200"
                 />
                 <div className="flex-1">
                   <div className="flex justify-between items-start mb-2">
@@ -294,7 +294,7 @@ export default ReviewList;
 
 //       {/* Review Form */}
 //       {showReviewForm && (
-//         <div className="bg-gray-50 p-6 rounded-lg border">
+//         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
 //           <h3 className="text-lg font-semibold mb-4">Rate this Mentor</h3>
           
 //           {/* Star Rating */}
@@ -360,12 +360,12 @@ export default ReviewList;
 //       ) : (
 //         <div className="space-y-6">
 //           {reviews.map((review) => (
-//             <div key={review._id} className="border-b pb-6 last:border-b-0">
+//             <div key={review._id} className="border-b pb-6 last:border-b-0 border-gray-200">
 //               <div className="flex gap-4">
 //                 <img
 //                   src={review.userId.profileImage || '/images/profile.jpg'}
 //                   alt={`${review.userId.firstName} ${review.userId.lastName}`}
-//                   className="rounded-full w-12 h-12 object-cover border"
+//                   className="rounded-full w-12 h-12 object-cover border border-gray-200"
 //                 />
 //                 <div className="flex-1">
 //                   <div className="flex justify-between items-start mb-2">

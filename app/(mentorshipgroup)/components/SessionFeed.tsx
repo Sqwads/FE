@@ -20,7 +20,7 @@ const SessionsFeed = ({
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-800">Sessions Feed</h3>
         {/* Placeholder for filter dropdown */}
-        <button className="flex items-center text-xs text-gray-500 border rounded px-2 py-1 hover:bg-gray-100">
+        <button className="flex items-center text-xs text-gray-500 border rounded px-2 py-1 hover:bg-gray-100 border-gray-200">
           All <FiChevronDown className="ml-1 h-3 w-3" />
         </button>
       </div>
@@ -28,7 +28,7 @@ const SessionsFeed = ({
       <div className="space-y-4">
         {/* Upcoming Sessions */}
         {sessionsData?.map((session:any, idx:number) => (
-          <div key={idx} className="border rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div key={idx} className="border rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-gray-200">
             <div className="flex items-center gap-3">
               <Image 
                 src={'/images/profile.jpg'} 
@@ -61,7 +61,7 @@ const SessionsFeed = ({
 
         {/* Past Sessions */}
         {/* {pastSessions.map((session) => (
-           <div key={session.id} className="border rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 opacity-70">
+           <div key={session.id} className="border rounded-lg p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 opacity-70 border-gray-200">
             <div className="flex items-center gap-3">
               <Image 
                 src={session.participantImage} 

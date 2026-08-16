@@ -98,7 +98,7 @@ const MentorDashboard: React.FC = () => {
         cell: ({row})=> <div className='flex items-center'>
             <div className='mr-3'>
               {row.original?.profileImage ?
-                <img src={row.original?.profileImage} className='h-10 w-14 object-cover border rounded-lg' alt="" />:
+                <img src={row.original?.profileImage} className='h-10 w-14 object-cover border rounded-lg border-gray-200' alt="" />:
                 <div className='bg-[#5483FF] text-white font-semibold text-lg h-10 w-10 rounded-lg flex items-center justify-center'>
                     {row.original?.firstName[0]}{row.original?.lastName[0]}
                 </div>

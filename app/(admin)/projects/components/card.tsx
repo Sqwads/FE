@@ -18,7 +18,7 @@ const Card = ({
     titleColor? : string;
 }) => {
     return ( 
-        <div className='border shadow-sm lg:py-7 py-4 px-5 rounded-lg' style={{background: cardBackground}}>
+        <div className='border shadow-sm lg:py-7 py-4 px-5 rounded-lg border-gray-200' style={{background: cardBackground}}>
 
             <div className="lg:flex">
                 <div 

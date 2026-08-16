@@ -95,7 +95,7 @@ const BasicInformation = ({user}:any) => {
       />
 
       <Textarea
-      className="w-full border rounded p-3 resize-y"
+      className="w-full border rounded p-3 resize-y border-gray-200"
         label="Bio"
         placeholder="Tell us about yourself..."
         rows={10}

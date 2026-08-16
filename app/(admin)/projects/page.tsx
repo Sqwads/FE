@@ -43,7 +43,7 @@ const Projects = () => {
                     {row.original.teamMembers?.slice(0, 2)?.map((item: any, index: any) =>
                         <div key={index}>
                             {item?.user?.profileImage ?
-                                <img src={item?.user?.profileImage} className='h-8 w-8 rounded-full border object-cover' alt="image" /> :
+                                <img src={item?.user?.profileImage} className='h-8 w-8 rounded-full border object-cover border-gray-200' alt="image" /> :
                                 <div
                                     className='rounded-full h-8 w-8 bg-blue-600 text-white font-medium ml-[-0.4rem] items-center justify-center flex text-lg'
                                 >

@@ -12,7 +12,7 @@ const MentorsList = () => {
         <button className="text-blue-500">View all</button>
       </div>
       {mentors.map((mentor:any, index:number) => (
-        <div key={index} className="flex justify-between items-center border-b py-3">
+        <div key={index} className="flex justify-between items-center border-b py-3 border-gray-200">
           <div>
             <p className="font-medium">{mentor.name}</p>
             <p className="text-sm text-gray-500">{mentor.lastSession}</p>

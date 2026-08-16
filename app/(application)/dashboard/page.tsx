@@ -21,10 +21,8 @@ import { PiWarningOctagonFill } from "react-icons/pi";
 import { instance } from '@/api/instance';
 
 export default function DashboardPage() {
-  const { user, setUser } = userWrapper((state: any) => ({
-    user: state.user,
-    setUser: state.setUser,
-  }));
+  const user = userWrapper((state: any) => state.user);
+  const setUser = userWrapper((state: any) => state.setUser);
 
   // Fix: Better LinkedIn validation and persistent state
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -64,14 +62,16 @@ export default function DashboardPage() {
   const profile = {
     skill: user?.skills_of_interest?.length > 0,
     experience: user?.experiences?.length > 0,
-    socialProfile: (!!user?.socialProfile?.twitter && !!user?.socialProfile?.linkedin),
+    socialProfile: (!!user?.socialProfile?.linkedin),
     location: !!user?.location
   }
+
+ 
 
   const profileFields = Object.values(profile);
   const completedFields = profileFields.filter(Boolean).length;
   const profileCompletion = Math.round((completedFields / profileFields.length) * 100);
-
+//  console.log('profileFields:--->',user, 'completedFields:--->',completedFields, 'profile:--->', profile)
   const { data: projectResponse, isLoading: projectIsLoading } = useQuery({
     queryFn: () => instance.get('/project/all', {
       params: {

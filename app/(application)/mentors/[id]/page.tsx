@@ -179,7 +179,7 @@ const MentorProfile = () => {
         <div className="lg:flex">
           <img
             src={mentor?.profileImage || "/images/profile.jpg"}
-            className="lg:h-36 ml-5 lg:w-36 h-24 w-24 object-cover rounded-full border lg:mt-[-70px] mt-[-45px]"
+            className="lg:h-36 ml-5 lg:w-36 h-24 w-24 object-cover rounded-full border lg:mt-[-70px] mt-[-45px] border-gray-200"
             alt=""
           />
           <div className="pl-5">
@@ -237,7 +237,7 @@ const MentorProfile = () => {
 
           {/* Calendar + Book */}
 
-          <div className="flex flex-col items-center w-full md:w-[400px]  gap-5 bg-white border rounded-lg p-6">
+          <div className="flex flex-col items-center w-full md:w-[400px]  gap-5 bg-white border rounded-lg p-6 border-gray-200">
             <div className="mb-3 font-semibold ">
               Check for mentor's availability
             </div>

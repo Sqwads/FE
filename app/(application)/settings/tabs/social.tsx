@@ -10,9 +10,7 @@ import { userWrapper } from '@/store';
 
 const SocialProfiles = ({ user }: any) => {
     const queryClient = useQueryClient();
-    const { setUser } = userWrapper((state: any) => ({
-        setUser: state.setUser,
-    }));
+    const setUser = userWrapper((state: any) => state.setUser);
 
     useEffect(() => {
         // console.log('🔍 SocialProfiles - CURRENT USER:', user);

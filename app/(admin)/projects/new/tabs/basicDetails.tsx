@@ -6,7 +6,7 @@ import { BsUpload } from 'react-icons/bs';
 import { RichTextEditor, Link as RichTextLink } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import '@mantine/tiptap/styles.css';
+import '@mantine/tiptap/styles.layer.css';
 
 const BasicDetails = ({
     handleProceed,
@@ -66,7 +66,7 @@ const BasicDetails = ({
             </div>
 
             {!previewMode &&
-            <div className={`border mb-4 lg:mx-0 mx-auto rounded flex flex-col items-center justify-center w-48 h-40`}>
+            <div className={`border border-gray-200 mb-4 lg:mx-0 mx-auto rounded flex flex-col items-center justify-center w-48 h-40`}>
                 {imageSrc ?
                     <img
                         src={imageSrc} className='h-full rounded w-full object-cover cursor-pointer'

@@ -214,7 +214,7 @@ const MentorAvailabilityPage = () => {
        
         <div className="space-y-6">
           {daysOrder.map((day) => (
-            <div key={day} className="border-b pb-4 last:border-b-0">
+            <div key={day} className="border-b pb-4 last:border-b-0 border-gray-200">
               {/* Main row for Switch, Day Name, and Right-side content */}
               <div className="flex items-center justify-between mb-3">
                 {/* Left side: Switch and Day Name */}

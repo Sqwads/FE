@@ -49,7 +49,7 @@ const Navbar = () => {
       {/* Get Started Button (Desktop) */}
       <div className="hidden lg:flex items-center">
         <Link href={"/signup"}>
-          <Button type="button" title="Get Started For Free" icon="/arrow.svg" variant="#0234B8" />
+          <button className='flex w-fit items-center text-white rounded-md bg-[#0234B8] border border-[#5483FF] lg:py-3 py-2 lg:text-base text-sm px-6 hover:bg-blue-700 transition duration-300'>Get Started For Free </button>
         </Link>
       </div>
 

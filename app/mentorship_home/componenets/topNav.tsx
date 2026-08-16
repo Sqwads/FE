@@ -15,9 +15,7 @@ import Sidebar from "./sidebar";
 export default function TopNav() {
  
   const [opened, { open, close }] = useDisclosure(false);
-  const { user } = userWrapper((state) => ({
-      user: state.user,
-  }));
+  const user = userWrapper((state) => state.user);
   const router = useRouter()
 
   const logout = ()=>{

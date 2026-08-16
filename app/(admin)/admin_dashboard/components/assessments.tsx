@@ -11,7 +11,7 @@ const Assessments = () => {
         <button className="text-blue-500">View all</button>
       </div>
       {assessments.map((assessment:any, index:number) => (
-        <div key={index} className="flex justify-between items-center border-b py-3">
+        <div key={index} className="flex justify-between items-center border-b py-3 border-gray-200">
           <div>
             <p className="font-medium">{assessment.name}</p>
             <p className="text-sm text-gray-500">{assessment.lastActivity}</p>

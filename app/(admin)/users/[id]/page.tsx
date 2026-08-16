@@ -189,7 +189,7 @@ const UserProfile = () => {
             <div className="text-[#16181B80] mr-5">Profile Photo: </div>
             <img
               src={user?.profile?.profileImage || "/images/profile,jpg"}
-              className="h-14 border w-14 mr-3 rounded-full object-cover"
+              className="h-14 border w-14 mr-3 rounded-full object-cover border-gray-200"
               alt=""
             />
           </div>
@@ -198,7 +198,7 @@ const UserProfile = () => {
         <div className="flex-1 bg-white rounded-xl py-7 lg:px-7 px-4 lg:mt-0 mt-7">
           <div className="text font- text-2xl mb-7">Sqwads Activity</div>
 
-          <div className="flex border-b ">
+          <div className="flex border-b  border-gray-200">
             {tabs.map((item, idx) => (
               <div
                 key={idx}

@@ -46,7 +46,7 @@ const AboutSection = ({ mentor }: any) => {
                     borderColor: bgColor,
                     backgroundColor: bgColor + "20",
                   }}
-                  className="rounded-md border px-3 py-1 text-xs font-medium transition-transform duration-300 hover:scale-105"
+                  className="rounded-md border px-3 py-1 text-xs font-medium transition-transform duration-300 hover:scale-105 border-gray-200"
                 >
                   {item}
                 </span>
@@ -98,7 +98,7 @@ const AboutSection = ({ mentor }: any) => {
               return (
                 <div
                   key={index}
-                  className="w-full flex gap-4 border-0 border-b-[1px] pb-8"
+                  className="w-full flex gap-4 border-0 border-b-[1px] pb-8 border-gray-200"
                 >
                   <div>
                     <Image

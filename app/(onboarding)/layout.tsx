@@ -1,7 +1,31 @@
+"use client"
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { instance } from '@/src/api/instance';
+import { cookieStorage } from '@ibnlanre/portal';
+import Preloader from '../components/preloader';
 
 export default function OnBoardingLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const router = useRouter();
+
+  const { isPending: userInfoIsLoading, isError } = useQuery({
+    queryFn: () => instance.get('/user'),
+    queryKey: ['user'],
+  });
+
+  useEffect(() => {
+    if (!userInfoIsLoading && isError) {
+      cookieStorage.clear();
+      router.push('/');
+    }
+  }, [isError, userInfoIsLoading, router]);
+
+  if (userInfoIsLoading) {
+    return <Preloader />;
+  }
+
   return (
     <div
       className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-5 md:px-10 px-3"
@@ -28,24 +52,6 @@ export default function OnBoardingLayout({ children }: Readonly<{ children: Reac
 
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row justify-between items-center lg:w-[80%] mx-auto">
-        {/* Left Section (Shared Across All Pages) */}
-        {/* <div className="flex flex-col items-start text-left lg:w-1/2 mb-10 lg:mb-0">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            Let’s Know You Better
-          </h1>
-          <p className="text-sm text-gray-600 mb-6">
-            Select your preferences so we can set up the space just for you.
-          </p>
-
-          <Image
-            src="/images/knowing_better.png"
-            alt="knowing_better"
-            width={500}
-            height={250}
-            className="rounded-md"
-          />
-        </div> */}
-
         {/* Dynamic Content */}
         <div className=" w-full">{children}</div>
       </div>

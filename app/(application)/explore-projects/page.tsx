@@ -13,9 +13,7 @@ import { instance } from '@/api/instance';
 import Preloader from '@/app/components/preloader';
 
 export default function ExploreProjectsPage() {
-    const { user } = userWrapper((state: any) => ({
-        user: state.user,
-    }));
+    const user = userWrapper((state: any) => state.user);
 
     const [currentPage, setCurrentPage] = useState(1);
 

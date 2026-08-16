@@ -27,7 +27,7 @@ const StatCard: React.FC<StatCardProps> = ({
 }) => {
   return (
     // Removed the outer div from the original component, assuming it's applied where StatCard is used (like in the grid cell)
-    <div className={`flex items-center py-7 rounded-lg border  px-4 space-x-4 ${bgColorClass} ${textColorClass}`}> 
+    <div className={`flex items-center py-7 rounded-lg border border-gray-200  px-4 space-x-4 ${bgColorClass} ${textColorClass}`}> 
       <div className={`p-3 rounded-full flex items-center justify-center ${iconBgClass}`}>
         {imageSrc ? (
           <img 

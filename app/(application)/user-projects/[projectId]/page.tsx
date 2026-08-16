@@ -43,9 +43,7 @@ function ProjectDetailsContent() {
   const [selectedDiscussion, setSelectedDiscussion] = useState<any>(null);
 
   // Get user data from store
-  const { user } = userWrapper((state: any) => ({
-    user: state.user,
-  }));
+  const user = userWrapper((state: any) => state.user);
 
   // ADD THIS: Fetch fresh user data to ensure we have the latest LinkedIn info
   const { data: freshUserData, refetch: refetchUser } = useQuery({
@@ -86,7 +84,7 @@ function ProjectDetailsContent() {
 
     const hasSkills = userData?.skills_of_interest?.length > 0;
     const hasExperience = userData?.experiences?.length > 0;
-    const hasSocials = !!userData?.socialProfile?.twitter && !!userData?.socialProfile?.linkedin;
+    const hasSocials = !!userData?.socialProfile?.linkedin;
     const hasLocation = !!userData?.location;
 
     return hasSkills  && hasSocials && hasLocation;

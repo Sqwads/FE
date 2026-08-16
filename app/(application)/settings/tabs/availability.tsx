@@ -48,7 +48,7 @@ const Availability = ({ user }: any) => {
                 </div>
             </div>
 
-            <div className="flex items-center justify-between p-4 bg-white border rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-white border rounded-lg border-gray-200">
                 <div>
                     <div className="font-medium text-card-foreground">I am available for projects</div>
                     <p className="text-sm text-muted-foreground mt-1">
